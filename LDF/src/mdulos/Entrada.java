@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author administrador
+ * @author Alvaro.p
  */
 public class Entrada {
     

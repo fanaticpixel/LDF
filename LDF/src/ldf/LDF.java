@@ -5,9 +5,11 @@
  */
 package ldf;
 
+import bbdd.BD_LDF;
+
 /**
  *
- * @author administrador
+ * @author Alvaro.p
  */
 public class LDF {
 
@@ -16,6 +18,8 @@ public class LDF {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        BD_LDF bd = new BD_LDF("LDF");
     }
     
 }

@@ -12,7 +12,7 @@ import mdulos.Usuario;
 
 /**
  *
- * @author administrador
+ * @author Alvaro.p
  */
 public class Ldf {
     private Vector<Cine> cines;

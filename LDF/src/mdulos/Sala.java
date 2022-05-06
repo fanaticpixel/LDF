@@ -7,7 +7,7 @@ package mdulos;
 
 /**
  *
- * @author administrador
+ * @author Alvaro.p
  */
 public class Sala {
     

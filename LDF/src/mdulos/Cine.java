@@ -9,7 +9,7 @@ import java.util.Vector;
 
 /**
  *
- * @author administrador
+ * @author Alvaro.p
  */
 public class Cine {
     
