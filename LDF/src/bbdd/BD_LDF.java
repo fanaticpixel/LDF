@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author administrador
+ * @author Alvaro.p
  */
 public class BD_LDF extends BD_Conector{
     
