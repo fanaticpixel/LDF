@@ -8,6 +8,8 @@ package ldf;
 import java.util.*;
 
 import bbdd.BD_LDF;
+import java.util.regex.Pattern;
+import jdk.nashorn.internal.runtime.regexp.joni.Matcher;
 import modulos.*;
 
 /**
@@ -46,12 +48,15 @@ public class LDF {
                         limpiar();
 
                         System.out.println("Vas a crear una cuenta, si desea parar en cualquier momento introduzca '0'");
-                        System.out.println("Introduzca su nombre");
-                        nombre1 = sc.nextLine();
 
-                        System.out.println("Introduce tus apellidos");
-                        apellidos1 = sc.nextLine();
-
+                        do {
+                            System.out.println("Introduzca su nombre");
+                            nombre1 = sc.nextLine();
+                        } while (validarDatos(nombre1) == false);//bucle de validacion del nombre
+                        do {
+                            System.out.println("Introduce tus apellidos");
+                            apellidos1 = sc.nextLine();
+                        } while (validarDatos(apellidos1) == false);//bucle de validacion del apellido
                         do {
                             System.out.println("Introduce tu nick");
                             nick1 = sc.nextLine();
@@ -76,10 +81,10 @@ public class LDF {
                         if (nick1.equalsIgnoreCase("0")) {
                             break;
                         }
-
-                        System.out.println("Introduce tu correo");
-                        correo1 = sc.nextLine();
-
+                        do {
+                            System.out.println("Introduce tu correo");
+                            correo1 = sc.nextLine();
+                        } while (validaEmail(correo1) == false);//Bucle de validadcion de email
                         System.out.println("Introduce tu contraseña");
                         pass1 = sc.nextLine();
 
@@ -173,5 +178,24 @@ public class LDF {
 
     }
 
+    /* @author Alvaro.p*/
+    public static boolean validarDatos(String dato) {
+
+        /* String regexp = "\\d+[a-zA-Z]";
+        if (Pattern.matches(regexp, dato) == true)
+                return true;
+        else
+            return false;*/
+        Pattern pattern = Pattern.compile("[a-zA-Z]");
+        java.util.regex.Matcher matcher = pattern.matcher(dato);
+        return matcher.matches();
+    }
+
+    /* @author Alvaro.p*/
+    public static boolean validaEmail(String mail) {
+        Pattern pattern = Pattern.compile("^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$");
+        java.util.regex.Matcher matcher = pattern.matcher(mail);
+        return matcher.matches();
+    }
 
 }
