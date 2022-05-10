@@ -12,12 +12,24 @@ import java.time.LocalDate;
  * @author Alvaro.p
  */
 public class Cartelera {
-    private LocalDate fecha_hora;
+    
     private String nombre;
     private String id_cine;
-    private String id_sala;
-    private String tipo;
+    private int id_sala;
+    private LocalDate fecha_hora; 
     private int duracion;
+     private String tipo;
+
+    public Cartelera(String nombre, String id_cine, int id_sala, LocalDate fecha_hora, int duracion, String tipo) {
+        this.nombre = nombre;
+        this.id_cine = id_cine;
+        this.id_sala = id_sala;
+        this.fecha_hora = fecha_hora;
+        this.duracion = duracion;
+        this.tipo = tipo;
+    }
+
+    
 
     public LocalDate getFecha_hora() {
         return fecha_hora;
@@ -43,11 +55,11 @@ public class Cartelera {
         this.id_cine = id_cine;
     }
 
-    public String getId_sala() {
+    public int getId_sala() {
         return id_sala;
     }
 
-    public void setId_sala(String id_sala) {
+    public void setId_sala(int id_sala) {
         this.id_sala = id_sala;
     }
 

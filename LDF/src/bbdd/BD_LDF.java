@@ -8,6 +8,7 @@ package bbdd;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Vector;
+import modulos.Cartelera;
 
 /**
  *
@@ -22,7 +23,78 @@ public class BD_LDF extends BD_Conector{
     public BD_LDF(String file){
 		super (file);
 	}
+        /**
+     * @author AlvaroPerez
+     *     
+     * 
+     * @return 
+     */
+    public Vector<Cartelera> listarCartelera(){
     
+        String cadenaSQL="SELECT * FROM Cartelera";
+        Vector<Cartelera> v = new Vector<Cartelera>();
+        
+        try{
+        
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+            
+            while(reg.next()){
+                 java.sql.Date f = reg.getDate("fecha_hora");
+                 LocalDate fBuena = f.toLocalDate();
+                  v.add(new Cartelera(reg.getString("nombre"),reg.getString("id_cine"),reg.getInt("id_sala") ,fBuena, reg.getInt("duracion"),reg.getString("tipo")));
+            }
+            
+            this.cerrar();
+            
+        }catch(SQLException e){
+            
+            e.printStackTrace();          
+        }
+        
+        return v;
+        
+    }
+     /**
+     * @author AlvaroPerez
+     *     
+     * @param tabla
+     * @param campo
+     * 
+     * @return 
+     */
+    public Vector<Cartelera> listarCarteleraFiltrada(String tabla, String campo){
+    
+        String cadenaSQL="SELECT * FROM CARTELERA WHERE ? LIKE  ?";
+        Vector<Cartelera> v = new Vector<Cartelera>();
+        
+        try{
+        
+            this.abrir();
+            ps=c.prepareStatement(cadenaSQL);
+            
+            ps.setString(1, campo);
+            ps.setString(2, tabla);
+            
+            reg = ps.executeQuery();
+            
+            while(reg.next()){
+                java.sql.Date f = reg.getDate("fecha_hora");
+                 LocalDate fBuena = f.toLocalDate();
+                v.add(new Cartelera(reg.getString("nombre"),reg.getString("id_cine"),reg.getInt("id_sala") ,fBuena, reg.getInt("duracion"),reg.getString("tipo")));
+            }
+            
+            this.cerrar();
+            
+        }catch(SQLException e){
+            
+            e.printStackTrace();          
+        }
+        
+        return v;
+        
+    }
     /**
      * @author Lucía Piñán Barberán y Daniel Molano Caraballo
      * 
