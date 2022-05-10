@@ -162,6 +162,4 @@ public class BD_LDF extends BD_Conector{
         return v;
         
     }
-    
-    
-}
+}  
