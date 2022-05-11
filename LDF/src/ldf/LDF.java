@@ -5,19 +5,22 @@
  */
 package ldf;
 
-import java.util.*;
-
 import bbdd.BD_LDF;
+import modulos.Usuario;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Vector;
 import java.util.regex.Pattern;
-import jdk.nashorn.internal.runtime.regexp.joni.Matcher;
-import modulos.*;
 
 /**
  *
  * @author Alvaro.p
  */
 public class LDF {
-
+    public static HashMap <String, Integer> descuentos = new HashMap<>();
     public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -196,6 +199,91 @@ public class LDF {
         Pattern pattern = Pattern.compile("^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$");
         java.util.regex.Matcher matcher = pattern.matcher(mail);
         return matcher.matches();
+    }
+
+
+    /**
+     * Carga en un HashMap los descuentos actuales, desde un fichero TXT
+     * @return Éxito o no en función de si la información se ha cargado correctamente
+     * Autor: Fer
+     */
+    public static boolean cargarDescuentosHashMap() {
+
+        try {
+            // Lee de archivo llamado "descuentos.txt" en la raíz del proyecto
+            FileReader entrada = new FileReader("./descuentos.txt");
+
+            //Creación BufferedReader
+            BufferedReader bfr = new BufferedReader(entrada);
+
+            String linea;
+            while ((linea = bfr.readLine()) != null) {
+
+                // Hago split por "," y almaceno tanto código como descuento en un String[]
+                String[] codigoYDescuento = linea.split(",");
+
+                //Lo cargo en un HashMap, parseo valor descuento a Integer para poder operar con él más tarde
+                descuentos.put(codigoYDescuento[0], Integer.valueOf(codigoYDescuento[1]));
+            }
+
+            bfr.close();
+            entrada.close();
+            return true;
+
+        } catch (FileNotFoundException fnf) {
+            System.out.println("Archivo no encontrado");
+        } catch (IOException ioe) {
+            System.out.println("InputOutput Exception");
+        }
+        return false;
+    }
+
+    /**
+     * Actualiza los descuentos del archivo descuentos.txt
+     * @return Éxito o no de la operación
+     * Autor: Fer
+     */
+    public static boolean cargarDescuentosTXT() {
+
+        try {
+            // Asigno el archivo que será actualizado
+            FileWriter salida = new FileWriter("./descuentos.txt");
+
+            // Objeto BufferedWriter para escribir en dicho fichero asignado como salida
+            BufferedWriter bfw = new BufferedWriter(salida);
+
+            for (Map.Entry<String, Integer> elemento : descuentos.entrySet()) {
+                // Escribo en el fichero código de descuento "," y valor del descuento en formato CSV("CÓDIGO,VALOR")
+                bfw.write(elemento.getKey() + "," + elemento.getValue().toString()+ "\n");
+            }
+
+            bfw.close();
+            salida.close();
+            return true;
+
+        }catch (IOException ioe) {
+            System.out.println("InputOutput exception");
+        }
+        return false;
+    }
+
+    /**
+     * Método que busca la cantidad de descuento (Integer) correspondiente a un código pasado por parámetro
+     * @param codDescuento Código de descuento en formato String
+     * @return Cantidad de descuento a aplicar o -1 en caso de no existir descuento
+     * Autor: Fer
+     */
+    public static int cantidadDescuento(String codDescuento) {
+
+        // Recorrer con bucle for each todos los elementos que se encuentran en el mapa
+        for (Map.Entry<String, Integer> elemento : descuentos.entrySet()) {
+            if (elemento.getKey().equalsIgnoreCase(codDescuento)) {
+                // En caso de existir match entre la Key y el código de descuento, devolvemos el valor
+                return elemento.getValue();
+            }
+        }
+        // Si no encuentra match ...
+        return -1;
     }
 
 }
