@@ -8,6 +8,7 @@ package ldf;
 import java.util.*;
 
 import bbdd.BD_LDF;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -26,7 +27,7 @@ public class LDF {
 
     public static void main(String[] args) {
         // TODO code application logic here
-        int opc1;
+        int opc1, opc2;
         String nombre1, apellidos1, nick1, correo1, pass1, resp1;
         LocalDate fh1;
         String nick2, pass2, passRet2;
@@ -156,6 +157,28 @@ public class LDF {
                         System.out.println("\nIntroduce 'No' si quieres volver a rellenar los datos");
 
                         resp1 = sc.nextLine();
+
+                        try {
+
+                            int filas1 = bd.añadirUsuario(u);
+
+                            switch (filas1) {
+
+                                case 1:
+
+                                    System.out.println("\nUsuario añadido con éxito");
+                                    break;
+
+                                case 2:
+
+                                    System.out.println("\nNo se ha podido añadir el usuario, contacte con soporte");
+
+                            }
+                        } catch (Exception e) {
+
+                            e.printStackTrace();
+                        }
+
                         limpiar();
 
                     } while (resp1.equalsIgnoreCase("no"));
@@ -176,13 +199,17 @@ public class LDF {
                         System.out.println("Introduzca su nick");
                         nick2 = sc.nextLine();
 
+                        if (nick2.equalsIgnoreCase("0")) {
+                            break;
+                        }
+
                         v1 = bd.listarCampoTablaString("USUARIOS", "nick");
 
                         flag2 = false;
 
                         for (int i = 0; i < v1.size(); i++) {
-                            if (nick2.equalsIgnoreCase(v1.get(i)) == true) {
-                                flag1 = true;
+                            if (nick2.equals(v1.get(i)) == true) {
+                                flag2 = true;
                             }
                         }
 
@@ -192,16 +219,24 @@ public class LDF {
 
                     } while (flag2 == false);
 
+                    if (nick2.equalsIgnoreCase("0")) {
+                        break;
+                    }
+
                     do {
                         System.out.println("Introduce tu contraseña");
                         pass2 = sc.nextLine();
+
+                        if (pass2.equalsIgnoreCase("0")) {
+                            break;
+                        }
 
                         passRet2 = bd.listarPassword(nick2);
 
                         flag2 = false;
 
-                        if (pass2.equalsIgnoreCase(passRet2) == true) {
-                            flag1 = true;
+                        if (pass2.equals(passRet2) == true) {
+                            flag2 = true;
                         }
 
                         if (flag2 == false) {
@@ -210,7 +245,34 @@ public class LDF {
 
                     } while (flag2 == false);
 
+                    if (pass2.equalsIgnoreCase("0")) {
+                        break;
+                    }
+
                     limpiar();
+                    
+                    if(nick2.equalsIgnoreCase("admin")){
+                        
+                        
+                    
+                    }else{
+                    
+                        do{
+                            System.out.println("#1. Ver perfil\n#2. Mirar entradas\n#3. Ver promociones\n#4. Ver historial\n#5. Ver cartelera\n#6. Comprar entradas\n#7. Mejorar a premium\n#8. Cerrar sesión");
+                            opc2 = sc.nextInt();
+                            
+                            switch(opc2){
+                            
+                                case 5:
+                                    limpiar();
+                                    cartelera();
+                                    break;
+                                
+                            }
+                        
+                        }while(opc2 != 8);
+                        
+                    }
 
                     break;
 
@@ -219,6 +281,7 @@ public class LDF {
                     break;
                 case 4:
 
+                    limpiar();
                     cartelera();
 
                     break;
@@ -249,7 +312,7 @@ public class LDF {
                 return true;
         else
             return false;*/
-        Pattern pattern = Pattern.compile("[a-zA-Z]");
+        Pattern pattern = Pattern.compile("[a-zA-Z ]*");
         java.util.regex.Matcher matcher = pattern.matcher(dato);
         return matcher.matches();
     }
@@ -287,67 +350,120 @@ public class LDF {
         return FechaAnotada;
     }
 
+    /**
+     * @author Lucía Piñán Barberán
+     */
     public static void cartelera() {
 
         int opc4;
         String nombre4;
         Vector<Cartelera> v4;
 
-        System.out.println("#1. Ver cartelera completa\n#2. Filtrar cartelera\n#3. Volver");
-        opc4 = sc.nextInt();
+        do {
 
-        switch (opc4) {
+            System.out.println("#1. Ver cartelera completa\n#2. Filtrar cartelera\n#3. Volver");
+            opc4 = sc.nextInt();
 
-            case 1:
+            switch (opc4) {
 
-                sc.nextLine();
+                case 1:
 
-                System.err.println(" ---- MOSTRANDO CARTELERA ----");
-                v4 = bd.listarCartelera();
+                    sc.nextLine();
 
-                for (int i = 0; i < v4.size(); i++) {
+                    System.err.println(" ---- MOSTRANDO CARTELERA ----");
+                    v4 = bd.listarCartelera();
 
-                    System.out.println(v4.get(i).toString());
+                    for (int i = 0; i < v4.size(); i++) {
 
-                }
+                        System.out.println(v4.get(i).toString());
 
-                break;
+                    }
 
-            case 2:
+                    break;
 
-                sc.nextLine();
+                case 2:
 
-                System.out.println("#1. FIltrar por NOMBRE\n#2. FIltrar por FECHA\n#3. FIltrar por TIPO\n#4. FIltrar por CINE\n#5. Salir");
-                opc4 = sc.nextInt();
+                    sc.nextLine();
 
-                switch (opc4) {
+                    System.out.println("#1. FIltrar por NOMBRE\n#2. FIltrar por FECHA\n#3. FIltrar por TIPO\n#4. FIltrar por CINE\n#5. Salir");
+                    opc4 = sc.nextInt();
 
-                    case 1:
-                        
-                        System.out.println("Introduce el nombre de la película");
-                        nombre4 = sc.nextLine();
+                    switch (opc4) {
 
-                        v4 = bd.listarCarteleraFiltrada(nombre4, "nombre");
+                        case 1:
 
-                        for (int i = 0; i < v4.size(); i++) {
+                            sc.nextLine();
 
-                            System.out.println(v4.get(i).toString());
+                            System.out.println("Introduce el nombre de la película");
+                            nombre4 = sc.nextLine();
 
-                        }
+                            v4 = bd.listarCarteleraFiltrada(nombre4, "nombre");
 
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
+                            for (int i = 0; i < v4.size(); i++) {
 
-                }
+                                System.out.println(v4.get(i).toString());
 
-                break;
+                            }
 
-        }
+                            break;
+                        case 2:
+
+                            sc.nextLine();
+
+                            System.out.println("Introduce la fecha de la película");
+                            nombre4 = sc.nextLine();
+
+                            v4 = bd.listarCarteleraFiltrada(nombre4, "fecha_hora");
+
+                            for (int i = 0; i < v4.size(); i++) {
+
+                                System.out.println(v4.get(i).toString());
+
+                            }
+
+                            break;
+                        case 3:
+
+                            sc.nextLine();
+
+                            System.out.println("Introduce la versión de la película");
+                            nombre4 = sc.nextLine();
+
+                            v4 = bd.listarCarteleraFiltrada(nombre4, "tipo");
+
+                            for (int i = 0; i < v4.size(); i++) {
+
+                                System.out.println(v4.get(i).toString());
+
+                            }
+
+                            break;
+
+                        case 4:
+
+                            sc.nextLine();
+
+                            bd.listarCines();
+
+                            System.out.println("Introduce el ID del cine donde quieres ver la película");
+                            nombre4 = sc.nextLine();
+
+                            v4 = bd.listarCarteleraFiltrada(nombre4, "id_cine");
+
+                            for (int i = 0; i < v4.size(); i++) {
+
+                                System.out.println(v4.get(i).toString());
+
+                            }
+
+                            break;
+
+                    }
+
+            }
+        } while (opc4 != 3);
+
+        limpiar();
 
     }
 

@@ -78,6 +78,13 @@ public class Cartelera {
     public void setDuracion(int duracion) {
         this.duracion = duracion;
     }
+
+    @Override
+    public String toString() {
+        return "Cartelera{" + "nombre=" + nombre + ", id_cine=" + id_cine + ", id_sala=" + id_sala + ", fecha_hora=" + fecha_hora + ", duracion=" + duracion + ", tipo=" + tipo + '}';
+    }
+    
+    
     
     
 }
