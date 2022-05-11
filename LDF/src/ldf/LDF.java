@@ -34,6 +34,8 @@ public class LDF {
         Boolean flag1, flag2;
 
         System.err.println("Bienvenido a LDF");
+        
+        System.out.println("TEsteo cambios");
 
         do {
 
