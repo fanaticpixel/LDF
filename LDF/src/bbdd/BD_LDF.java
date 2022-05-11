@@ -31,7 +31,7 @@ public class BD_LDF extends BD_Conector{
      */
     public Vector<Cartelera> listarCartelera(){
     
-        String cadenaSQL="SELECT * FROM Cartelera";
+        String cadenaSQL="SELECT * FROM CARTELERA";
         Vector<Cartelera> v = new Vector<Cartelera>();
         
         try{
@@ -232,6 +232,32 @@ public class BD_LDF extends BD_Conector{
         }
         
         return v;
+        
+    }
+    
+    
+    public void listarCines(){
+    
+        String cadenaSQL="SELECT id_cine, nombre, direccion FROM CINES";
+        
+        try{
+        
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+            
+            while(reg.next()){
+
+                System.out.println("ID_CINE: " + reg.getString("id_cine") + " NOMBRE: " + reg.getString("nombre") + " DIRECCION: " + reg.getString("direccion"));
+                
+            }
+            
+            this.cerrar();
+            
+        }catch(SQLException e){
+            
+            e.printStackTrace();          
+        }
         
     }
 }  
