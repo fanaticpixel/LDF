@@ -64,9 +64,10 @@ public class BD_LDF extends BD_Conector{
      * 
      * @return 
      */
-    public Vector<Cartelera> listarCarteleraFiltrada(String tabla, String campo){
+    public Vector<Cartelera> listarCarteleraFiltrada(String dato, String campo){
     
-        String cadenaSQL="SELECT * FROM CARTELERA WHERE ? LIKE  ?";
+        String data = "%" + dato + "%";
+        String cadenaSQL="SELECT * FROM CARTELERA WHERE " + campo + " LIKE  ?";
         Vector<Cartelera> v = new Vector<Cartelera>();
         
         try{
@@ -74,8 +75,7 @@ public class BD_LDF extends BD_Conector{
             this.abrir();
             ps=c.prepareStatement(cadenaSQL);
             
-            ps.setString(1, campo);
-            ps.setString(2, tabla);
+            ps.setString(1, data);
             
             reg = ps.executeQuery();
             

@@ -290,6 +290,7 @@ public class LDF {
     public static void cartelera() {
 
         int opc4;
+        String nombre4;
         Vector<Cartelera> v4;
 
         System.out.println("#1. Ver cartelera completa\n#2. Filtrar cartelera\n#3. Volver");
@@ -319,9 +320,21 @@ public class LDF {
                 System.out.println("#1. FIltrar por NOMBRE\n#2. FIltrar por FECHA\n#3. FIltrar por TIPO\n#4. FIltrar por CINE\n#5. Salir");
                 opc4 = sc.nextInt();
 
-                switch(opc4){
-                
+                switch (opc4) {
+
                     case 1:
+                        
+                        System.out.println("Introduce el nombre de la película");
+                        nombre4 = sc.nextLine();
+
+                        v4 = bd.listarCarteleraFiltrada(nombre4, "nombre");
+
+                        for (int i = 0; i < v4.size(); i++) {
+
+                            System.out.println(v4.get(i).toString());
+
+                        }
+
                         break;
                     case 2:
                         break;
@@ -329,8 +342,7 @@ public class LDF {
                         break;
                     case 4:
                         break;
-                
-                
+
                 }
 
                 break;
