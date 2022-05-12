@@ -254,6 +254,6 @@ public class Colorinchis {
                 contador = 0;
             }
         }
-        return String.join("", letras);
+        return String.join("", letras) + "\u001B[0m";
     }
 }

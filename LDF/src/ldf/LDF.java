@@ -39,9 +39,10 @@ public class LDF {
         System.out.println(Colorinchis.rainbow ("--------------------------------------------------"));
         System.out.println(Colorinchis.blue("|                Bienvenido a LDF                |" ));
         System.out.println(Colorinchis.rainbow ("--------------------------------------------------"));
+        
         do {
 
-            System.out.println("\nIntroduzca opción:    ");
+            System.out.println(Colorinchis.purple("\nIntroduzca opción:    "));
             System.out.println("\n#1. Registrarse\n#2. Iniciar Sesión\n#3. Comprar entradas\n#4. Ver cartelera\n#5. Salir");
             opc1 = sc.nextInt();
 
