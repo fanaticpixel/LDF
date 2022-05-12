@@ -317,5 +317,27 @@ public class BD_LDF extends BD_Conector {
 
         return -1;
     }
+    
+    public int cambiarNick(String newNick, String oldNick) {
+
+        String cadenaSQL = "UPDATE USUARIOS SET NICK = '" + newNick +"' WHERE NICK = '" + oldNick + "'";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            int filas=s.executeUpdate(cadenaSQL);
+            s.close();
+            this.cerrar();
+            return filas;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return -1;
+        
+    }
 
 }
