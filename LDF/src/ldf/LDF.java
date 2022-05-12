@@ -36,10 +36,6 @@ public class LDF {
         Boolean flag1, flag2;
 
         System.out.println("Bienvenido a LDF");
-        
-        System.out.println("asdfasdfa");  
-        
-        System.out.println("asjdnfasdkjf");
 
         do {
 
