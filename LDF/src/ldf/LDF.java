@@ -5,16 +5,18 @@
  */
 package ldf;
 
-import java.util.*;
-
+import Colores.Colorinchis;
 import bbdd.BD_LDF;
-import java.sql.SQLException;
+import modulos.Cartelera;
+import modulos.Descuentos;
+import modulos.Usuario;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Scanner;
+import java.util.Vector;
 import java.util.regex.Pattern;
-import jdk.nashorn.internal.runtime.regexp.joni.Matcher;
-import modulos.*;
 
 /**
  *
@@ -34,7 +36,7 @@ public class LDF {
         Vector<String> v1;
         Boolean flag1, flag2;
 
-        System.err.println("Bienvenido a LDF");
+        System.out.println(Colorinchis.blue("Bienvenido a LDF"));
 
         do {
 
