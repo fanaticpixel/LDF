@@ -19,6 +19,7 @@ public class Usuario {
     private LocalDate fecha_nac;
     private String correo;
     private String contraseña;
+    private boolean premium;
 
     public Usuario(String nombre, String apellidos, String nick, LocalDate fecha_nac, String correo, String contraseña) {
         this.nombre = nombre;
@@ -27,6 +28,7 @@ public class Usuario {
         this.fecha_nac = fecha_nac;
         this.correo = correo;
         this.contraseña = contraseña;
+        this.premium = false;
     }
 
     public String getNombre() {

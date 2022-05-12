@@ -299,7 +299,7 @@ public class BD_LDF extends BD_Conector {
 
         String cadenaSQL = "INSERT INTO USUARIOS VALUES('" + u.getNick() + "','"
                 + u.getNombre() + "','" + u.getApellidos() + "','" + u.getCorreo()
-                + "','" + u.getContraseña() + "','" + u.getFecha_nac() + "')";
+                + "','" + u.getContraseña() + "','" + u.getFecha_nac() + "', '0')";
 
         try {
 

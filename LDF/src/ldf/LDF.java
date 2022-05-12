@@ -35,10 +35,10 @@ public class LDF {
         String nick2, pass2, passRet2;
         Vector<String> v1;
         Boolean flag1, flag2;
-        
-        System.out.println(Colorinchis.rainbow ("--------------------------------------------------"));
-        System.out.println(Colorinchis.blue("|                Bienvenido a LDF                |" ));
-        System.out.println(Colorinchis.rainbow ("--------------------------------------------------"));
+
+        System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
+        System.out.println(Colorinchis.blue("|                Bienvenido a LDF                |"));
+        System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
         do {
 
             System.out.println("\nIntroduzca opción:    ");
@@ -276,12 +276,16 @@ public class LDF {
                                         opc2 = sc.nextInt();
 
                                         sc.nextLine();
+                                        limpiar();
 
                                         switch (opc2) {
+
                                             case 1:
+
                                                 do {
 
-                                                    System.out.println("¿Que desea modificar?\n" + "#1. Modificar Nick\n #2. Modificar Contraseñas\n #3. Volver");
+                                                    bd.listarUser(nick2);
+                                                    System.out.println("¿Que desea modificar?\n" + "#1. Modificar Nick\n#2. Modificar Contraseñas\n#3. Volver");
                                                     opc2 = sc.nextInt();
 
                                                     switch (opc2) {
@@ -302,7 +306,12 @@ public class LDF {
                                                                     if (newNick.equalsIgnoreCase(v1.get(i)) == true) {
                                                                         flag1 = true;
                                                                         System.out.println("El nick introducido ( " + newNick + " ) ya pertenece a un usuario registrado");
+                                                                        break;
                                                                     }
+                                                                }
+
+                                                                if (flag1 == true) {
+                                                                    continue;
                                                                 }
 
                                                                 try {
@@ -313,7 +322,7 @@ public class LDF {
 
                                                                         case 1:
 
-                                                                            System.out.println("\nUsuario añadido con éxito");
+                                                                            System.out.println("\nUsuario modificado con éxito");
                                                                             break;
 
                                                                         case 2:
@@ -335,10 +344,59 @@ public class LDF {
                                                             break;
 
                                                         case 2:
+
+                                                            limpiar();
+                                                            sc.nextLine();
+
+                                                            do {
+                                                                System.out.println("Introduce un nuevo nick");
+                                                                String newNick = sc.nextLine();
+
+                                                                v1 = bd.listarCampoTablaString("USUARIOS", "nick");
+
+                                                                flag1 = false;
+
+                                                                for (int i = 0; i < v1.size(); i++) {
+                                                                    if (newNick.equalsIgnoreCase(v1.get(i)) == true) {
+                                                                        flag1 = true;
+                                                                        System.out.println("El nick introducido ( " + newNick + " ) ya pertenece a un usuario registrado");
+                                                                        break;
+                                                                    }
+                                                                }
+
+                                                                if (flag1 == true) {
+                                                                    continue;
+                                                                }
+
+                                                                try {
+
+                                                                    int filas1 = bd.cambiarNick(newNick, nick2);
+
+                                                                    switch (filas1) {
+
+                                                                        case 1:
+
+                                                                            System.out.println("\nUsuario modificado con éxito");
+                                                                            break;
+
+                                                                        case 2:
+
+                                                                            System.out.println("\nNo se ha podido añadir el usuario, contacte con soporte");
+
+                                                                    }
+                                                                } catch (Exception e) {
+
+                                                                    e.printStackTrace();
+                                                                }
+
+                                                                limpiar();
+
+                                                                nick2 = newNick;
+
+                                                            } while (flag1 == true);
+
                                                             break;
 
-                                                        default:
-                                                            System.out.println("La opción introducida no es correcta");
                                                     }
 
                                                 } while (opc2 != 3);
