@@ -35,9 +35,10 @@ public class LDF {
         String nick2, pass2, passRet2;
         Vector<String> v1;
         Boolean flag1, flag2;
-
-        System.out.println("Bienvenido a LDF");
-
+        
+        System.out.println(Colorinchis.rainbow ("--------------------------------------------------"));
+        System.out.println(Colorinchis.blue("|                Bienvenido a LDF                |" ));
+        System.out.println(Colorinchis.rainbow ("--------------------------------------------------"));
         do {
 
             System.out.println("\nIntroduzca opción:    ");
