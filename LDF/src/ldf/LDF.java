@@ -5,6 +5,7 @@
  */
 package ldf;
 
+import Estilos.Colorinchis;
 import bbdd.BD_LDF;
 import modulos.Cartelera;
 import modulos.Descuentos;
@@ -269,31 +270,52 @@ public class LDF {
                                         limpiar();
 
                                         bd.listarUser(nick2);
-                                        
+
                                         System.out.println("#1. Modificar información\n#2. Cerrar sesión\n#3. Salir");
                                         opc2 = sc.nextInt();
-                                        
+
                                         sc.nextLine();
-                                        
+
                                         switch (opc2) {
                                             case 1:
-                                                do{
-                                                    
-                                                System.out.println("¿Que desea modificar?\n" + "#1. Modificar Nick\n #2. Modificar Contraseñas\n #3. Volver");
-                                                opc2 = sc.nextInt();
-                                                
-                                                switch (opc2){
-                                                    case 1:
-                                                        break;
-                                                        
-                                                    case 2:
-                                                        break;
-                                                        
-                                                    default:
-                                                        System.out.println("La opción introducida no es correcta");
-                                                }
-                                                
-                                                }while(opc2 != 3);
+                                                do {
+
+                                                    System.out.println("¿Que desea modificar?\n" + "#1. Modificar Nick\n #2. Modificar Contraseñas\n #3. Volver");
+                                                    opc2 = sc.nextInt();
+
+                                                    switch (opc2) {
+                                                        case 1:
+
+                                                            limpiar();
+                                                            sc.nextLine();
+
+                                                            do {
+                                                                System.out.println("Introduce un nuevo nick");
+                                                                String newNick = sc.nextLine();
+
+                                                                v1 = bd.listarCampoTablaString("USUARIOS", "nick");
+
+                                                                flag1 = false;
+
+                                                                for (int i = 0; i < v1.size(); i++) {
+                                                                    if (newNick.equalsIgnoreCase(v1.get(i)) == true) {
+                                                                        flag1 = true;
+                                                                        System.out.println("El nick introducido ( " + newNick + " ) ya pertenece a un usuario registrado");
+                                                                    }
+                                                                }
+
+                                                            } while (flag1 == true);
+
+                                                            break;
+
+                                                        case 2:
+                                                            break;
+
+                                                        default:
+                                                            System.out.println("La opción introducida no es correcta");
+                                                    }
+
+                                                } while (opc2 != 3);
                                                 break;
                                             case 2:
                                                 break;
@@ -301,7 +323,7 @@ public class LDF {
                                             default:
                                                 System.out.println("La opción introducida no es correcta");
                                         }
-                                        
+
                                     } while (opc2 != 3);
                                     break;
 
