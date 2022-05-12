@@ -407,6 +407,14 @@ public class LDF {
                                     break;
                                     
                                 case 6:
+                                    
+                                    System.out.println("Ventajas de ser premium:    ");
+                                    System.out.println("#1. Si no te gusta la película, te devolvemos la entrada");
+                                    System.out.println("#2. Descuentos de un 20% en el precio de tus entradas");
+                                    System.out.println("#3. Trato exclusivo y personalizado\n");
+                                    System.out.println("#4. Sistema de puntos (No implementado todavía)");
+                                    
+                                    System.out.println("Pago domicilado (SEPA) de 5€ mensuales");
                                     break;
 
                             }

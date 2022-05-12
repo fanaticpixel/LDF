@@ -79,6 +79,14 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
+    public boolean isPremium() {
+        return premium;
+    }
+
+    public void setPremium(boolean premium) {
+        this.premium = premium;
+    }
+
     @Override
     public String toString() {
         return "----- ¿Son los datos correctos?" + "\nNombre:    " + nombre + "\nApellidos:  " + apellidos + "\nNick:    " + nick + "\nFecha de nacimiento:  " + fecha_nac + "\nCorreo:  " + correo + "\n";
