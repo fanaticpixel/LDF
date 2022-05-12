@@ -304,6 +304,31 @@ public class LDF {
                                                                     }
                                                                 }
 
+                                                                try {
+
+                                                                    int filas1 = bd.cambiarNick(newNick, nick2);
+
+                                                                    switch (filas1) {
+
+                                                                        case 1:
+
+                                                                            System.out.println("\nUsuario añadido con éxito");
+                                                                            break;
+
+                                                                        case 2:
+
+                                                                            System.out.println("\nNo se ha podido añadir el usuario, contacte con soporte");
+
+                                                                    }
+                                                                } catch (Exception e) {
+
+                                                                    e.printStackTrace();
+                                                                }
+
+                                                                limpiar();
+
+                                                                nick2 = newNick;
+
                                                             } while (flag1 == true);
 
                                                             break;
