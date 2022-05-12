@@ -250,28 +250,57 @@ public class LDF {
                     }
 
                     limpiar();
-                    
-                    if(nick2.equalsIgnoreCase("admin")){
-                        
-                        
-                    
-                    }else{
-                    
-                        do{
-                            System.out.println("#1. Ver perfil\n#2. Mirar entradas\n#3. Ver promociones\n#4. Ver historial\n#5. Ver cartelera\n#6. Comprar entradas\n#7. Mejorar a premium\n#8. Cerrar sesión");
+
+                    if (nick2.equalsIgnoreCase("admin")) {
+
+                    } else {
+
+                        do {
+                            System.out.println("#1. Ver perfil\n#2. Mirar entradas\n#3. Ver promociones\n#4. Ver cartelera\n#5. Comprar entradas\n#6. Mejorar a premium\n#7. Cerrar sesión");
                             opc2 = sc.nextInt();
-                            
-                            switch(opc2){
-                            
-                                case 5:
+
+                            switch (opc2) {
+                                case 1:
+
+                                    do {
+
+                                        sc.nextLine();
+                                        limpiar();
+
+                                        bd.listarUser(nick2);
+                                        
+                                        System.out.println("#1. Modificar información\n#2. Cerrar sesión\n#3. Salir");
+                                        opc2 = sc.nextInt();
+                                        
+                                        sc.nextLine();
+                                        
+                                        switch (opc2) {
+                                            case 1:
+                                                
+                                                break;
+                                            case 2:
+                                                break;
+
+                                            default:
+                                                System.out.println("La opción introducida no es correcta");
+                                        }
+                                        
+                                    } while (opc2 != 3);
+                                    break;
+
+                                case 3:
+                                    Descuentos.mostrarDescuentosActuales();
+                                    break;
+
+                                case 4:
                                     limpiar();
                                     cartelera();
                                     break;
-                                
+
                             }
-                        
-                        }while(opc2 != 8);
-                        
+
+                        } while (opc2 != 7);
+
                     }
 
                     break;
@@ -369,8 +398,9 @@ public class LDF {
                 case 1:
 
                     sc.nextLine();
+                    limpiar();
 
-                    System.err.println(" ---- MOSTRANDO CARTELERA ----");
+                    System.err.println("                                                             ---- MOSTRANDO CARTELERA ----\n");
                     v4 = bd.listarCartelera();
 
                     for (int i = 0; i < v4.size(); i++) {
@@ -382,84 +412,88 @@ public class LDF {
                     break;
 
                 case 2:
-
                     sc.nextLine();
+                    limpiar();
+                    do {
+                        System.out.println("#1. Filtrar por NOMBRE\n#2. Filtrar por FECHA\n#3. Filtrar por TIPO\n#4. Filtrar por CINE\n#5. Salir");
+                        opc4 = sc.nextInt();
 
-                    System.out.println("#1. FIltrar por NOMBRE\n#2. FIltrar por FECHA\n#3. FIltrar por TIPO\n#4. FIltrar por CINE\n#5. Salir");
-                    opc4 = sc.nextInt();
+                        switch (opc4) {
 
-                    switch (opc4) {
+                            case 1:
 
-                        case 1:
+                                sc.nextLine();
+                                limpiar();
 
-                            sc.nextLine();
+                                System.out.println("Introduce el nombre de la película");
+                                nombre4 = sc.nextLine();
 
-                            System.out.println("Introduce el nombre de la película");
-                            nombre4 = sc.nextLine();
+                                v4 = bd.listarCarteleraFiltrada(nombre4, "nombre");
 
-                            v4 = bd.listarCarteleraFiltrada(nombre4, "nombre");
+                                for (int i = 0; i < v4.size(); i++) {
 
-                            for (int i = 0; i < v4.size(); i++) {
+                                    System.out.println(v4.get(i).toString());
 
-                                System.out.println(v4.get(i).toString());
+                                }
 
-                            }
+                                break;
+                            case 2:
 
-                            break;
-                        case 2:
+                                sc.nextLine();
+                                limpiar();
 
-                            sc.nextLine();
+                                System.out.println("Introduce la fecha de la película");
+                                nombre4 = sc.nextLine();
 
-                            System.out.println("Introduce la fecha de la película");
-                            nombre4 = sc.nextLine();
+                                v4 = bd.listarCarteleraFiltrada(nombre4, "fecha_hora");
 
-                            v4 = bd.listarCarteleraFiltrada(nombre4, "fecha_hora");
+                                for (int i = 0; i < v4.size(); i++) {
 
-                            for (int i = 0; i < v4.size(); i++) {
+                                    System.out.println(v4.get(i).toString());
 
-                                System.out.println(v4.get(i).toString());
+                                }
 
-                            }
+                                break;
+                            case 3:
 
-                            break;
-                        case 3:
+                                sc.nextLine();
+                                limpiar();
 
-                            sc.nextLine();
+                                System.out.println("Introduce la versión de la película");
+                                nombre4 = sc.nextLine();
 
-                            System.out.println("Introduce la versión de la película");
-                            nombre4 = sc.nextLine();
+                                v4 = bd.listarCarteleraFiltrada(nombre4, "tipo");
 
-                            v4 = bd.listarCarteleraFiltrada(nombre4, "tipo");
+                                for (int i = 0; i < v4.size(); i++) {
 
-                            for (int i = 0; i < v4.size(); i++) {
+                                    System.out.println(v4.get(i).toString());
 
-                                System.out.println(v4.get(i).toString());
+                                }
 
-                            }
+                                break;
 
-                            break;
+                            case 4:
 
-                        case 4:
+                                sc.nextLine();
+                                limpiar();
 
-                            sc.nextLine();
+                                System.out.println("CINES: \n");
+                                bd.listarCines();
 
-                            bd.listarCines();
+                                System.out.println("Introduce el ID del cine donde quieres ver la película");
+                                nombre4 = sc.nextLine();
 
-                            System.out.println("Introduce el ID del cine donde quieres ver la película");
-                            nombre4 = sc.nextLine();
+                                v4 = bd.listarCarteleraFiltrada(nombre4, "id_cine");
 
-                            v4 = bd.listarCarteleraFiltrada(nombre4, "id_cine");
+                                for (int i = 0; i < v4.size(); i++) {
 
-                            for (int i = 0; i < v4.size(); i++) {
+                                    System.out.println(v4.get(i).toString());
 
-                                System.out.println(v4.get(i).toString());
+                                }
 
-                            }
-
-                            break;
-
-                    }
-
+                                break;
+                        }
+                    } while (opc4 != 5);
             }
         } while (opc4 != 3);
 

@@ -81,7 +81,7 @@ public class Cartelera {
 
     @Override
     public String toString() {
-        return "Cartelera{" + "nombre=" + nombre + ", id_cine=" + id_cine + ", id_sala=" + id_sala + ", fecha_hora=" + fecha_hora + ", duracion=" + duracion + ", tipo=" + tipo + '}';
+        return "NOMBRE: " + nombre + "      ID_CINE: " + id_cine + "        SALA: " + id_sala + "       SESIÓN: " + fecha_hora + "      DURACION: " + duracion + "      VERSIÓN: " + tipo + "\n";
     }
     
     

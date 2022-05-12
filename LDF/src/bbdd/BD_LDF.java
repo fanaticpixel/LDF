@@ -212,7 +212,7 @@ public class BD_LDF extends BD_Conector {
     public String listarPassword(String nick) {
 
         String dato = "'%" + nick + "%'";
-        String cadenaSQL = "SELECT contraseña FROM USUARIOS WHERE nick like " + dato;
+        String cadenaSQL = "SELECT contrasena FROM USUARIOS WHERE nick like " + dato;
         String v = "";
 
         try {
@@ -237,6 +237,37 @@ public class BD_LDF extends BD_Conector {
         return v;
 
     }
+    
+    public void listarUser(String nick) {
+
+        String dato = "'%" + nick + "%'";
+        String cadenaSQL = "SELECT * FROM USUARIOS WHERE nick like " + dato;
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+
+            
+            
+            while (reg.next()) {
+                java.sql.Date f = reg.getDate("fecha_nacimiento");
+                LocalDate fBuena = f.toLocalDate();
+                
+                 System.out.println("NICK: " + reg.getString("nick") + "       NOMBRE: " + reg.getString("nombre") + 
+                         "       APELLIDOS: " + reg.getString("apellidos") +  "       CORREO: " + reg.getString("correo") + 
+                         "       FECHA DE NACIMIENTO: " + fBuena + "        PREMIUM: "+reg.getBoolean("premium") + "\n");
+            }
+
+            this.cerrar();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+    }
 
     public void listarCines() {
 
@@ -250,7 +281,8 @@ public class BD_LDF extends BD_Conector {
 
             while (reg.next()) {
 
-                System.out.println("ID_CINE: " + reg.getString("id_cine") + " NOMBRE: " + reg.getString("nombre") + " DIRECCION: " + reg.getString("direccion"));
+                System.out.println("ID_CINE: " + reg.getString("id_cine") + "       NOMBRE: " + reg.getString("nombre") 
+                        + "       DIRECCION: " + reg.getString("direccion") + "\n");
 
             }
 
