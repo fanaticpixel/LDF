@@ -294,6 +294,37 @@ public class BD_LDF extends BD_Conector {
         }
 
     }
+    
+    public void listarEntradasUsuario(String nick) {
+
+        String cadenaSQL = "SELECT * FROM ENTRADAS where NICK = '" + nick +"'";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+
+            while (reg.next()) {
+                
+                java.sql.Date f = reg.getDate("FECHA_HORA");
+                LocalDate fBuena = f.toLocalDate();
+
+                System.out.println("NICK: " + reg.getString("NICK") + "       ID_CINE: " + reg.getString("ID_CINE") 
+                        + "       ID_SALA: " + reg.getInt("ID_SALA")+ "       NOMBRE: " + reg.getString("NOMBRE")
+                        + "       NUM_FILA: " + reg.getInt("NUM_FILA") + "       NUM_BUTACA: " + reg.getInt("NUM_BUTACA")
+                        + "       SESION: " + fBuena + "       PRECIO: " + reg.getDouble("PRECIO") + "\n");
+
+            }
+
+            this.cerrar();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+    }
 
     public int añadirUsuario(Usuario u) {
 
@@ -321,6 +352,29 @@ public class BD_LDF extends BD_Conector {
     public int cambiarNick(String newNick, String oldNick) {
 
         String cadenaSQL = "UPDATE USUARIOS SET NICK = '" + newNick +"' WHERE NICK = '" + oldNick + "'";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            int filas=s.executeUpdate(cadenaSQL);
+            s.close();
+            this.cerrar();
+            return filas;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return -1;
+        
+    }
+    
+    
+    public int cambiarContrasena(String newPass, String Nick) {
+
+        String cadenaSQL = "UPDATE USUARIOS SET CONTRASENA = '" + newPass +"' WHERE NICK = '" + Nick + "'";
 
         try {
 
