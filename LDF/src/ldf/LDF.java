@@ -276,7 +276,23 @@ public class LDF {
                                         
                                         switch (opc2) {
                                             case 1:
+                                                do{
+                                                    
+                                                System.out.println("¿Que desea modificar?\n" + "#1. Modificar Nick\n #2. Modificar Contraseñas\n #3. Volver");
+                                                opc2 = sc.nextInt();
                                                 
+                                                switch (opc2){
+                                                    case 1:
+                                                        break;
+                                                        
+                                                    case 2:
+                                                        break;
+                                                        
+                                                    default:
+                                                        System.out.println("La opción introducida no es correcta");
+                                                }
+                                                
+                                                }while(opc2 != 3);
                                                 break;
                                             case 2:
                                                 break;
