@@ -73,6 +73,16 @@ public class Descuentos {
         return false;
     }
 
+    public static void mostrarDescuentosActuales () {
+        descuentos.clear();
+        Descuentos.cargarDescuentosHashMap();
+        System.out.println("\u001B[31m Los descuentos actuales son:");
+
+        for (Map.Entry<String, Integer> descuento : descuentos.entrySet()) {
+            System.out.println("\u001B[34m Código: " + "\u001B[35m" + descuento.getKey() + " => " + "\u001B[33m" +descuento.getValue() + "% \u001B[0m"); // Reset color por defecto
+        }
+    }
+
     /**
      * Método que busca la cantidad de descuento (Integer) correspondiente a un código pasado por parámetro
      * @param codDescuento Código de descuento en formato String
