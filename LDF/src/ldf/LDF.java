@@ -5,7 +5,6 @@
  */
 package ldf;
 
-import Colores.Colorinchis;
 import bbdd.BD_LDF;
 import modulos.Cartelera;
 import modulos.Descuentos;
@@ -36,7 +35,7 @@ public class LDF {
         Vector<String> v1;
         Boolean flag1, flag2;
 
-        System.out.println(Colorinchis.blue("Bienvenido a LDF"));
+        System.out.println("Bienvenido a LDF");
 
         do {
 
