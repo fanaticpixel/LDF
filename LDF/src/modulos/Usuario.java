@@ -5,6 +5,7 @@
  */
 package modulos;
 
+import Estilos.Colorinchis;
 import java.time.LocalDate;
 
 /**
@@ -81,7 +82,8 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "----- ¿Son los datos correctos?" + "\nNombre:    " + nombre + "\nApellidos:  " + apellidos + "\nNick:    " + nick + "\nFecha de nacimiento:  " + fecha_nac + "\nCorreo:  " + correo + "\n";
+        return "¿Son los datos correctos?" +"\n"+ Colorinchis.purple("\nNombre:    ") + nombre + Colorinchis.purple("\nApellidos:  ") + apellidos + Colorinchis.purple("\nNick:    ") + nick + Colorinchis.purple("\nFecha de nacimiento:  ") + fecha_nac + 
+                Colorinchis.purple("\nCorreo:  ") + correo + "\n";
     }
     
     
