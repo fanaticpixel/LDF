@@ -6,10 +6,12 @@
 package bbdd;
 
 import Estilos.Colorinchis;
+import modulos.Cartelera;
+import modulos.Usuario;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Vector;
-import modulos.*;
 
 /**
  *
@@ -396,6 +398,37 @@ public class BD_LDF extends BD_Conector {
 
         return -1;
         
+    }
+
+    /* FUNCIONES ADMIN */
+
+    public void Admin_listarUsuarios() {
+
+        String cadenaSQL = "SELECT * FROM USUARIOS";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+
+
+
+            while (reg.next()) {
+                java.sql.Date f = reg.getDate("fecha_nacimiento");
+                LocalDate fBuena = f.toLocalDate();
+
+                System.out.println(Colorinchis.purple("NICK: ") + reg.getString("nick") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre") +
+                        Colorinchis.purple("       APELLIDOS: ") + reg.getString("apellidos") +  Colorinchis.purple("       CORREO: ") + reg.getString("correo") +
+                        Colorinchis.purple("       FECHA DE NACIMIENTO: ") + fBuena + Colorinchis.purple("        PREMIUM: ") +reg.getBoolean("premium") + "\n");
+            }
+
+            this.cerrar();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
     }
 
 }

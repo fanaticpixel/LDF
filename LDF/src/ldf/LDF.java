@@ -28,7 +28,7 @@ public class LDF {
     public static BD_LDF bd = new BD_LDF("LDF");
 
     public static void main(String[] args) {
-        // TODO code application logic here
+
         int opc1, opc2;
         String nombre1, apellidos1, nick1, correo1, pass1, resp1;
         LocalDate fh1;
@@ -258,6 +258,40 @@ public class LDF {
                     limpiar();
 
                     if (nick2.equalsIgnoreCase("admin")) {
+                        int opcAdmin;
+                        int opcAdmin2;
+
+                        do {
+                            limpiar();
+                            m_admin();
+                            opcAdmin = sc.nextInt();
+                            sc.nextLine();
+
+                            switch (opcAdmin) {
+                                case 0:
+                                    break;
+                                case 1:
+                                    limpiar();
+                                    m_admin_ges();
+                                    opcAdmin2 = sc.nextInt();
+                                    sc.nextLine();
+                                    switch(opcAdmin2){
+                                        case 1:
+                                            break;
+                                        case 2:
+                                            break;
+                                        case 3:
+                                            limpiar();
+                                            String nombreUsu;
+                                            System.out.println("Que usuario deseas modificar? ");
+                                            bd.Admin_listarUsuarios();
+                                            nombreUsu = sc.nextLine();
+
+                                            break;
+                                    }
+                            }
+                        }while(opcAdmin != 5);
+
 
                     } else {
 
@@ -678,4 +712,23 @@ public class LDF {
 
     }
 
+
+    /* MENUS ADMINISTRADOR */
+    /* Autor : Fer */
+    public static void m_admin() {
+        System.out.println(Colorinchis.blue("Bienvenido Bruce:\n") +
+                Colorinchis.red("#1. ") + "Gestionar usuarios\n" +
+                Colorinchis.red("#2. ") + "Modificar entradas\n" +
+                Colorinchis.red("#3. ") + "Modificar cartelera\n" +
+                Colorinchis.red("#4. ") + "Modificar promociones\n" +
+                Colorinchis.red("#5. ") + "Volver");;
+    }
+
+    public static void m_admin_ges() {
+        System.out.println(Colorinchis.blue("Bienvenido Bruce:\n") +
+                Colorinchis.red("#1. ") + "Alta usuario\n" +
+                Colorinchis.red("#2. ") + "Baja usuario\n" +
+                Colorinchis.red("#3. ") + "Modificar usuario\n" +
+                Colorinchis.red("#0. ") + "Volver");;
+    }
 }
