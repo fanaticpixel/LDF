@@ -352,66 +352,53 @@ public class LDF {
                                                             limpiar();
                                                             sc.nextLine();
 
-                                                            do {
-                                                                System.out.println("Introduce un nuevo nick");
-                                                                String newNick = sc.nextLine();
+                                                            System.out.println("Introduce una nueva contraseña");
+                                                            String newPass = sc.nextLine();
 
-                                                                v1 = bd.listarCampoTablaString("USUARIOS", "nick");
+                                                            try {
 
-                                                                flag1 = false;
+                                                                int filas1 = bd.cambiarContrasena(newPass, nick2);
 
-                                                                for (int i = 0; i < v1.size(); i++) {
-                                                                    if (newNick.equalsIgnoreCase(v1.get(i)) == true) {
-                                                                        flag1 = true;
-                                                                        System.out.println("El nick introducido ( " + newNick + " ) ya pertenece a un usuario registrado");
+                                                                switch (filas1) {
+
+                                                                    case 1:
+
+                                                                        System.out.println("\nUsuario modificado con éxito");
                                                                         break;
-                                                                    }
+
+                                                                    case 2:
+
+                                                                        System.out.println("\nNo se ha podido añadir el usuario, contacte con soporte");
+
                                                                 }
+                                                            } catch (Exception e) {
 
-                                                                if (flag1 == true) {
-                                                                    continue;
-                                                                }
+                                                                e.printStackTrace();
+                                                            }
 
-                                                                try {
-
-                                                                    int filas1 = bd.cambiarNick(newNick, nick2);
-
-                                                                    switch (filas1) {
-
-                                                                        case 1:
-
-                                                                            System.out.println("\nUsuario modificado con éxito");
-                                                                            break;
-
-                                                                        case 2:
-
-                                                                            System.out.println("\nNo se ha podido añadir el usuario, contacte con soporte");
-
-                                                                    }
-                                                                } catch (Exception e) {
-
-                                                                    e.printStackTrace();
-                                                                }
-
-                                                                limpiar();
-
-                                                                nick2 = newNick;
-
-                                                            } while (flag1 == true);
+                                                            limpiar();
 
                                                             break;
 
                                                     }
 
                                                 } while (opc2 != 3);
-                                                break;
-
-                                            default:
-                                                System.out.println("La opción introducida no es correcta");
+                                                
                                         }
 
                                     } while (opc2 != 2);
                                     break;
+                                    
+                                case 2:
+                                    
+                                    limpiar();
+                                    
+                                    System.out.println("Listando las entradas del usuario:  " + nick2 + "\n");
+                                    
+                                    bd.listarEntradasUsuario(nick2);
+                                    
+                                    break;
+                                    
 
                                 case 3:
                                     Descuentos.mostrarDescuentosActuales();
@@ -423,6 +410,17 @@ public class LDF {
                                 case 4:
                                     limpiar();
                                     cartelera();
+                                    break;
+                                    
+                                case 6:
+                                    
+                                    System.out.println("Ventajas de ser premium:    ");
+                                    System.out.println("#1. Si no te gusta la película, te devolvemos la entrada");
+                                    System.out.println("#2. Descuentos de un 20% en el precio de tus entradas");
+                                    System.out.println("#3. Trato exclusivo y personalizado\n");
+                                    System.out.println("#4. Sistema de puntos (No implementado todavía)");
+                                    
+                                    System.out.println("Pago domicilado (SEPA) de 5€ mensuales");
                                     break;
 
                             }

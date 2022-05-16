@@ -80,6 +80,14 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
+    public boolean isPremium() {
+        return premium;
+    }
+
+    public void setPremium(boolean premium) {
+        this.premium = premium;
+    }
+
     @Override
     public String toString() {
         return "¿Son los datos correctos?" +"\n"+ Colorinchis.purple("\nNombre:    ") + nombre + Colorinchis.purple("\nApellidos:  ") + apellidos + Colorinchis.purple("\nNick:    ") + nick + Colorinchis.purple("\nFecha de nacimiento:  ") + fecha_nac + 
