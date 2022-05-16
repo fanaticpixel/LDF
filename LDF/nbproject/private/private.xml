@@ -3,21 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/modulos/Usuario.java</file>
-            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/modulos/Descuentos.java</file>
-            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/bbdd/BD_LDF.java</file>
-            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/bbdd/BD_Conector.java</file>
-            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/modulos/Pelicula.java</file>
             <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/modulos/Cartelera.java</file>
-            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/ldf/LDF.java</file>
             <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/modulos/Entrada.java</file>
+            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/modulos/Pelicula.java</file>
+            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/bbdd/BD_Conector.java</file>
+            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/bbdd/BD_LDF.java</file>
+            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/modulos/Usuario.java</file>
+            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/ldf/LDF.java</file>
             <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/modulos/Cine.java</file>
-=======
-            <file>file:/home/administrador/Escritorio/LDF/LDF/src/Estilos/Colorinchis.java</file>
-            <file>file:/home/administrador/Escritorio/LDF/LDF/src/ldf/LDF.java</file>
-            <file>file:/home/administrador/Escritorio/LDF/LDF/src/bbdd/BD_LDF.java</file>
->>>>>>> ce508babbb6f2970c272d648a3117790a0221da0
+            <file>file:/C:/Users/pixel/OneDrive/Escritorio/LDF/LDF/src/modulos/Descuentos.java</file>
         </group>
     </open-files>
 </project-private>

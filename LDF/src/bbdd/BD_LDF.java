@@ -70,7 +70,7 @@ public class BD_LDF extends BD_Conector {
     public Vector<Cartelera> listarCarteleraFiltrada(String dato, String campo) {
 
         String data = "%" + dato + "%";
-        String cadenaSQL = "SELECT * FROM CARTELERA WHERE " + campo + " LIKE  ?";
+        String cadenaSQL = "SELECT * FROM CARTELERA WHERE ? LIKE  ?";
         Vector<Cartelera> v = new Vector<Cartelera>();
 
         try {
@@ -79,6 +79,7 @@ public class BD_LDF extends BD_Conector {
             ps = c.prepareStatement(cadenaSQL);
 
             ps.setString(1, data);
+            ps.setString(2, campo);
 
             reg = ps.executeQuery();
 
@@ -98,6 +99,8 @@ public class BD_LDF extends BD_Conector {
         return v;
 
     }
+    
+    
 
     /**
      * @author Lucía Piñán Barberán y Daniel Molano Caraballo

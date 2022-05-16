@@ -37,13 +37,13 @@ public class LDF {
         Boolean flag1, flag2;
 
         do {
-            
+
             limpiar();
-            
+
             System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
             System.out.println(Colorinchis.blue("|                Bienvenido a LDF                |"));
             System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
-            
+
             System.out.println(Colorinchis.purple("\nIntroduzca opción:    "));
             System.out.println("\n#1. Registrarse\n#2. Iniciar Sesión\n#3. Comprar entradas\n#4. Ver cartelera\n#5. Salir");
             opc1 = sc.nextInt();
@@ -383,22 +383,21 @@ public class LDF {
                                                     }
 
                                                 } while (opc2 != 3);
-                                                
+
                                         }
 
                                     } while (opc2 != 2);
                                     break;
-                                    
+
                                 case 2:
-                                    
+
                                     limpiar();
-                                    
+
                                     System.out.println("Listando las entradas del usuario:  " + nick2 + "\n");
-                                    
+
                                     bd.listarEntradasUsuario(nick2);
-                                    
+
                                     break;
-                                    
 
                                 case 3:
                                     Descuentos.mostrarDescuentosActuales();
@@ -411,7 +410,7 @@ public class LDF {
                                     limpiar();
                                     cartelera();
                                     break;
-                                    
+
                                 case 6:
                                     limpiar();
                                     //VENTAJAS DE SER PREMIUM
@@ -421,14 +420,13 @@ public class LDF {
                                     System.out.println("#3. Trato exclusivo y personalizado\n");
                                     System.out.println("#4. Sistema de puntos (No implementado todavía)");
                                     System.out.println(Colorinchis.black("Pago domicilado (SEPA) de 5€ mensuales", true, true));
-                                    
+
                                     System.out.println(Colorinchis.green("Pulsa cualquier tecla para continuar"));
                                     sc.nextLine();
                                     sc.nextLine();
                                     break;
-                                    
-                                    //HACER CONSULTA DE PREMIUM
 
+                                //HACER CONSULTA DE PREMIUM
                             }
 
                         } while (opc2 != 7);
@@ -464,36 +462,39 @@ public class LDF {
         }
 
     }
-    
-      /* @author Alvaro.p*/
+
+    /* @author Alvaro.p*/
     public static boolean validarNumTarjeta(String dato) {
 
         Pattern pattern = Pattern.compile("\\d{16}");
         java.util.regex.Matcher matcher = pattern.matcher(dato);
         return matcher.matches();
     }
-    
-      public static boolean validarFechaTarjeta(String dato) {
+    /* @author Alvaro.p*/
+
+    public static boolean validarFechaTarjeta(String dato) {
 
         Pattern pattern = Pattern.compile("\\d{1,2}/\\d{1,2}");
         java.util.regex.Matcher matcher = pattern.matcher(dato);
         return matcher.matches();
     }
-      public static boolean validarCvTarjeta(String dato) {
+    /* @author Alvaro.p*/
+
+    public static boolean validarCvTarjeta(String dato) {
 
         Pattern pattern = Pattern.compile("\\d{3}");
         java.util.regex.Matcher matcher = pattern.matcher(dato);
         return matcher.matches();
-    }      
+    }
 
     /* @author Alvaro.p*/
     public static boolean validarDatos(String dato) {
 
         /* String regexp = "\\d+[a-zA-Z]";
-        if (Pattern.matches(regexp, dato) == true)
-                return true;
-        else
-            return false;*/
+         if (Pattern.matches(regexp, dato) == true)
+         return true;
+         else
+         return false;*/
         Pattern pattern = Pattern.compile("[a-zA-Z ]*");
         java.util.regex.Matcher matcher = pattern.matcher(dato);
         return matcher.matches();
@@ -504,6 +505,27 @@ public class LDF {
         Pattern pattern = Pattern.compile("^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$");
         java.util.regex.Matcher matcher = pattern.matcher(mail);
         return matcher.matches();
+    }
+
+    /* @author Alvaro.p*/
+    public static void comprarEntradas() {
+        Scanner sc = new Scanner(System.in);
+        Vector<Cartelera> v;
+        bd.listarCartelera();
+        System.out.println("Dime el cine");
+        String cines = sc.nextLine();
+        v = bd.listarCarteleraFiltrada("cine", cines);
+
+        System.out.println("Dime el nombre de la peli");
+        String nombre = sc.nextLine();
+        for (int i = 0; i < v.size(); i++) {
+            if (v.get(i).getNombre().contains(nombre)== true)
+          {
+              System.out.println(v.get(i).toString());
+            }
+        }
+        System.out.println(" 1 sesion de mañana \n 2 sesion tarde ");
+
     }
 
     public static LocalDate leeFecha(String msgError, String patron) {
