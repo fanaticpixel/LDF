@@ -414,7 +414,7 @@ public class LDF {
                                     
                                 case 6:
                                     limpiar();
-                                    
+                                    //VENTAJAS DE SER PREMIUM
                                     System.out.println(Colorinchis.rainbow("Ventajas de ser premium:    "));
                                     System.out.println("#1. Si no te gusta la película, te devolvemos la entrada");
                                     System.out.println("#2. Descuentos de un 20% en el precio de tus entradas");
@@ -426,6 +426,8 @@ public class LDF {
                                     sc.nextLine();
                                     sc.nextLine();
                                     break;
+                                    
+                                    //HACER CONSULTA DE PREMIUM
 
                             }
 
