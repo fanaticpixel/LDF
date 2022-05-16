@@ -452,6 +452,27 @@ public class LDF {
         }
 
     }
+    
+      /* @author Alvaro.p*/
+    public static boolean validarNumTarjeta(String dato) {
+
+        Pattern pattern = Pattern.compile("\\d{16}");
+        java.util.regex.Matcher matcher = pattern.matcher(dato);
+        return matcher.matches();
+    }
+    
+      public static boolean validarFechaTarjeta(String dato) {
+
+        Pattern pattern = Pattern.compile("\\d{1,2}/\\d{1,2}");
+        java.util.regex.Matcher matcher = pattern.matcher(dato);
+        return matcher.matches();
+    }
+      public static boolean validarCvTarjeta(String dato) {
+
+        Pattern pattern = Pattern.compile("\\d{3}");
+        java.util.regex.Matcher matcher = pattern.matcher(dato);
+        return matcher.matches();
+    }      
 
     /* @author Alvaro.p*/
     public static boolean validarDatos(String dato) {
