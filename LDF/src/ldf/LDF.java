@@ -14,6 +14,7 @@ import modulos.Usuario;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Vector;
 import java.util.regex.Pattern;
@@ -268,8 +269,6 @@ public class LDF {
                             sc.nextLine();
 
                             switch (opcAdmin) {
-                                case 0:
-                                    break;
                                 case 1:
                                     limpiar();
                                     m_admin_ges();
@@ -277,18 +276,232 @@ public class LDF {
                                     sc.nextLine();
                                     switch(opcAdmin2){
                                         case 1:
-                                            break;
-                                        case 2:
-                                            break;
-                                        case 3:
+                                            //Alta usuario
+                                            do {
+                                                limpiar();
+
+                                                System.out.println(Colorinchis.blue("Vas a crear una cuenta, si desea parar en cualquier momento introduzca '0'"));
+
+                                                // PREGUNTAMOS Y VALIDAMOS EL NOMBRE
+                                                do {
+
+                                                    System.out.println("Introduzca el nombre");
+                                                    nombre1 = sc.nextLine();
+
+                                                    if (validarDatos(nombre1) == false) {
+
+                                                        System.out.println("El nombre no puede contener números");
+
+                                                    }
+
+                                                    if (nombre1.equalsIgnoreCase("0")) {
+                                                        break;
+                                                    }
+
+                                                } while (validarDatos(nombre1) == false);
+
+                                                if (nombre1.equalsIgnoreCase("0")) {
+                                                    break;
+                                                }
+
+                                                // PREGUNTAMOS Y VALIDAMOS LOS APELLIDOS
+                                                do {
+
+                                                    System.out.println("Introduzca los apellidos");
+                                                    apellidos1 = sc.nextLine();
+
+                                                    if (validarDatos(apellidos1) == false) {
+
+                                                        System.out.println("Los apellidos no pueden contener numeros");
+
+                                                    }
+
+                                                    if (apellidos1.equalsIgnoreCase("0")) {
+                                                        break;
+                                                    }
+
+                                                } while (validarDatos(apellidos1) == false);
+
+                                                if (apellidos1.equalsIgnoreCase("0")) {
+                                                    break;
+                                                }
+
+                                                // COMPROBAMOS QUE EL NICK NO ESTE YA EN LA BASE DE DATOS
+                                                do {
+                                                    System.out.println("Introduzca el nick");
+                                                    nick1 = sc.nextLine();
+
+                                                    if (nick1.equalsIgnoreCase("0")) {
+                                                        break;
+                                                    }
+
+                                                    v1 = bd.listarCampoTablaString("USUARIOS", "nick");
+
+                                                    flag1 = false;
+
+                                                    for (int i = 0; i < v1.size(); i++) {
+                                                        if (nick1.equalsIgnoreCase(v1.get(i)) == true) {
+                                                            flag1 = true;
+                                                            System.out.println("El nick introducido ( " + nick1 + " ) ya pertenece a un usuario registrado");
+                                                        }
+                                                    }
+
+                                                } while (flag1 == true);
+
+                                                if (nick1.equalsIgnoreCase("0")) {
+                                                    break;
+                                                }
+
+                                                // VALIDAMOS LA FECHA DE NACIMIENTO
+                                                System.out.println("Introduce la fecha de nacimiento");
+                                                fh1 = leeFecha("Fecha incorrecta | Formato: 'dd/mm/yyyy'", "dd/LL/yyyy");
+
+                                                // VALIDAMOS EL CORREO
+                                                do {
+
+                                                    System.out.println("Introduce tu correo");
+                                                    correo1 = sc.nextLine();
+
+                                                    if (validaEmail(correo1) == false) {
+                                                        System.out.println("El correo introducido no es válido");
+                                                    }
+
+                                                } while (validaEmail(correo1) == false);
+
+                                                // PREGUNTAMOS POR LA CONTRASEÑA
+                                                System.out.println("Introduce tu contraseña");
+                                                pass1 = sc.nextLine();
+
+                                                if (pass1.equalsIgnoreCase("0")) {
+                                                    break;
+                                                }
+
+                                                limpiar();
+
+                                                Usuario u = new Usuario(nombre1, apellidos1, nick1, fh1, correo1, pass1);
+
+                                                System.out.println(u.toString());
+
+                                                System.out.println(Colorinchis.green("\nIntroduce 'No' si quieres volver a rellenar los datos"));
+
+                                                resp1 = sc.nextLine();
+
+                                                try {
+
+                                                    int filas1 = bd.añadirUsuario(u);
+
+                                                    switch (filas1) {
+
+                                                        case 1:
+
+                                                            System.out.println(Colorinchis.rainbow("\nUsuario añadido con éxito"));
+                                                            break;
+
+                                                        case 2:
+
+                                                            System.out.println(Colorinchis.purple("\nNo se ha podido añadir el usuario, contacte con soporte"));
+
+                                                    }
+                                                } catch (Exception e) {
+
+                                                    e.printStackTrace();
+                                                }
+
+                                                limpiar();
+
+                                            } while (resp1.equalsIgnoreCase("no"));
+
                                             limpiar();
-                                            String nombreUsu;
-                                            System.out.println("Que usuario deseas modificar? ");
-                                            bd.Admin_listarUsuarios();
-                                            nombreUsu = sc.nextLine();
 
                                             break;
+
+                                        case 2:
+                                            //BAJA USUARIO
+                                            String nick;
+                                            boolean existe = false;
+                                            System.out.println(Colorinchis.red("Anota el nick del usuario que deseas borrar: "));
+                                            do {
+                                                nick = sc.nextLine();
+                                                existe = bd.Admin_existeUsuario(nick);
+                                                if (!existe) {
+                                                    System.out.println(Colorinchis.red("No existe ese nick, prueba otra vez: "));
+                                                }
+                                            }while(!existe);
+
+                                            int filas = bd.Admin_borrarUsuario(nick);
+
+                                            if (filas == 1) {
+                                                System.out.println(Colorinchis.green("Usuario borrado correctamente"));
+                                            } else {
+                                                System.out.println(Colorinchis.red("Usuario no se ha podido borrar correctamente"));
+                                            }
+                                            System.out.println("Pulsa enter para continuar");
+                                            sc.nextLine();
+
+                                            break;
+                                        case 3:
+                                            //MODIFICAR USUARIO
+                                            limpiar();
+                                            String Admin_Usuario;
+                                            bd.Admin_listarUsuarios();
+                                            System.out.print("Anota el nombre del usuario que desea modificar" + Colorinchis.red(" -> "));
+                                            Admin_Usuario = sc.nextLine();
+                                            break;
+                                        case 4:
+                                            break;
                                     }
+                                    break;
+
+                                case 2:
+                                    //Modificar entradas
+                                    break;
+                                case 3:
+                                    //Modificar cartelera
+                                    break;
+                                case 4:
+                                    limpiar();
+                                    m_admin_prom();
+                                    opcAdmin2 = sc.nextInt();
+                                    String codDescuento;
+                                    int porcentajeDescuento = 0;
+                                    boolean correcto = false;
+
+                                    sc.nextLine();
+                                    switch (opcAdmin2) {
+                                        case 1:
+                                            System.out.println(Colorinchis.red("Vamos a añadir un descuento: "));
+                                            System.out.println("Anota el nombre del descuento: ");
+                                            codDescuento = sc.nextLine();
+
+                                            do {
+                                                try {
+                                                    System.out.println("Cantidad de descuento del 0 al 100");
+                                                    porcentajeDescuento = sc.nextInt();
+                                                    sc.nextLine();
+                                                    correcto = true;
+                                                }catch (InputMismatchException imm) {
+                                                    System.out.println("Error introduce un número");
+                                                }
+                                            }while (!correcto);
+
+                                            Descuentos.Admin_addDescuento(codDescuento, porcentajeDescuento);
+                                            break;
+
+                                        case 2:
+                                            System.out.println(Colorinchis.red("Anota el código del descuento que deseas borrar: "));
+                                            codDescuento = sc.nextLine();
+
+                                            Descuentos.Admin_deleteDescuento(codDescuento);
+                                            break;
+
+                                        case 3:
+                                            System.out.println(Colorinchis.red("Anota el descuento que desea modificar: "));
+                                            codDescuento = sc.nextLine();
+                                            break;
+                                        case 4:
+                                            break;
+                                    }
+                                    break;
                             }
                         }while(opcAdmin != 5);
 
@@ -716,19 +929,41 @@ public class LDF {
     /* MENUS ADMINISTRADOR */
     /* Autor : Fer */
     public static void m_admin() {
-        System.out.println(Colorinchis.blue("Bienvenido Bruce:\n") +
+        System.out.println(Colorinchis.purple("Bienvenido Bruce:\n") +
                 Colorinchis.red("#1. ") + "Gestionar usuarios\n" +
                 Colorinchis.red("#2. ") + "Modificar entradas\n" +
                 Colorinchis.red("#3. ") + "Modificar cartelera\n" +
                 Colorinchis.red("#4. ") + "Modificar promociones\n" +
-                Colorinchis.red("#5. ") + "Volver");;
+                Colorinchis.red("#5. ") + "Volver");
     }
 
     public static void m_admin_ges() {
-        System.out.println(Colorinchis.blue("Bienvenido Bruce:\n") +
+        System.out.println(Colorinchis.purple("Gestión de usuarios:\n") +
                 Colorinchis.red("#1. ") + "Alta usuario\n" +
                 Colorinchis.red("#2. ") + "Baja usuario\n" +
                 Colorinchis.red("#3. ") + "Modificar usuario\n" +
-                Colorinchis.red("#0. ") + "Volver");;
+                Colorinchis.red("#4. ") + "Volver");
     }
+
+    public static void m_admin_cart() {
+        System.out.println(Colorinchis.purple("Gestión de cartelera:\n") +
+                Colorinchis.red("#1. ") + "Añadir datos\n" +
+                Colorinchis.red("#2. ") + "Borrar datos\n" +
+                Colorinchis.red("#3. ") + "Modificar datos\n" +
+                Colorinchis.red("#4. ") + "Volver");
+    }
+
+    public static void m_admin_prom() {
+        System.out.println(Colorinchis.purple("Gestión de promociones:\n") +
+                Colorinchis.red("#1. ") + "Añadir promoción\n" +
+                Colorinchis.red("#2. ") + "Borrar promoción\n" +
+                Colorinchis.red("#3. ") + "Modificar promoción\n" +
+                Colorinchis.red("#4. ") + "Volver");
+    }
+
+
+
+
+
+
 }

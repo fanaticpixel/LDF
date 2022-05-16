@@ -413,16 +413,19 @@ public class BD_LDF extends BD_Conector {
             reg = s.executeQuery(cadenaSQL);
 
 
-
             while (reg.next()) {
-                java.sql.Date f = reg.getDate("fecha_nacimiento");
-                LocalDate fBuena = f.toLocalDate();
 
-                System.out.println(Colorinchis.purple("NICK: ") + reg.getString("nick") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre") +
-                        Colorinchis.purple("       APELLIDOS: ") + reg.getString("apellidos") +  Colorinchis.purple("       CORREO: ") + reg.getString("correo") +
-                        Colorinchis.purple("       FECHA DE NACIMIENTO: ") + fBuena + Colorinchis.purple("        PREMIUM: ") +reg.getBoolean("premium") + "\n");
+                if (!reg.getString(1).equalsIgnoreCase("admin")) {
+                    java.sql.Date f = reg.getDate("fecha_nacimiento");
+                    LocalDate fBuena = f.toLocalDate();
+
+                    System.out.println(Colorinchis.purple("NICK: ") + reg.getString("nick") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre") +
+                            Colorinchis.purple("       APELLIDOS: ") + reg.getString("apellidos") +  Colorinchis.purple("       CORREO: ") + reg.getString("correo") +
+                            Colorinchis.purple("       FECHA DE NACIMIENTO: ") + fBuena + Colorinchis.purple("        PREMIUM: ") +reg.getBoolean("premium"));
+                }
             }
 
+            reg.close();
             this.cerrar();
 
         } catch (SQLException e) {
@@ -430,5 +433,73 @@ public class BD_LDF extends BD_Conector {
             e.printStackTrace();
         }
     }
+
+    public boolean Admin_existeUsuario (String nick) {
+        String cadenaSQL = "SELECT COUNT(*) FROM USUARIOS WHERE nick LIKE '" + nick + "'";
+        int contador = 0;
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+
+
+            while (reg.next()) {
+                contador = reg.getInt(1);
+            }
+            reg.close();
+            this.cerrar();
+            if (contador == 1) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int Admin_borrarUsuario (String nick) {
+        String cadenaSQL = "DELETE FROM USUARIOS WHERE nick LIKE '" + nick + "'";
+
+        Admin_borrarMovAsociados(nick);
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            int filasAfectadas = s.executeUpdate(cadenaSQL);
+            reg.close();
+            this.cerrar();
+
+            return filasAfectadas;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
+    private void Admin_borrarMovAsociados (String nick) {
+        String cadenaSQL = "DELETE FROM ENTRADAS WHERE nick LIKE '" + nick + "'";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            s.executeUpdate(cadenaSQL);
+            reg.close();
+            this.cerrar();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 }

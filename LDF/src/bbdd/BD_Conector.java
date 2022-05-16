@@ -23,6 +23,11 @@ public class BD_Conector {
 		usuario="root";
 		pass="";
 		url="jdbc:mysql://localhost/"+base;
+
+		//FER
+		//usuario="fer";
+		//pass="123";
+		//url="jdbc:mysql://localhost:8889/"+base;
 	}
 	
 	public void abrir(){
