@@ -36,12 +36,14 @@ public class LDF {
         Vector<String> v1;
         Boolean flag1, flag2;
 
-        System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
-        System.out.println(Colorinchis.blue("|                Bienvenido a LDF                |"));
-        System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
-
         do {
-
+            
+            limpiar();
+            
+            System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
+            System.out.println(Colorinchis.blue("|                Bienvenido a LDF                |"));
+            System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
+            
             System.out.println(Colorinchis.purple("\nIntroduzca opción:    "));
             System.out.println("\n#1. Registrarse\n#2. Iniciar Sesión\n#3. Comprar entradas\n#4. Ver cartelera\n#5. Salir");
             opc1 = sc.nextInt();
@@ -56,7 +58,7 @@ public class LDF {
                     do {
                         limpiar();
 
-                        System.out.println("Vas a crear una cuenta, si desea parar en cualquier momento introduzca '0'");
+                        System.out.println(Colorinchis.blue("Vas a crear una cuenta, si desea parar en cualquier momento introduzca '0'"));
 
                         // PREGUNTAMOS Y VALIDAMOS EL NOMBRE
                         do {
@@ -158,7 +160,7 @@ public class LDF {
 
                         System.out.println(u.toString());
 
-                        System.out.println("\nIntroduce 'No' si quieres volver a rellenar los datos");
+                        System.out.println(Colorinchis.green("\nIntroduce 'No' si quieres volver a rellenar los datos"));
 
                         resp1 = sc.nextLine();
 
@@ -170,12 +172,12 @@ public class LDF {
 
                                 case 1:
 
-                                    System.out.println("\nUsuario añadido con éxito");
+                                    System.out.println(Colorinchis.rainbow("\nUsuario añadido con éxito"));
                                     break;
 
                                 case 2:
 
-                                    System.out.println("\nNo se ha podido añadir el usuario, contacte con soporte");
+                                    System.out.println(Colorinchis.purple("\nNo se ha podido añadir el usuario, contacte con soporte"));
 
                             }
                         } catch (Exception e) {
@@ -197,7 +199,7 @@ public class LDF {
 
                     limpiar();
 
-                    System.out.println("Vas a iniciar sesión, si desea parar en cualquier momento introduzca '0'");
+                    System.out.println(Colorinchis.blue("Vas a iniciar sesión, si desea parar en cualquier momento introduzca '0'"));
 
                     do {
                         System.out.println("Introduzca su nick");
@@ -260,6 +262,7 @@ public class LDF {
                     } else {
 
                         do {
+                            limpiar();
                             System.out.println("#1. Ver perfil\n#2. Mirar entradas\n#3. Ver promociones\n#4. Ver cartelera\n#5. Comprar entradas\n#6. Mejorar a premium\n#7. Cerrar sesión");
                             opc2 = sc.nextInt();
 
@@ -286,7 +289,7 @@ public class LDF {
                                                 do {
 
                                                     bd.listarUser(nick2);
-                                                    System.out.println("¿Que desea modificar?\n" + "#1. Modificar Nick\n#2. Modificar Contraseñas\n#3. Volver");
+                                                    System.out.println(Colorinchis.blue("¿Que desea modificar?\n") + "#1. Modificar Nick\n#2. Modificar Contraseñas\n#3. Volver");
                                                     opc2 = sc.nextInt();
 
                                                     switch (opc2) {
@@ -380,7 +383,7 @@ public class LDF {
                                                     }
 
                                                 } while (opc2 != 3);
-                                                break;
+                                                
                                         }
 
                                     } while (opc2 != 2);
@@ -399,6 +402,9 @@ public class LDF {
 
                                 case 3:
                                     Descuentos.mostrarDescuentosActuales();
+                                    System.out.println(Colorinchis.green("Pulse cualquier tecla para continuar."));
+                                    sc.nextLine();
+                                    sc.nextLine();
                                     break;
 
                                 case 4:
@@ -407,15 +413,21 @@ public class LDF {
                                     break;
                                     
                                 case 6:
-                                    
-                                    System.out.println("Ventajas de ser premium:    ");
+                                    limpiar();
+                                    //VENTAJAS DE SER PREMIUM
+                                    System.out.println(Colorinchis.rainbow("Ventajas de ser premium:    "));
                                     System.out.println("#1. Si no te gusta la película, te devolvemos la entrada");
                                     System.out.println("#2. Descuentos de un 20% en el precio de tus entradas");
                                     System.out.println("#3. Trato exclusivo y personalizado\n");
                                     System.out.println("#4. Sistema de puntos (No implementado todavía)");
+                                    System.out.println(Colorinchis.black("Pago domicilado (SEPA) de 5€ mensuales", true, true));
                                     
-                                    System.out.println("Pago domicilado (SEPA) de 5€ mensuales");
+                                    System.out.println(Colorinchis.green("Pulsa cualquier tecla para continuar"));
+                                    sc.nextLine();
+                                    sc.nextLine();
                                     break;
+                                    
+                                    //HACER CONSULTA DE PREMIUM
 
                             }
 
@@ -530,7 +542,7 @@ public class LDF {
         Vector<Cartelera> v4;
 
         do {
-
+            limpiar();
             System.out.println("#1. Ver cartelera completa\n#2. Filtrar cartelera\n#3. Volver");
             opc4 = sc.nextInt();
 
@@ -541,7 +553,7 @@ public class LDF {
                     sc.nextLine();
                     limpiar();
 
-                    System.err.println("                                                             ---- MOSTRANDO CARTELERA ----\n");
+                    System.err.println(Colorinchis.rainbow("                                                             ---- MOSTRANDO CARTELERA ----\n"));
                     v4 = bd.listarCartelera();
 
                     for (int i = 0; i < v4.size(); i++) {
@@ -623,6 +635,8 @@ public class LDF {
 
                                 System.out.println("Introduce el ID del cine donde quieres ver la película");
                                 nombre4 = sc.nextLine();
+
+                                limpiar();
 
                                 v4 = bd.listarCarteleraFiltrada(nombre4, "id_cine");
 

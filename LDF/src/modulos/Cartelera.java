@@ -5,6 +5,7 @@
  */
 package modulos;
 
+import Estilos.Colorinchis;
 import java.time.LocalDate;
 
 /**
@@ -81,7 +82,7 @@ public class Cartelera {
 
     @Override
     public String toString() {
-        return "NOMBRE: " + nombre + "      ID_CINE: " + id_cine + "        SALA: " + id_sala + "       SESIÓN: " + fecha_hora + "      DURACION: " + duracion + "      VERSIÓN: " + tipo + "\n";
+        return Colorinchis.purple("NOMBRE: ") + nombre + Colorinchis.purple("      ID_CINE: ") + id_cine + Colorinchis.purple("        SALA: ") + id_sala + Colorinchis.purple("       SESIÓN: ") + fecha_hora + Colorinchis.purple("      DURACION: ") + duracion + Colorinchis.purple("      VERSIÓN: ") + tipo + "\n";
     }
     
     

@@ -5,6 +5,7 @@
  */
 package bbdd;
 
+import Estilos.Colorinchis;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Vector;
@@ -255,9 +256,9 @@ public class BD_LDF extends BD_Conector {
                 java.sql.Date f = reg.getDate("fecha_nacimiento");
                 LocalDate fBuena = f.toLocalDate();
                 
-                 System.out.println("NICK: " + reg.getString("nick") + "       NOMBRE: " + reg.getString("nombre") + 
-                         "       APELLIDOS: " + reg.getString("apellidos") +  "       CORREO: " + reg.getString("correo") + 
-                         "       FECHA DE NACIMIENTO: " + fBuena + "        PREMIUM: "+reg.getBoolean("premium") + "\n");
+                 System.out.println(Colorinchis.purple("NICK: ") + reg.getString("nick") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre") + 
+                         Colorinchis.purple("       APELLIDOS: ") + reg.getString("apellidos") +  Colorinchis.purple("       CORREO: ") + reg.getString("correo") + 
+                         Colorinchis.purple("       FECHA DE NACIMIENTO: ") + fBuena + Colorinchis.purple("        PREMIUM: ") +reg.getBoolean("premium") + "\n");
             }
 
             this.cerrar();
@@ -281,8 +282,8 @@ public class BD_LDF extends BD_Conector {
 
             while (reg.next()) {
 
-                System.out.println("ID_CINE: " + reg.getString("id_cine") + "       NOMBRE: " + reg.getString("nombre") 
-                        + "       DIRECCION: " + reg.getString("direccion") + "\n");
+                System.out.println(Colorinchis.purple("ID_CINE: ") + reg.getString("id_cine") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre") 
+                        + Colorinchis.purple("       DIRECCION: ") + reg.getString("direccion") + "\n");
 
             }
 
