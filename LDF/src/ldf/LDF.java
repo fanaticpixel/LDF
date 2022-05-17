@@ -417,8 +417,10 @@ public class LDF {
 
                                         case 2:
                                             //BAJA USUARIO
+                                            limpiar();
                                             String nick;
                                             boolean existe = false;
+                                            bd.Admin_listarUsuarios();
                                             System.out.println(Colorinchis.red("Anota el nick del usuario que deseas borrar: "));
                                             do {
                                                 nick = sc.nextLine();
@@ -458,6 +460,7 @@ public class LDF {
                                             } while (!existe);
 
                                             do {
+                                                limpiar();
                                                 m_admin_ges_mod();
                                                 opcAdmin2 = sc.nextInt();
                                                 sc.nextLine();
@@ -468,10 +471,19 @@ public class LDF {
 
                                                 switch (opcAdmin2) {
                                                     case 1:
+                                                        limpiar();
                                                         System.out.println(Colorinchis.green("Anota el nuevo nick: "));
                                                         newNick = sc.nextLine();
 
-                                                        bd.Admin_updateUser();
+                                                        int Admin_filas = bd.Admin_updateUser("nick", newNick, nick);
+
+                                                        if (Admin_filas > 0) {
+                                                            System.out.println(Colorinchis.green(Admin_filas + " filas actualizadas"));
+                                                        } else {
+                                                            System.out.println(Colorinchis.red("No se han actualizado filas"));
+                                                        }
+                                                        System.out.println("Pulsa enter para continuar");
+                                                        sc.nextLine();
 
                                                         break;
                                                     case 2:
@@ -480,7 +492,6 @@ public class LDF {
                                                         break;
                                                 }
                                             }while (opcAdmin2 < 1 || opcAdmin2 > 3);
-
 
                                             break;
 
@@ -506,6 +517,7 @@ public class LDF {
                                     sc.nextLine();
                                     switch (opcAdmin2) {
                                         case 1:
+                                            limpiar();
                                             System.out.println(Colorinchis.red("Vamos a añadir un descuento: "));
                                             System.out.println("Anota el nombre del descuento: ");
                                             codDescuento = sc.nextLine();
@@ -522,18 +534,55 @@ public class LDF {
                                             } while (!correcto);
 
                                             Descuentos.Admin_addDescuento(codDescuento, porcentajeDescuento);
+                                            System.out.println("Descuento añadido, pulsa enter para continuar");
+                                            sc.nextLine();
                                             break;
 
                                         case 2:
+                                            limpiar();
                                             System.out.println(Colorinchis.red("Anota el código del descuento que deseas borrar: "));
                                             codDescuento = sc.nextLine();
 
-                                            Descuentos.Admin_deleteDescuento(codDescuento);
+                                            if (Descuentos.Admin_deleteDescuento(codDescuento)) {
+                                                System.out.println("Descuento borrado con éxito, pulsa enter para continuar");
+                                            } else {
+                                                System.out.println("Descuento no se ha podido borrar correctamente, pulsa enter para continuar");
+                                            }
+                                            sc.nextLine();
                                             break;
 
                                         case 3:
-                                            System.out.println(Colorinchis.red("Anota el descuento que desea modificar: "));
-                                            codDescuento = sc.nextLine();
+                                            limpiar();
+                                            boolean existeDesc = false;
+                                            boolean buenNum = false;
+                                            String newCodDesc;
+                                            int newPercent = -1;
+
+                                            do {
+                                                System.out.println(Colorinchis.red("Anota el descuento que desea modificar: "));
+                                                codDescuento = sc.nextLine();
+
+                                                existeDesc = Descuentos.existeDescuento(codDescuento);
+                                            } while (!existeDesc);
+
+                                            System.out.println(Colorinchis.red("Anota el NUEVO nombre del descuento: "));
+                                            newCodDesc = sc.nextLine();
+
+                                            do {
+                                                limpiar();
+                                                System.out.println("Anota la NUEVA cantidad de descuento");
+                                                try {
+                                                    newPercent = sc.nextInt();
+                                                    sc.nextLine();
+                                                    buenNum = true;
+                                                } catch (InputMismatchException imm) {
+                                                    System.out.println("Error introduce un número");
+                                                }
+                                            }while (!buenNum);
+
+                                            Descuentos.Admin_deleteDescuento(codDescuento);
+                                            Descuentos.Admin_addDescuento(newCodDesc, newPercent);
+
                                             break;
                                         case 4:
                                             break;
@@ -999,7 +1048,7 @@ public class LDF {
         System.out.println(Colorinchis.purple("Gestión de usuarios:\n") +
                 Colorinchis.red("#1. ") + "Modificar nick\n" +
                 Colorinchis.red("#2. ") + "Modificar contraseña\n" +
-                Colorinchis.red("#3. ") + "Modificar email\n");
+                Colorinchis.red("#3. ") + "Modificar email");
     }
 
     public static void m_admin_cart() {

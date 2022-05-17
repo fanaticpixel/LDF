@@ -104,6 +104,23 @@ public class Descuentos {
     }
 
     /**
+     * Método que checkea si existe un descuento en descuentos.txt
+     * @param codDescuento
+     * @return
+     */
+    public static boolean existeDescuento(String codDescuento) {
+        codDescuento = codDescuento.toUpperCase();
+        descuentos.clear();
+        Descuentos.cargarDescuentosHashMap();
+
+        if (descuentos.get(codDescuento) == null) {
+            return false;
+        }
+        return true;
+
+    }
+
+    /**
      * Función que permite al usuario administrador añadir códigos de descuento, y actualizar descuentos.txt
      * @param codDescuento
      * @param porcentajeDescuento

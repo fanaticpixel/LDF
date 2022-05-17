@@ -90,9 +90,9 @@ public class BD_LDF extends BD_Conector {
                 Time f = reg.getTime("fecha_hora");
                 System.out.println(f.toString());
                     ///////////////acá
-                LocalDate fBuena = f.toLocalDate();
-                System.out.println(fBuena);
-                v.add(new Cartelera(reg.getString("nombre"), reg.getString("id_cine"), reg.getInt("id_sala"), fBuena, reg.getInt("duracion"), reg.getString("tipo")));
+                //LocalDate fBuena = f.toLocalDate();
+                //System.out.println(fBuena);
+                //v.add(new Cartelera(reg.getString("nombre"), reg.getString("id_cine"), reg.getInt("id_sala"), fBuena, reg.getInt("duracion"), reg.getString("tipo")));
             }
 
             this.cerrar();
@@ -503,19 +503,21 @@ public class BD_LDF extends BD_Conector {
         }
     }
 
-    public int Admin_updateUser(String nick) {
-        String cadenaSQL = "SELECT ? FROM USUARIOS";
+    public int Admin_updateUser(String campo, String valor, String nick) {
+        String cadenaSQL = "UPDATE USUARIOS SET " + campo +  " = '" + valor + "' WHERE nick LIKE '%"+ nick +"%'";
 
         try {
 
             this.abrir();
-            PreparedStatement pSt = c.prepareStatement(cadenaSQL);
-            s.executeUpdate(cadenaSQL);
+            s = c.createStatement();
+            int filas = s.executeUpdate(cadenaSQL);
+
             reg.close();
             this.cerrar();
-
+            return filas;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 }
