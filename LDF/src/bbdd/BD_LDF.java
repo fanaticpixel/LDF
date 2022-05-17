@@ -455,6 +455,33 @@ public class BD_LDF extends BD_Conector {
         return false;
     }
 
+    public boolean Admin_existeUsuarioPass(String nick, String password) {
+        String cadenaSQL = "SELECT COUNT(*) FROM USUARIOS WHERE nick LIKE '" + nick + "' AND contrasena LIKE '" + "'";
+        int contador = 0;
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+
+            while (reg.next()) {
+                contador = reg.getInt(1);
+            }
+            reg.close();
+            this.cerrar();
+            if (contador == 1) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
     public int Admin_borrarUsuario(String nick) {
         String cadenaSQL = "DELETE FROM USUARIOS WHERE nick LIKE '" + nick + "'";
 
@@ -509,4 +536,71 @@ public class BD_LDF extends BD_Conector {
         }
         return -1;
     }
+
+    public boolean Admin_existeIdCine (String idCine) {
+        String cadenaSQL = "SELECT id_cine FROM CINES";
+        boolean existe = false;
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+
+            while (reg.next()) {
+                if (reg.getString(1).equalsIgnoreCase(idCine)) {
+                    existe = true;
+                }
+            }
+            reg.close();
+            this.cerrar();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return existe;
+    }
+
+    public boolean Admin_insertCartelera (Cartelera c1) {
+        String cadenaSQL = "INSERT INTO CARTELERA VALUES = (?, ?, ?, ?, ?, ?)";
+        int exito = -1;
+        try {
+
+            this.abrir();
+            PreparedStatement pSt = c.prepareStatement(cadenaSQL);
+
+            pSt.setString(1, c1.getNombre());
+            pSt.setString(2, c1.getId_cine());
+            pSt.setInt(3, c1.getId_sala());
+            pSt.setDate(4, Date.valueOf(c1.getFecha_hora()));
+            pSt.setInt(5, c1.getDuracion());
+            pSt.setString(6, c1.getTipo());
+
+            exito = pSt.executeUpdate();
+            reg.close();
+            this.cerrar();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito == 1;
+    }
+
+    public int Admin_updateCartelera (String campo, String valor) {
+        String cadenaSQL = "UPDATE USUARIOS SET " + campo + " = '" + valor + "' WHERE nick LIKE ";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            int filas = s.executeUpdate(cadenaSQL);
+
+            reg.close();
+            this.cerrar();
+            return filas;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 }

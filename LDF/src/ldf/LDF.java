@@ -422,21 +422,21 @@ public class LDF {
                                         case 2:
                                             //BAJA USUARIO
                                             limpiar();
-                                            String nick;
+                                            String Admin_nick;
                                             boolean existe = false;
                                             bd.Admin_listarUsuarios();
                                             System.out.println(Colorinchis.red("Anota el nick del usuario que deseas borrar: "));
                                             do {
-                                                nick = sc.nextLine();
-                                                existe = bd.Admin_existeUsuario(nick);
+                                                Admin_nick = sc.nextLine();
+                                                existe = bd.Admin_existeUsuario(Admin_nick);
                                                 if (!existe) {
                                                     System.out.println(Colorinchis.red("No existe ese nick, prueba otra vez: "));
                                                 }
                                             } while (!existe);
 
-                                            int filas = bd.Admin_borrarUsuario(nick);
+                                            int Admin_filas = bd.Admin_borrarUsuario(Admin_nick);
 
-                                            if (filas == 1) {
+                                            if (Admin_filas == 1) {
                                                 System.out.println(Colorinchis.green("Usuario borrado correctamente"));
                                             } else {
                                                 System.out.println(Colorinchis.red("Usuario no se ha podido borrar correctamente"));
@@ -448,7 +448,7 @@ public class LDF {
                                         case 3:
                                             //MODIFICAR USUARIO
                                             limpiar();
-                                            nick = null;
+                                            Admin_nick = null;
                                             String newNick;
                                             existe = false;
                                             int modOpc;
@@ -456,8 +456,8 @@ public class LDF {
                                             bd.Admin_listarUsuarios();
                                             System.out.print("Anota el nick del usuario que desea modificar" + Colorinchis.red(" -> "));
                                             do {
-                                                nick = sc.nextLine();
-                                                existe = bd.Admin_existeUsuario(nick);
+                                                Admin_nick = sc.nextLine();
+                                                existe = bd.Admin_existeUsuario(Admin_nick);
                                                 if (!existe) {
                                                     System.out.println(Colorinchis.red("Usuario no encontrado, vuelva a introducir un nick valido"));
                                                 }
@@ -479,7 +479,7 @@ public class LDF {
                                                         System.out.println(Colorinchis.green("Anota el nuevo nick: "));
                                                         newNick = sc.nextLine();
 
-                                                        int Admin_filas = bd.Admin_updateUser("nick", newNick, nick);
+                                                        Admin_filas = bd.Admin_updateUser("nick", newNick, Admin_nick);
 
                                                         if (Admin_filas > 0) {
                                                             System.out.println(Colorinchis.green(Admin_filas + " filas actualizadas"));
@@ -491,11 +491,50 @@ public class LDF {
 
                                                         break;
                                                     case 2:
+                                                        limpiar();
+                                                        String password;
+                                                        System.out.println(Colorinchis.red("Anota la nueva contraseña nueva: "));
+                                                        password = sc.nextLine();
+
+                                                        Admin_filas = bd.Admin_updateUser("contrasena", password, Admin_nick);
+
+                                                        if (Admin_filas > 0) {
+                                                            System.out.println(Colorinchis.green(Admin_filas + " filas actualizadas"));
+                                                        } else {
+                                                            System.out.println(Colorinchis.red("No se han actualizado filas"));
+                                                        }
+                                                        System.out.println("Pulsa enter para continuar");
+                                                        sc.nextLine();
+
                                                         break;
+
                                                     case 3:
+                                                        String email;
+                                                        boolean Admin_emailB;
+                                                        do {
+                                                            System.out.println(Colorinchis.red("Anota el correo nuevo: "));
+                                                            email = sc.nextLine();
+
+                                                            Admin_emailB = validaEmail(email);
+                                                            if (!Admin_emailB) {
+                                                                System.out.println("Email con formato incorrecto");
+                                                            }
+                                                        }while(!Admin_emailB);
+
+                                                        Admin_filas = bd.Admin_updateUser("correo", email, Admin_nick);
+
+                                                        if (Admin_filas > 0) {
+                                                            System.out.println(Colorinchis.green(Admin_filas + " filas actualizadas"));
+                                                        } else {
+                                                            System.out.println(Colorinchis.red("No se han actualizado filas"));
+                                                        }
+                                                        System.out.println("Pulsa enter para continuar");
+                                                        sc.nextLine();
+                                                        break;
+                                                    case 4:
                                                         break;
                                                 }
-                                            } while (opcAdmin2 < 1 || opcAdmin2 > 3);
+                                            } while (opcAdmin2 < 1 || opcAdmin2 > 4);
 
                                             break;
 
@@ -506,9 +545,100 @@ public class LDF {
 
                                 case 2:
                                     //Modificar entradas
+
                                     break;
                                 case 3:
                                     //Modificar cartelera
+                                    limpiar();
+                                    m_admin_cart();
+                                    opcAdmin2 = sc.nextInt();
+                                    sc.nextLine();
+
+                                    switch (opcAdmin2) {
+                                        case 1:
+                                            limpiar();
+                                            String Admin_nomPelicula, Admin_idCine, Admin_tipoPeli;
+                                            int Admin_idSala = -1;
+                                            LocalDate Admin_fecha_hora;
+                                            boolean idExiste = false, salaNum = false;
+                                            System.out.println("Anote nombre de la película: ");
+                                            Admin_nomPelicula = sc.nextLine();
+
+                                            do {
+                                                System.out.println("Anote el id del cine");
+                                                Admin_idCine = sc.nextLine();
+                                                Admin_idCine = Admin_idCine.toUpperCase();
+                                                idExiste = bd.Admin_existeIdCine(Admin_idCine);
+
+                                                if (!idExiste) {
+                                                    System.out.println("El cine indicado no existe");
+                                                }
+                                            }while(!idExiste);
+
+                                            do {
+                                                System.out.println("Anota id de sala:");
+                                                try {
+                                                    Admin_idSala = sc.nextInt();
+                                                    salaNum = true;
+                                                }catch(InputMismatchException imme) {
+                                                    System.out.println("Introduce un número");
+                                                }
+                                            }while(!salaNum);
+
+                                            System.out.println("Anota fecha en formato dd/mm/aaaa: ");
+                                            Admin_fecha_hora = leeFecha("Fecha incorrecta | Formato: 'dd/mm/yyyy'", "dd/LL/yyyy");
+
+                                            System.out.println("Anota la duración de la película: ");
+                                            int Admin_duracion = sc.nextInt();
+                                            sc.nextLine();
+
+                                            do {
+                                                System.out.println("Anota tipo de la película:");
+                                                Admin_tipoPeli = sc.nextLine();
+                                                if (!Admin_tipoPeli.equalsIgnoreCase("CASTELLANO") && !Admin_tipoPeli.equalsIgnoreCase("VOSE")) {
+                                                    System.out.println("La película debe ser CASTELLANO o VOSE");
+                                                }
+                                            }while(!Admin_tipoPeli.equalsIgnoreCase("CASTELLANO") && !Admin_tipoPeli.equalsIgnoreCase("VOSE"));
+
+                                            //Cartelera c1 = new Cartelera(Admin_nomPelicula, Admin_idCine, Admin_idSala, Admin_fecha_hora, Admin_duracion, Admin_tipoPeli);
+
+                                            break;
+                                        case 2:
+
+                                            break;
+                                        case 3:
+                                            limpiar();
+                                            String Admin_campo_mod, Admin_newValue;
+                                            int Admin_valor_num;
+                                            boolean Admin_vali;
+
+                                            do {
+                                                limpiar();
+                                                System.out.println("Anota el campo que deseas modificar: ");
+                                                Admin_campo_mod = sc.nextLine();
+
+                                                if (Admin_campo_mod.equalsIgnoreCase("nombre") || Admin_campo_mod.equalsIgnoreCase("id_cine") || Admin_campo_mod.equalsIgnoreCase("tipo")) {
+                                                    System.out.println("Anote el nuevo valor para " + Admin_campo_mod);
+                                                    Admin_newValue = sc.nextLine();
+                                                    Admin_vali = true;
+                                                } else if (Admin_campo_mod.equalsIgnoreCase("id_sala") || Admin_campo_mod.equalsIgnoreCase("duración")) {
+                                                    System.out.println("Anote el nuevo valor para " + Admin_campo_mod);
+                                                    Admin_valor_num = sc.nextInt();
+                                                    sc.nextLine();
+                                                    Admin_vali = true;
+                                                } else if (Admin_campo_mod.equalsIgnoreCase("fecha_hora")) {
+                                                    System.out.println("Anote el nuevo valor para " + Admin_campo_mod + " en formato dd/mm/aaaa");
+                                                    Admin_fecha_hora = leeFecha("Fecha incorrecta | Formato: 'dd/mm/yyyy'", "dd/LL/yyyy");
+                                                    Admin_vali = true;
+                                                } else {
+                                                    System.out.println("Error, valor se encuentra en la tabla");
+                                                    Admin_vali = false;
+                                                }
+                                            }while(!Admin_vali);
+                                            break;
+                                        case 4:
+                                            break;
+                                    }
                                     break;
                                 case 4:
                                     limpiar();
@@ -1052,7 +1182,8 @@ public class LDF {
         System.out.println(Colorinchis.purple("Gestión de usuarios:\n")
                 + Colorinchis.red("#1. ") + "Modificar nick\n"
                 + Colorinchis.red("#2. ") + "Modificar contraseña\n"
-                + Colorinchis.red("#3. ") + "Modificar email");
+                + Colorinchis.red("#3. ") + "Modificar email"
+                + Colorinchis.red("#4. ") + "Volver");
     }
 
     public static void m_admin_cart() {
