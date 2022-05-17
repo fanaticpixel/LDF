@@ -499,7 +499,19 @@ public class BD_LDF extends BD_Conector {
         }
     }
 
+    public int Admin_updateUser(String nick) {
+        String cadenaSQL = "SELECT ? FROM USUARIOS";
 
+        try {
 
+            this.abrir();
+            PreparedStatement pSt = c.prepareStatement(cadenaSQL);
+            s.executeUpdate(cadenaSQL);
+            reg.close();
+            this.cerrar();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
