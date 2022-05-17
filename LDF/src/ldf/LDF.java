@@ -258,6 +258,10 @@ public class LDF {
 
                     limpiar();
 
+                    /*
+                     * Usuario Admin
+                     * Autor: Fer
+                     */
                     if (nick2.equalsIgnoreCase("admin")) {
                         int opcAdmin;
                         int opcAdmin2;
@@ -1026,7 +1030,7 @@ public class LDF {
 
 
     /* MENUS ADMINISTRADOR */
- /* Autor : Fer */
+    /* Autor : Fer */
     public static void m_admin() {
         System.out.println(Colorinchis.purple("Bienvenido Bruce:\n")
                 + Colorinchis.red("#1. ") + "Gestionar usuarios\n"
