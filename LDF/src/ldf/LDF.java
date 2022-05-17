@@ -442,11 +442,48 @@ public class LDF {
                                         case 3:
                                             //MODIFICAR USUARIO
                                             limpiar();
-                                            String Admin_Usuario;
+                                            nick = null;
+                                            String newNick;
+                                            existe = false;
+                                            int modOpc;
+
                                             bd.Admin_listarUsuarios();
-                                            System.out.print("Anota el nombre del usuario que desea modificar" + Colorinchis.red(" -> "));
-                                            Admin_Usuario = sc.nextLine();
+                                            System.out.print("Anota el nick del usuario que desea modificar" + Colorinchis.red(" -> "));
+                                            do {
+                                                nick = sc.nextLine();
+                                                existe = bd.Admin_existeUsuario(nick);
+                                                if (!existe) {
+                                                    System.out.println(Colorinchis.red("Usuario no encontrado, vuelva a introducir un nick valido"));
+                                                }
+                                            } while (!existe);
+
+                                            do {
+                                                m_admin_ges_mod();
+                                                opcAdmin2 = sc.nextInt();
+                                                sc.nextLine();
+
+                                                if (opcAdmin2 < 1 || opcAdmin2 > 3) {
+                                                    System.out.println(Colorinchis.red("Opción incorrecta"));
+                                                }
+
+                                                switch (opcAdmin2) {
+                                                    case 1:
+                                                        System.out.println(Colorinchis.green("Anota el nuevo nick: "));
+                                                        newNick = sc.nextLine();
+
+                                                        bd.Admin_updateUser();
+
+                                                        break;
+                                                    case 2:
+                                                        break;
+                                                    case 3:
+                                                        break;
+                                                }
+                                            }while (opcAdmin2 < 1 || opcAdmin2 > 3);
+
+
                                             break;
+
                                         case 4:
                                             break;
                                     }
@@ -956,6 +993,13 @@ public class LDF {
                 + Colorinchis.red("#2. ") + "Baja usuario\n"
                 + Colorinchis.red("#3. ") + "Modificar usuario\n"
                 + Colorinchis.red("#4. ") + "Volver");
+    }
+
+    public static void m_admin_ges_mod() {
+        System.out.println(Colorinchis.purple("Gestión de usuarios:\n") +
+                Colorinchis.red("#1. ") + "Modificar nick\n" +
+                Colorinchis.red("#2. ") + "Modificar contraseña\n" +
+                Colorinchis.red("#3. ") + "Modificar email\n");
     }
 
     public static void m_admin_cart() {
