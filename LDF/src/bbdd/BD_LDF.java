@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bbdd;
 
 import Estilos.Colorinchis;
@@ -45,9 +40,14 @@ public class BD_LDF extends BD_Conector {
             reg = s.executeQuery(cadenaSQL);
 
             while (reg.next()) {
-                java.sql.Date f = reg.getDate("fecha_hora");
-                LocalDate fBuena = f.toLocalDate();
-                v.add(new Cartelera(reg.getString("nombre"), reg.getString("id_cine"), reg.getInt("id_sala"), fBuena, reg.getInt("duracion"), reg.getString("tipo")));
+                Time f = reg.getTime("fecha_hora");
+                System.out.println(f.toString());
+
+                Date fecha = reg.getDate("fecha_hora");
+                LocalDate fBuena = fecha.toLocalDate();
+
+
+                v.add(new Cartelera(reg.getString("nombre"), reg.getString("id_cine"), reg.getInt("id_sala"), fBuena, f, reg.getInt("duracion"), reg.getString("tipo")));
             }
 
             this.cerrar();
@@ -82,17 +82,16 @@ public class BD_LDF extends BD_Conector {
 
             ps.setString(1, data);
 
-
             reg = ps.executeQuery();
 
             while (reg.next()) {
 
                 Time f = reg.getTime("fecha_hora");
                 System.out.println(f.toString());
-                    ///////////////acá
-                //LocalDate fBuena = f.toLocalDate();
-                //System.out.println(fBuena);
-                //v.add(new Cartelera(reg.getString("nombre"), reg.getString("id_cine"), reg.getInt("id_sala"), fBuena, reg.getInt("duracion"), reg.getString("tipo")));
+                Date fecha = reg.getDate("fecha_hora");
+                LocalDate fBuena = fecha.toLocalDate();
+
+                v.add(new Cartelera(reg.getString("nombre"), reg.getString("id_cine"), reg.getInt("id_sala"), fBuena, f, reg.getInt("duracion"), reg.getString("tipo")));
             }
 
             this.cerrar();
@@ -105,8 +104,6 @@ public class BD_LDF extends BD_Conector {
         return v;
 
     }
-    
-    
 
     /**
      * @author Lucía Piñán Barberán y Daniel Molano Caraballo
@@ -169,6 +166,7 @@ public class BD_LDF extends BD_Conector {
             while (reg.next()) {
                 v.add(reg.getDate(1));
             }
+            
 
             this.cerrar();
 
@@ -231,8 +229,6 @@ public class BD_LDF extends BD_Conector {
             s = c.createStatement();
             reg = s.executeQuery(cadenaSQL);
 
-            
-            
             while (reg.next()) {
                 v = reg.getString(1);
             }
@@ -247,7 +243,7 @@ public class BD_LDF extends BD_Conector {
         return v;
 
     }
-    
+
     public void listarUser(String nick) {
 
         String dato = "'%" + nick + "%'";
@@ -259,15 +255,13 @@ public class BD_LDF extends BD_Conector {
             s = c.createStatement();
             reg = s.executeQuery(cadenaSQL);
 
-            
-            
             while (reg.next()) {
                 java.sql.Date f = reg.getDate("fecha_nacimiento");
                 LocalDate fBuena = f.toLocalDate();
-                
-                 System.out.println(Colorinchis.purple("NICK: ") + reg.getString("nick") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre") + 
-                         Colorinchis.purple("       APELLIDOS: ") + reg.getString("apellidos") +  Colorinchis.purple("       CORREO: ") + reg.getString("correo") + 
-                         Colorinchis.purple("       FECHA DE NACIMIENTO: ") + fBuena + Colorinchis.purple("        PREMIUM: ") +reg.getBoolean("premium") + "\n");
+
+                System.out.println(Colorinchis.purple("NICK: ") + reg.getString("nick") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre")
+                        + Colorinchis.purple("       APELLIDOS: ") + reg.getString("apellidos") + Colorinchis.purple("       CORREO: ") + reg.getString("correo")
+                        + Colorinchis.purple("       FECHA DE NACIMIENTO: ") + fBuena + Colorinchis.purple("        PREMIUM: ") + reg.getBoolean("premium") + "\n");
             }
 
             this.cerrar();
@@ -291,7 +285,7 @@ public class BD_LDF extends BD_Conector {
 
             while (reg.next()) {
 
-                System.out.println(Colorinchis.purple("ID_CINE: ") + reg.getString("id_cine") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre") 
+                System.out.println(Colorinchis.purple("ID_CINE: ") + reg.getString("id_cine") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre")
                         + Colorinchis.purple("       DIRECCION: ") + reg.getString("direccion") + "\n");
 
             }
@@ -304,10 +298,10 @@ public class BD_LDF extends BD_Conector {
         }
 
     }
-    
+
     public void listarEntradasUsuario(String nick) {
 
-        String cadenaSQL = "SELECT * FROM ENTRADAS where NICK = '" + nick +"'";
+        String cadenaSQL = "SELECT * FROM ENTRADAS where NICK = '" + nick + "'";
 
         try {
 
@@ -316,12 +310,12 @@ public class BD_LDF extends BD_Conector {
             reg = s.executeQuery(cadenaSQL);
 
             while (reg.next()) {
-                
+
                 java.sql.Date f = reg.getDate("FECHA_HORA");
                 LocalDate fBuena = f.toLocalDate();
 
-                System.out.println("NICK: " + reg.getString("NICK") + "       ID_CINE: " + reg.getString("ID_CINE") 
-                        + "       ID_SALA: " + reg.getInt("ID_SALA")+ "       NOMBRE: " + reg.getString("NOMBRE")
+                System.out.println("NICK: " + reg.getString("NICK") + "       ID_CINE: " + reg.getString("ID_CINE")
+                        + "       ID_SALA: " + reg.getInt("ID_SALA") + "       NOMBRE: " + reg.getString("NOMBRE")
                         + "       NUM_FILA: " + reg.getInt("NUM_FILA") + "       NUM_BUTACA: " + reg.getInt("NUM_BUTACA")
                         + "       SESION: " + fBuena + "       PRECIO: " + reg.getDouble("PRECIO") + "\n");
 
@@ -346,7 +340,7 @@ public class BD_LDF extends BD_Conector {
 
             this.abrir();
             s = c.createStatement();
-            int filas=s.executeUpdate(cadenaSQL);
+            int filas = s.executeUpdate(cadenaSQL);
             s.close();
             this.cerrar();
             return filas;
@@ -358,16 +352,16 @@ public class BD_LDF extends BD_Conector {
 
         return -1;
     }
-    
+
     public int cambiarNick(String newNick, String oldNick) {
 
-        String cadenaSQL = "UPDATE USUARIOS SET NICK = '" + newNick +"' WHERE NICK = '" + oldNick + "'";
+        String cadenaSQL = "UPDATE USUARIOS SET NICK = '" + newNick + "' WHERE NICK = '" + oldNick + "'";
 
         try {
 
             this.abrir();
             s = c.createStatement();
-            int filas=s.executeUpdate(cadenaSQL);
+            int filas = s.executeUpdate(cadenaSQL);
             s.close();
             this.cerrar();
             return filas;
@@ -378,19 +372,18 @@ public class BD_LDF extends BD_Conector {
         }
 
         return -1;
-        
+
     }
-    
-    
+
     public int cambiarContrasena(String newPass, String Nick) {
 
-        String cadenaSQL = "UPDATE USUARIOS SET CONTRASENA = '" + newPass +"' WHERE NICK = '" + Nick + "'";
+        String cadenaSQL = "UPDATE USUARIOS SET CONTRASENA = '" + newPass + "' WHERE NICK = '" + Nick + "'";
 
         try {
 
             this.abrir();
             s = c.createStatement();
-            int filas=s.executeUpdate(cadenaSQL);
+            int filas = s.executeUpdate(cadenaSQL);
             s.close();
             this.cerrar();
             return filas;
@@ -401,11 +394,10 @@ public class BD_LDF extends BD_Conector {
         }
 
         return -1;
-        
+
     }
 
     /* FUNCIONES ADMIN */
-
     public void Admin_listarUsuarios() {
 
         String cadenaSQL = "SELECT * FROM USUARIOS";
@@ -416,16 +408,15 @@ public class BD_LDF extends BD_Conector {
             s = c.createStatement();
             reg = s.executeQuery(cadenaSQL);
 
-
             while (reg.next()) {
 
                 if (!reg.getString(1).equalsIgnoreCase("admin")) {
                     java.sql.Date f = reg.getDate("fecha_nacimiento");
                     LocalDate fBuena = f.toLocalDate();
 
-                    System.out.println(Colorinchis.purple("NICK: ") + reg.getString("nick") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre") +
-                            Colorinchis.purple("       APELLIDOS: ") + reg.getString("apellidos") +  Colorinchis.purple("       CORREO: ") + reg.getString("correo") +
-                            Colorinchis.purple("       FECHA DE NACIMIENTO: ") + fBuena + Colorinchis.purple("        PREMIUM: ") +reg.getBoolean("premium"));
+                    System.out.println(Colorinchis.purple("NICK: ") + reg.getString("nick") + Colorinchis.purple("       NOMBRE: ") + reg.getString("nombre")
+                            + Colorinchis.purple("       APELLIDOS: ") + reg.getString("apellidos") + Colorinchis.purple("       CORREO: ") + reg.getString("correo")
+                            + Colorinchis.purple("       FECHA DE NACIMIENTO: ") + fBuena + Colorinchis.purple("        PREMIUM: ") + reg.getBoolean("premium"));
                 }
             }
 
@@ -438,7 +429,7 @@ public class BD_LDF extends BD_Conector {
         }
     }
 
-    public boolean Admin_existeUsuario (String nick) {
+    public boolean Admin_existeUsuario(String nick) {
         String cadenaSQL = "SELECT COUNT(*) FROM USUARIOS WHERE nick LIKE '" + nick + "'";
         int contador = 0;
         try {
@@ -446,7 +437,6 @@ public class BD_LDF extends BD_Conector {
             this.abrir();
             s = c.createStatement();
             reg = s.executeQuery(cadenaSQL);
-
 
             while (reg.next()) {
                 contador = reg.getInt(1);
@@ -465,7 +455,7 @@ public class BD_LDF extends BD_Conector {
         return false;
     }
 
-    public int Admin_borrarUsuario (String nick) {
+    public int Admin_borrarUsuario(String nick) {
         String cadenaSQL = "DELETE FROM USUARIOS WHERE nick LIKE '" + nick + "'";
 
         Admin_borrarMovAsociados(nick);
@@ -486,8 +476,7 @@ public class BD_LDF extends BD_Conector {
         return -1;
     }
 
-
-    private void Admin_borrarMovAsociados (String nick) {
+    private void Admin_borrarMovAsociados(String nick) {
         String cadenaSQL = "DELETE FROM ENTRADAS WHERE nick LIKE '" + nick + "'";
 
         try {
@@ -504,7 +493,7 @@ public class BD_LDF extends BD_Conector {
     }
 
     public int Admin_updateUser(String campo, String valor, String nick) {
-        String cadenaSQL = "UPDATE USUARIOS SET " + campo +  " = '" + valor + "' WHERE nick LIKE '%"+ nick +"%'";
+        String cadenaSQL = "UPDATE USUARIOS SET " + campo + " = '" + valor + "' WHERE nick LIKE '%" + nick + "%'";
 
         try {
 
