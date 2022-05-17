@@ -72,7 +72,7 @@ public class BD_LDF extends BD_Conector {
     public Vector<Cartelera> listarCarteleraFiltrada(String dato, String campo) {
 
         String data = "%" + dato + "%";
-        String cadenaSQL = "SELECT * FROM CARTELERA WHERE ? LIKE  ?";
+        String cadenaSQL = "SELECT * FROM CARTELERA WHERE " + campo + " LIKE  ?";
         Vector<Cartelera> v = new Vector<Cartelera>();
 
         try {
@@ -81,13 +81,17 @@ public class BD_LDF extends BD_Conector {
             ps = c.prepareStatement(cadenaSQL);
 
             ps.setString(1, data);
-            ps.setString(2, campo);
+
 
             reg = ps.executeQuery();
 
             while (reg.next()) {
-                java.sql.Date f = reg.getDate("fecha_hora");
+
+                Time f = reg.getTime("fecha_hora");
+                System.out.println(f.toString());
+                    ///////////////acá
                 LocalDate fBuena = f.toLocalDate();
+                System.out.println(fBuena);
                 v.add(new Cartelera(reg.getString("nombre"), reg.getString("id_cine"), reg.getInt("id_sala"), fBuena, reg.getInt("duracion"), reg.getString("tipo")));
             }
 

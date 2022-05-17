@@ -274,7 +274,7 @@ public class LDF {
                                     m_admin_ges();
                                     opcAdmin2 = sc.nextInt();
                                     sc.nextLine();
-                                    switch(opcAdmin2){
+                                    switch (opcAdmin2) {
                                         case 1:
                                             //Alta usuario
                                             do {
@@ -426,7 +426,7 @@ public class LDF {
                                                 if (!existe) {
                                                     System.out.println(Colorinchis.red("No existe ese nick, prueba otra vez: "));
                                                 }
-                                            }while(!existe);
+                                            } while (!existe);
 
                                             int filas = bd.Admin_borrarUsuario(nick);
 
@@ -479,10 +479,10 @@ public class LDF {
                                                     porcentajeDescuento = sc.nextInt();
                                                     sc.nextLine();
                                                     correcto = true;
-                                                }catch (InputMismatchException imm) {
+                                                } catch (InputMismatchException imm) {
                                                     System.out.println("Error introduce un número");
                                                 }
-                                            }while (!correcto);
+                                            } while (!correcto);
 
                                             Descuentos.Admin_addDescuento(codDescuento, porcentajeDescuento);
                                             break;
@@ -503,8 +503,7 @@ public class LDF {
                                     }
                                     break;
                             }
-                        }while(opcAdmin != 5);
-
+                        } while (opcAdmin != 5);
 
                     } else {
 
@@ -683,7 +682,7 @@ public class LDF {
                     break;
 
                 case 3:
-
+                    comprarEntradas();
                     break;
                 case 4:
 
@@ -717,16 +716,16 @@ public class LDF {
         java.util.regex.Matcher matcher = pattern.matcher(dato);
         return matcher.matches();
     }
-    /* @author Alvaro.p*/
 
+    /* @author Alvaro.p*/
     public static boolean validarFechaTarjeta(String dato) {
 
         Pattern pattern = Pattern.compile("\\d{1,2}/\\d{1,2}");
         java.util.regex.Matcher matcher = pattern.matcher(dato);
         return matcher.matches();
     }
-    /* @author Alvaro.p*/
 
+    /* @author Alvaro.p*/
     public static boolean validarCvTarjeta(String dato) {
 
         Pattern pattern = Pattern.compile("\\d{3}");
@@ -756,23 +755,37 @@ public class LDF {
 
     /* @author Alvaro.p*/
     public static void comprarEntradas() {
-        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
         Vector<Cartelera> v;
-        bd.listarCartelera();
+        v = bd.listarCartelera();
+
+        for (int i = 0; i < v.size(); i++) {
+
+            System.out.println(v.get(i).toString());
+
+        }
+        
         System.out.println("Dime el cine");
         String cines = sc.nextLine();
-        v = bd.listarCarteleraFiltrada("cine", cines);
+        v = bd.listarCarteleraFiltrada(cines, "id_cine") ;
+        
+        for (int i = 0; i < v.size(); i++) {
 
+            System.out.println(v.get(i).toString());
+
+        }
+        
         System.out.println("Dime el nombre de la peli");
         String nombre = sc.nextLine();
+        
         for (int i = 0; i < v.size(); i++) {
-            if (v.get(i).getNombre().contains(nombre)== true)
-          {
-              System.out.println(v.get(i).toString());
+            if (v.get(i).getNombre().toUpperCase().contains(nombre.toUpperCase()) == true) {
+                System.out.println(v.get(i).toString());
             }
         }
         System.out.println(" 1 sesion de mañana \n 2 sesion tarde ");
 
+        sc.nextLine();
     }
 
     public static LocalDate leeFecha(String msgError, String patron) {
@@ -927,43 +940,38 @@ public class LDF {
 
 
     /* MENUS ADMINISTRADOR */
-    /* Autor : Fer */
+ /* Autor : Fer */
     public static void m_admin() {
-        System.out.println(Colorinchis.purple("Bienvenido Bruce:\n") +
-                Colorinchis.red("#1. ") + "Gestionar usuarios\n" +
-                Colorinchis.red("#2. ") + "Modificar entradas\n" +
-                Colorinchis.red("#3. ") + "Modificar cartelera\n" +
-                Colorinchis.red("#4. ") + "Modificar promociones\n" +
-                Colorinchis.red("#5. ") + "Volver");
+        System.out.println(Colorinchis.purple("Bienvenido Bruce:\n")
+                + Colorinchis.red("#1. ") + "Gestionar usuarios\n"
+                + Colorinchis.red("#2. ") + "Modificar entradas\n"
+                + Colorinchis.red("#3. ") + "Modificar cartelera\n"
+                + Colorinchis.red("#4. ") + "Modificar promociones\n"
+                + Colorinchis.red("#5. ") + "Volver");
     }
 
     public static void m_admin_ges() {
-        System.out.println(Colorinchis.purple("Gestión de usuarios:\n") +
-                Colorinchis.red("#1. ") + "Alta usuario\n" +
-                Colorinchis.red("#2. ") + "Baja usuario\n" +
-                Colorinchis.red("#3. ") + "Modificar usuario\n" +
-                Colorinchis.red("#4. ") + "Volver");
+        System.out.println(Colorinchis.purple("Gestión de usuarios:\n")
+                + Colorinchis.red("#1. ") + "Alta usuario\n"
+                + Colorinchis.red("#2. ") + "Baja usuario\n"
+                + Colorinchis.red("#3. ") + "Modificar usuario\n"
+                + Colorinchis.red("#4. ") + "Volver");
     }
 
     public static void m_admin_cart() {
-        System.out.println(Colorinchis.purple("Gestión de cartelera:\n") +
-                Colorinchis.red("#1. ") + "Añadir datos\n" +
-                Colorinchis.red("#2. ") + "Borrar datos\n" +
-                Colorinchis.red("#3. ") + "Modificar datos\n" +
-                Colorinchis.red("#4. ") + "Volver");
+        System.out.println(Colorinchis.purple("Gestión de cartelera:\n")
+                + Colorinchis.red("#1. ") + "Añadir datos\n"
+                + Colorinchis.red("#2. ") + "Borrar datos\n"
+                + Colorinchis.red("#3. ") + "Modificar datos\n"
+                + Colorinchis.red("#4. ") + "Volver");
     }
 
     public static void m_admin_prom() {
-        System.out.println(Colorinchis.purple("Gestión de promociones:\n") +
-                Colorinchis.red("#1. ") + "Añadir promoción\n" +
-                Colorinchis.red("#2. ") + "Borrar promoción\n" +
-                Colorinchis.red("#3. ") + "Modificar promoción\n" +
-                Colorinchis.red("#4. ") + "Volver");
+        System.out.println(Colorinchis.purple("Gestión de promociones:\n")
+                + Colorinchis.red("#1. ") + "Añadir promoción\n"
+                + Colorinchis.red("#2. ") + "Borrar promoción\n"
+                + Colorinchis.red("#3. ") + "Modificar promoción\n"
+                + Colorinchis.red("#4. ") + "Volver");
     }
-
-
-
-
-
 
 }
