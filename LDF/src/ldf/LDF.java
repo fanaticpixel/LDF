@@ -495,7 +495,7 @@ public class LDF {
                                                     case 3:
                                                         break;
                                                 }
-                                            }while (opcAdmin2 < 1 || opcAdmin2 > 3);
+                                            } while (opcAdmin2 < 1 || opcAdmin2 > 3);
 
                                             break;
 
@@ -582,7 +582,7 @@ public class LDF {
                                                 } catch (InputMismatchException imm) {
                                                     System.out.println("Error introduce un número");
                                                 }
-                                            }while (!buenNum);
+                                            } while (!buenNum);
 
                                             Descuentos.Admin_deleteDescuento(codDescuento);
                                             Descuentos.Admin_addDescuento(newCodDesc, newPercent);
@@ -845,37 +845,37 @@ public class LDF {
 
     /* @author Alvaro.p*/
     public static void comprarEntradas() {
-        sc.nextLine();
+        Scanner sc = new Scanner(System.in);
         Vector<Cartelera> v;
-        v = bd.listarCartelera();
-
-        for (int i = 0; i < v.size(); i++) {
-
-            System.out.println(v.get(i).toString());
-
-        }
-        
+        bd.listarCartelera();
         System.out.println("Dime el cine");
         String cines = sc.nextLine();
-        v = bd.listarCarteleraFiltrada(cines, "id_cine") ;
-        
-        for (int i = 0; i < v.size(); i++) {
+        v = bd.listarCarteleraFiltrada("cine", cines);
 
-            System.out.println(v.get(i).toString());
-
-        }
-        
         System.out.println("Dime el nombre de la peli");
         String nombre = sc.nextLine();
-        
         for (int i = 0; i < v.size(); i++) {
-            if (v.get(i).getNombre().toUpperCase().contains(nombre.toUpperCase()) == true) {
+            if (v.get(i).getNombre().contains(nombre) == true) {
                 System.out.println(v.get(i).toString());
             }
         }
-        System.out.println(" 1 sesion de mañana \n 2 sesion tarde ");
+        System.out.println("dime la fecha y hora");
+        String fh = sc.nextLine();
 
-        sc.nextLine();
+        for (int i = 0; i < v.size(); i++) {
+            if (v.get(i).toString().contains(fh) == true) {
+                System.out.println(v.get(i).toString());
+            }
+        }
+
+        System.out.println("Dime la sala");
+        int sala = sc.nextInt();
+        for (int i = 0; i < v.size(); i++) {
+            if (v.get(i).getId_sala() == sala) {
+                System.out.println(v.get(i).toString());
+            }
+        }
+
     }
 
     public static LocalDate leeFecha(String msgError, String patron) {
@@ -1049,10 +1049,10 @@ public class LDF {
     }
 
     public static void m_admin_ges_mod() {
-        System.out.println(Colorinchis.purple("Gestión de usuarios:\n") +
-                Colorinchis.red("#1. ") + "Modificar nick\n" +
-                Colorinchis.red("#2. ") + "Modificar contraseña\n" +
-                Colorinchis.red("#3. ") + "Modificar email");
+        System.out.println(Colorinchis.purple("Gestión de usuarios:\n")
+                + Colorinchis.red("#1. ") + "Modificar nick\n"
+                + Colorinchis.red("#2. ") + "Modificar contraseña\n"
+                + Colorinchis.red("#3. ") + "Modificar email");
     }
 
     public static void m_admin_cart() {
