@@ -261,13 +261,24 @@ public class LDF {
                                 case 6:
                                     limpiar();
                                     //VENTAJAS DE SER PREMIUM
-                                    System.out.println(Colorinchis.rainbow("Ventajas de ser premium:    "));
-                                    System.out.println("#1. Garantía de satis");
-                                    System.out.println("#2. Descuentos de un 20% en el precio de tus entradas");
-                                    System.out.println("#3. Trato exclusivo y personalizado\n");
-                                    System.out.println("#4. Sistema de puntos (No implementado todavía)");
+                                    System.out.println(Colorinchis.rainbow("Ventajas de ser premium:"));
+                                    System.out.println(Colorinchis.purple("#1. ") 
+                                            +  "GARANTÍA DE SATISFACCIÓN:\n" +
+                                               "Si no te gusta la peli, te devolvemos la entrada");
+                                    System.out.println(Colorinchis.purple("#2. ") 
+                                            +  "COMODIDAD:\n" +
+                                               "Incluyen butaca VIP");
+                                    System.out.println(Colorinchis.purple("#3. ") 
+                                            +  "PRECIOS:\n" +
+                                               "Especiales para socios (Podrás elegir butacas VIP a precio rebajado)");
+                                    System.out.println(Colorinchis.purple("#4. ") 
+                                            +  "DESCUENTOS EXCLUSIVOS:\n" +
+                                               "Recibirás en tu e-mail promos exclusivas Cinesacard");
+                                    System.out.println(Colorinchis.purple("#5. ") 
+                                            +  "PUNTOS:\n" +
+                                               "Canjéalos por entradas o productos de bar\n");
+                                    
                                     System.out.println(Colorinchis.black("Pago domicilado (SEPA) de 5€ mensuales", true, true));
-
                                     System.out.println(Colorinchis.green("Pulsa cualquier tecla para continuar"));
                                     sc.nextLine();
                                     sc.nextLine();
@@ -382,24 +393,24 @@ public class LDF {
 
     public static void m_usuarioModificarPerfil() {
         System.out.println(Colorinchis.blue("¿Que desea modificar?\n")
-                + "#1. Modificar Nick\n"
-                + "#2. Modificar Contraseñas\n"
-                + "#3. Volver");
+                + Colorinchis.red("#1.") + " Modificar Nick\n"
+                + Colorinchis.red("#2.") + "Modificar Contraseñas\n"
+                + Colorinchis.red("#3.") + "Volver");
     }
 
     public static void m_usuarioVerPerfil() {
-        System.out.println("#1. Modificar información\n"
-                + "#2. Salir");
+        System.out.println(Colorinchis.red("#1.") + "Modificar información\n"
+                + Colorinchis.red("#2.") + "Salir");
     }
 
     public static void m_menuUsuario() {
-        System.out.println("#1. Ver perfil\n"
-                + "#2. Mirar entradas\n"
-                + "#3. Ver promociones\n"
-                + "#4. Ver cartelera\n"
-                + "#5. Comprar entradas\n"
-                + "#6. Mejorar a premium\n"
-                + "#7. Cerrar sesión");
+        System.out.println(Colorinchis.red("#1.") + "Ver perfil\n"
+                + Colorinchis.red("#2.") + "Mirar entradas\n"
+                + Colorinchis.red("#3.") +"Ver promociones\n"
+                + Colorinchis.red("#4.") +"Ver cartelera\n"
+                + Colorinchis.red("#5.") + "Comprar entradas\n"
+                + Colorinchis.red("#6.") + "Mejorar a premium\n"
+                + Colorinchis.red("#7.") + "Cerrar sesión");
     }
 
     public static void m_cabecera() {
@@ -410,10 +421,11 @@ public class LDF {
 
     public static void m_base() {
         System.out.println(Colorinchis.purple("\nIntroduzca opción:    "));
-        System.out.println("\n#1. Registrarse\n"
-                + "#2. Iniciar Sesión\n"
-                + "#3. Comprar entradas\n"
-                + "#4. Ver cartelera\n#5. Salir");
+        System.out.println(Colorinchis.red("#1.") + "Registrarse\n"
+                + Colorinchis.red("#2.") + "Iniciar Sesión\n"
+                + Colorinchis.red("#3.") + "Comprar entradas\n"
+                + Colorinchis.red("#4.") +"Ver cartelera\n"
+                + Colorinchis.red("#5.") + "Salir");
     }
 
     public static void limpiar() {
@@ -475,7 +487,7 @@ public class LDF {
         bd.listarCartelera();
         System.out.println("Dime el cine");
         String cines = sc.nextLine();
-        v = bd.listarCarteleraFiltrada("cine", cines);
+        v = bd.listarCarteleraFiltrada(cines, "id_cine");
 
         System.out.println("Dime el nombre de la peli");
         String nombre = sc.nextLine();
@@ -539,12 +551,12 @@ public class LDF {
         Vector<Cartelera> v4;
 
         do {
-
-            System.out.println("#1. Ver cartelera completa\n#2. Filtrar cartelera\n#3. Volver");
+           
+            System.out.println(Colorinchis.red("#1.") + "Ver cartelera completa\n" + Colorinchis.red("#2.") + "Filtrar cartelera\n" + Colorinchis.red("#3.") + "Volver");
             opc4 = sc.nextInt();
 
             switch (opc4) {
-
+                
                 case 1:
 
                     sc.nextLine();
@@ -565,7 +577,8 @@ public class LDF {
                     sc.nextLine();
                     limpiar();
                     do {
-                        System.out.println("#1. Filtrar por NOMBRE\n#2. Filtrar por FECHA\n#3. Filtrar por TIPO\n#4. Filtrar por CINE\n#5. Salir");
+                        System.out.println(Colorinchis.red("#1.") + "Filtrar por NOMBRE\n" + Colorinchis.red("#2.") + "Filtrar por FECHA\n" + 
+                                Colorinchis.red("#3.") + "Filtrar por TIPO\n"+ Colorinchis.red("#4.") + "Filtrar por CINE\n" + Colorinchis.red("#5.") + "Salir");
                         opc4 = sc.nextInt();
 
                         switch (opc4) {
@@ -646,6 +659,7 @@ public class LDF {
                                 break;
                         }
                     } while (opc4 != 5);
+                     limpiar();
             }
         } while (opc4 != 3);
 
