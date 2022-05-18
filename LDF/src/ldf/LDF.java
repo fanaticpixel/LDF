@@ -52,7 +52,7 @@ public class LDF {
                 case 1:
 
                     registrarse();
-                    
+
                     break;
 
                 case 2:
@@ -138,151 +138,19 @@ public class LDF {
                                     limpiar();
                                     m_admin_ges();
                                     opcAdmin2 = sc.nextInt();
-                                    sc.nextLine();
+                                    
                                     switch (opcAdmin2) {
                                         case 1:
                                             //Alta usuario
-                                            do {
-                                                limpiar();
-
-                                                System.out.println(Colorinchis.blue("Vas a crear una cuenta, si desea parar en cualquier momento introduzca '0'"));
-
-                                                // PREGUNTAMOS Y VALIDAMOS EL NOMBRE
-                                                do {
-
-                                                    System.out.println("Introduzca el nombre");
-                                                    nombre1 = sc.nextLine();
-
-                                                    if (validarDatos(nombre1) == false) {
-
-                                                        System.out.println("El nombre no puede contener números");
-
-                                                    }
-
-                                                    if (nombre1.equalsIgnoreCase("0")) {
-                                                        break;
-                                                    }
-
-                                                } while (validarDatos(nombre1) == false);
-
-                                                if (nombre1.equalsIgnoreCase("0")) {
-                                                    break;
-                                                }
-
-                                                // PREGUNTAMOS Y VALIDAMOS LOS APELLIDOS
-                                                do {
-
-                                                    System.out.println("Introduzca los apellidos");
-                                                    apellidos1 = sc.nextLine();
-
-                                                    if (validarDatos(apellidos1) == false) {
-
-                                                        System.out.println("Los apellidos no pueden contener numeros");
-
-                                                    }
-
-                                                    if (apellidos1.equalsIgnoreCase("0")) {
-                                                        break;
-                                                    }
-
-                                                } while (validarDatos(apellidos1) == false);
-
-                                                if (apellidos1.equalsIgnoreCase("0")) {
-                                                    break;
-                                                }
-
-                                                // COMPROBAMOS QUE EL NICK NO ESTE YA EN LA BASE DE DATOS
-                                                do {
-                                                    System.out.println("Introduzca el nick");
-                                                    nick1 = sc.nextLine();
-
-                                                    if (nick1.equalsIgnoreCase("0")) {
-                                                        break;
-                                                    }
-
-                                                    v1 = bd.listarCampoTablaString("USUARIOS", "nick");
-
-                                                    flag1 = false;
-
-                                                    for (int i = 0; i < v1.size(); i++) {
-                                                        if (nick1.equalsIgnoreCase(v1.get(i)) == true) {
-                                                            flag1 = true;
-                                                            System.out.println("El nick introducido ( " + nick1 + " ) ya pertenece a un usuario registrado");
-                                                        }
-                                                    }
-
-                                                } while (flag1 == true);
-
-                                                if (nick1.equalsIgnoreCase("0")) {
-                                                    break;
-                                                }
-
-                                                // VALIDAMOS LA FECHA DE NACIMIENTO
-                                                System.out.println("Introduce la fecha de nacimiento");
-                                                fh1 = leeFecha("Fecha incorrecta | Formato: 'dd/mm/yyyy'", "dd/LL/yyyy");
-
-                                                // VALIDAMOS EL CORREO
-                                                do {
-
-                                                    System.out.println("Introduce tu correo");
-                                                    correo1 = sc.nextLine();
-
-                                                    if (validaEmail(correo1) == false) {
-                                                        System.out.println("El correo introducido no es válido");
-                                                    }
-
-                                                } while (validaEmail(correo1) == false);
-
-                                                // PREGUNTAMOS POR LA CONTRASEÑA
-                                                System.out.println("Introduce tu contraseña");
-                                                pass1 = sc.nextLine();
-
-                                                if (pass1.equalsIgnoreCase("0")) {
-                                                    break;
-                                                }
-
-                                                limpiar();
-
-                                                Usuario u = new Usuario(nombre1, apellidos1, nick1, fh1, correo1, pass1);
-
-                                                System.out.println(u.toString());
-
-                                                System.out.println(Colorinchis.green("\nIntroduce 'No' si quieres volver a rellenar los datos"));
-
-                                                resp1 = sc.nextLine();
-
-                                                try {
-
-                                                    int filas1 = bd.añadirUsuario(u);
-
-                                                    switch (filas1) {
-
-                                                        case 1:
-
-                                                            System.out.println(Colorinchis.rainbow("\nUsuario añadido con éxito"));
-                                                            break;
-
-                                                        case 2:
-
-                                                            System.out.println(Colorinchis.purple("\nNo se ha podido añadir el usuario, contacte con soporte"));
-
-                                                    }
-                                                } catch (Exception e) {
-
-                                                    e.printStackTrace();
-                                                }
-
-                                                limpiar();
-
-                                            } while (resp1.equalsIgnoreCase("no"));
-
-                                            limpiar();
+                                            sc.nextLine();
+                                            registrarse();
 
                                             break;
 
                                         case 2:
                                             //BAJA USUARIO
                                             limpiar();
+                                            sc.nextLine();
                                             String Admin_nick;
                                             boolean existe = false;
                                             bd.Admin_listarUsuarios();
@@ -593,7 +461,7 @@ public class LDF {
 
                         do {
                             limpiar();
-                            System.out.println("#1. Ver perfil\n#2. Mirar entradas\n#3. Ver promociones\n#4. Ver cartelera\n#5. Comprar entradas\n#6. Mejorar a premium\n#7. Cerrar sesión");
+                            m_menuUsuario();
                             opc2 = sc.nextInt();
 
                             switch (opc2) {
@@ -606,7 +474,7 @@ public class LDF {
 
                                         bd.listarUser(nick2);
 
-                                        System.out.println("#1. Modificar información\n#2. Salir");
+                                        m_usuarioVerPerfil();
                                         opc2 = sc.nextInt();
 
                                         sc.nextLine();
@@ -619,7 +487,7 @@ public class LDF {
                                                 do {
 
                                                     bd.listarUser(nick2);
-                                                    System.out.println(Colorinchis.blue("¿Que desea modificar?\n") + "#1. Modificar Nick\n#2. Modificar Contraseñas\n#3. Volver");
+                                                    m_usuarioModificarPerfil();
                                                     opc2 = sc.nextInt();
 
                                                     switch (opc2) {
@@ -628,52 +496,7 @@ public class LDF {
                                                             limpiar();
                                                             sc.nextLine();
 
-                                                            do {
-                                                                System.out.println("Introduce un nuevo nick");
-                                                                String newNick = sc.nextLine();
-
-                                                                v1 = bd.listarCampoTablaString("USUARIOS", "nick");
-
-                                                                flag1 = false;
-
-                                                                for (int i = 0; i < v1.size(); i++) {
-                                                                    if (newNick.equalsIgnoreCase(v1.get(i)) == true) {
-                                                                        flag1 = true;
-                                                                        System.out.println("El nick introducido ( " + newNick + " ) ya pertenece a un usuario registrado");
-                                                                        break;
-                                                                    }
-                                                                }
-
-                                                                if (flag1 == true) {
-                                                                    continue;
-                                                                }
-
-                                                                try {
-
-                                                                    int filas1 = bd.cambiarNick(newNick, nick2);
-
-                                                                    switch (filas1) {
-
-                                                                        case 1:
-
-                                                                            System.out.println("\nUsuario modificado con éxito");
-                                                                            break;
-
-                                                                        case 2:
-
-                                                                            System.out.println("\nNo se ha podido añadir el usuario, contacte con soporte");
-
-                                                                    }
-                                                                } catch (Exception e) {
-
-                                                                    e.printStackTrace();
-                                                                }
-
-                                                                limpiar();
-
-                                                                nick2 = newNick;
-
-                                                            } while (flag1 == true);
+                                                            nick2 = usuario_ModificarPerfil(nick2);
 
                                                             break;
 
@@ -682,31 +505,7 @@ public class LDF {
                                                             limpiar();
                                                             sc.nextLine();
 
-                                                            System.out.println("Introduce una nueva contraseña");
-                                                            String newPass = sc.nextLine();
-
-                                                            try {
-
-                                                                int filas1 = bd.cambiarContrasena(newPass, nick2);
-
-                                                                switch (filas1) {
-
-                                                                    case 1:
-
-                                                                        System.out.println("\nUsuario modificado con éxito");
-                                                                        break;
-
-                                                                    case 2:
-
-                                                                        System.out.println("\nNo se ha podido añadir el usuario, contacte con soporte");
-
-                                                                }
-                                                            } catch (Exception e) {
-
-                                                                e.printStackTrace();
-                                                            }
-
-                                                            limpiar();
+                                                            usuario_ModificarContraseña(nick2);
 
                                                             break;
 
@@ -730,6 +529,7 @@ public class LDF {
                                     break;
 
                                 case 3:
+
                                     Descuentos.mostrarDescuentosActuales();
                                     System.out.println(Colorinchis.green("Pulse cualquier tecla para continuar."));
                                     sc.nextLine();
@@ -781,6 +581,108 @@ public class LDF {
 
         } while (opc1 != 5);
 
+    }
+
+    public static void usuario_ModificarContraseña(String nick2) {
+        System.out.println("Introduce una nueva contraseña");
+        String newPass = sc.nextLine();
+
+        try {
+
+            int filas1 = bd.cambiarContrasena(newPass, nick2);
+
+            switch (filas1) {
+
+                case 1:
+
+                    System.out.println("\nUsuario modificado con éxito");
+                    break;
+
+                case 2:
+
+                    System.out.println("\nNo se ha podido añadir el usuario, contacte con soporte");
+
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        limpiar();
+    }
+
+    public static String usuario_ModificarPerfil(String nick2) {
+        Vector<String> v1;
+        Boolean flag1;
+        do {
+            System.out.println("Introduce un nuevo nick");
+            String newNick = sc.nextLine();
+
+            v1 = bd.listarCampoTablaString("USUARIOS", "nick");
+
+            flag1 = false;
+
+            for (int i = 0; i < v1.size(); i++) {
+                if (newNick.equalsIgnoreCase(v1.get(i)) == true) {
+                    flag1 = true;
+                    System.out.println("El nick introducido ( " + newNick + " ) ya pertenece a un usuario registrado");
+                    break;
+                }
+            }
+
+            if (flag1 == true) {
+                continue;
+            }
+
+            try {
+
+                int filas1 = bd.cambiarNick(newNick, nick2);
+
+                switch (filas1) {
+
+                    case 1:
+
+                        System.out.println("\nUsuario modificado con éxito");
+                        break;
+
+                    case 2:
+
+                        System.out.println("\nNo se ha podido añadir el usuario, contacte con soporte");
+
+                }
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+
+            limpiar();
+
+            nick2 = newNick;
+
+        } while (flag1 == true);
+        return nick2;
+    }
+
+    public static void m_usuarioModificarPerfil() {
+        System.out.println(Colorinchis.blue("¿Que desea modificar?\n")
+                + "#1. Modificar Nick\n"
+                + "#2. Modificar Contraseñas\n"
+                + "#3. Volver");
+    }
+
+    public static void m_usuarioVerPerfil() {
+        System.out.println("#1. Modificar información\n"
+                + "#2. Salir");
+    }
+
+    public static void m_menuUsuario() {
+        System.out.println("#1. Ver perfil\n"
+                + "#2. Mirar entradas\n"
+                + "#3. Ver promociones\n"
+                + "#4. Ver cartelera\n"
+                + "#5. Comprar entradas\n"
+                + "#6. Mejorar a premium\n"
+                + "#7. Cerrar sesión");
     }
 
     public static void m_cabecera() {
@@ -1180,8 +1082,10 @@ public class LDF {
         limpiar();
 
     }
+
     /**
      * Método para validar que los datos introducidos son números siempre
+     *
      * @return un int 100%
      */
     public static int esInt() {
@@ -1195,12 +1099,13 @@ public class LDF {
                 System.out.println(Colorinchis.red("Error! debes introducir un int"));
                 sc.nextLine();
             }
-        } while(!pasaPasa);
+        } while (!pasaPasa);
         return numero;
     }
 
     /**
      * Método para validar que los datos introducidos son números siempre
+     *
      * @return un double 100%
      */
     public static double esDouble() {
@@ -1214,7 +1119,7 @@ public class LDF {
                 System.out.println(Colorinchis.red("Error! debes introducir un double"));
                 sc.nextLine();
             }
-        } while(!pasaPasa);
+        } while (!pasaPasa);
         return numero;
 
     }
