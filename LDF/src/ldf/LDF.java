@@ -317,7 +317,7 @@ public class LDF {
                                                 }
                                             } while (!salaNum);
 
-                                            System.out.println("Anota fecha en formato dd/mm/aaaa: ");
+                                            System.out.println("Anota fecha en formato dd/mm/yyyy: ");
                                             Admin_fecha_hora = leeFecha("Fecha incorrecta | Formato: 'dd/mm/yyyy'", "dd/LL/yyyy");
 
                                             System.out.println("Anota la duración de la película: ");
@@ -332,7 +332,16 @@ public class LDF {
                                                 }
                                             } while (!Admin_tipoPeli.equalsIgnoreCase("CASTELLANO") && !Admin_tipoPeli.equalsIgnoreCase("VOSE"));
 
-                                            //Cartelera c1 = new Cartelera(Admin_nomPelicula, Admin_idCine, Admin_idSala, Admin_fecha_hora, Admin_duracion, Admin_tipoPeli);
+                                            Cartelera c1 = new Cartelera(Admin_nomPelicula, Admin_idCine, Admin_idSala, Admin_fecha_hora, Admin_duracion, Admin_tipoPeli);
+
+                                            if (bd.Admin_insertCartelera(c1)) {
+                                                System.out.println(Colorinchis.green("Cartelera actualizada"));
+                                            } else {
+                                                System.out.println(Colorinchis.red("No se ha podido actualizar cartelera"));
+                                            }
+                                            System.out.println("Pulsa enter para continuar");
+                                            sc.nextLine();
+
                                             break;
                                         case 2:
 

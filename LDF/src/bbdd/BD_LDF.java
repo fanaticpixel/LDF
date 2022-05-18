@@ -560,7 +560,7 @@ public class BD_LDF extends BD_Conector {
     }
 
     public boolean Admin_insertCartelera (Cartelera c1) {
-        String cadenaSQL = "INSERT INTO CARTELERA VALUES = (?, ?, ?, ?, ?, ?)";
+        String cadenaSQL = "INSERT INTO CARTELERA VALUES (?, ?, ?, ?, ?, ?)";
         int exito = -1;
         try {
 

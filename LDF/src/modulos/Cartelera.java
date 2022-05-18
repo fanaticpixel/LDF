@@ -33,6 +33,15 @@ public class Cartelera {
         this.tipo = tipo;
     }
 
+    public Cartelera(String nombre, String id_cine, int id_sala, LocalDate fecha_hora, int duracion, String tipo) {
+        this.nombre = nombre;
+        this.id_cine = id_cine;
+        this.id_sala = id_sala;
+        this.fecha_hora = fecha_hora;
+        this.duracion = duracion;
+        this.tipo = tipo;
+    }
+
     public LocalDate getFecha_hora() {
         return fecha_hora;
     }
