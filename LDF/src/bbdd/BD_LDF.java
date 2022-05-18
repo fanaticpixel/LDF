@@ -41,7 +41,6 @@ public class BD_LDF extends BD_Conector {
 
             while (reg.next()) {
                 Time f = reg.getTime("fecha_hora");
-                System.out.println(f.toString());
 
                 Date fecha = reg.getDate("fecha_hora");
                 LocalDate fBuena = fecha.toLocalDate();
@@ -59,6 +58,38 @@ public class BD_LDF extends BD_Conector {
 
         return v;
 
+    }
+    
+    public Cartelera listarPeliculaCartelera(String nombre, String id_cine, int id_sala, String hora){
+
+        String cadenaSQL = "SELECT * FROM CARTELERA WHERE NOMBRE LIKE '%" + nombre +"%' AND ID_CINE LIKE '%" + id_cine + "%' AND ID_SALA = " + id_sala + " AND FECHA_HORA LIKE '%"+ hora + "%'";
+        Cartelera ca = null;
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+            
+            while (reg.next()) {
+                Time f = reg.getTime("fecha_hora");
+
+                Date fecha = reg.getDate("fecha_hora");
+                LocalDate fBuena = fecha.toLocalDate();
+
+
+                ca = new Cartelera(reg.getString("nombre"), reg.getString("id_cine"), reg.getInt("id_sala"), fBuena, f, reg.getInt("duracion"), reg.getString("tipo"));
+            }
+
+            this.cerrar();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return ca;
+    
+    
     }
 
     /**
@@ -126,6 +157,34 @@ public class BD_LDF extends BD_Conector {
 
             while (reg.next()) {
                 v.add(reg.getString(1));
+            }
+
+            this.cerrar();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return v;
+
+    }
+    
+    public Vector<Integer> listarFilaButaca(int sala, String cine) {
+
+        String cadenaSQL = "SELECT NUM_FILA, NUM_BUTACA FROM SALAS WHERE ID_SALA = " + sala + " AND ID_CINE LIKE '" + cine + "'";
+        Vector<Integer> v = new Vector<Integer>();
+
+        try {
+
+            this.abrir();
+            ps = c.prepareStatement(cadenaSQL);
+
+            reg = ps.executeQuery();
+
+            while (reg.next()) {
+                v.add(reg.getInt("NUM_FILA"));
+                v.add(reg.getInt(("NUM_BUTACA"))/reg.getInt("NUM_FILA"));
             }
 
             this.cerrar();

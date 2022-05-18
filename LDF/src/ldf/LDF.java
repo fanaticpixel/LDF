@@ -18,6 +18,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Vector;
 import java.util.regex.Pattern;
+import modulos.Entrada;
 
 /**
  *
@@ -132,7 +133,7 @@ public class LDF {
                                     limpiar();
                                     m_admin_ges();
                                     opcAdmin2 = sc.nextInt();
-                                    
+
                                     switch (opcAdmin2) {
                                         case 1:
                                             // ALTA USUARIO
@@ -262,22 +263,22 @@ public class LDF {
                                     limpiar();
                                     //VENTAJAS DE SER PREMIUM
                                     System.out.println(Colorinchis.rainbow("Ventajas de ser premium:"));
-                                    System.out.println(Colorinchis.purple("#1. ") 
-                                            +  "GARANTÍA DE SATISFACCIÓN:\n" +
-                                               "Si no te gusta la peli, te devolvemos la entrada");
-                                    System.out.println(Colorinchis.purple("#2. ") 
-                                            +  "COMODIDAD:\n" +
-                                               "Incluyen butaca VIP");
-                                    System.out.println(Colorinchis.purple("#3. ") 
-                                            +  "PRECIOS:\n" +
-                                               "Especiales para socios (Podrás elegir butacas VIP a precio rebajado)");
-                                    System.out.println(Colorinchis.purple("#4. ") 
-                                            +  "DESCUENTOS EXCLUSIVOS:\n" +
-                                               "Recibirás en tu e-mail promos exclusivas Cinesacard");
-                                    System.out.println(Colorinchis.purple("#5. ") 
-                                            +  "PUNTOS:\n" +
-                                               "Canjéalos por entradas o productos de bar\n");
-                                    
+                                    System.out.println(Colorinchis.purple("#1. ")
+                                            + "GARANTÍA DE SATISFACCIÓN:\n"
+                                            + "Si no te gusta la peli, te devolvemos la entrada");
+                                    System.out.println(Colorinchis.purple("#2. ")
+                                            + "COMODIDAD:\n"
+                                            + "Incluyen butaca VIP");
+                                    System.out.println(Colorinchis.purple("#3. ")
+                                            + "PRECIOS:\n"
+                                            + "Especiales para socios (Podrás elegir butacas VIP a precio rebajado)");
+                                    System.out.println(Colorinchis.purple("#4. ")
+                                            + "DESCUENTOS EXCLUSIVOS:\n"
+                                            + "Recibirás en tu e-mail promos exclusivas Cinesacard");
+                                    System.out.println(Colorinchis.purple("#5. ")
+                                            + "PUNTOS:\n"
+                                            + "Canjéalos por entradas o productos de bar\n");
+
                                     System.out.println(Colorinchis.black("Pago domicilado (SEPA) de 5€ mensuales", true, true));
                                     System.out.println(Colorinchis.green("Pulsa cualquier tecla para continuar"));
                                     sc.nextLine();
@@ -294,7 +295,8 @@ public class LDF {
                     break;
 
                 case 3:
-                    comprarEntradas();
+                    limpiar();
+                    comprarEntradas("a");
                     break;
                 case 4:
 
@@ -406,8 +408,8 @@ public class LDF {
     public static void m_menuUsuario() {
         System.out.println(Colorinchis.red("#1.") + "Ver perfil\n"
                 + Colorinchis.red("#2.") + "Mirar entradas\n"
-                + Colorinchis.red("#3.") +"Ver promociones\n"
-                + Colorinchis.red("#4.") +"Ver cartelera\n"
+                + Colorinchis.red("#3.") + "Ver promociones\n"
+                + Colorinchis.red("#4.") + "Ver cartelera\n"
                 + Colorinchis.red("#5.") + "Comprar entradas\n"
                 + Colorinchis.red("#6.") + "Mejorar a premium\n"
                 + Colorinchis.red("#7.") + "Cerrar sesión");
@@ -424,7 +426,7 @@ public class LDF {
         System.out.println(Colorinchis.red("#1.") + "Registrarse\n"
                 + Colorinchis.red("#2.") + "Iniciar Sesión\n"
                 + Colorinchis.red("#3.") + "Comprar entradas\n"
-                + Colorinchis.red("#4.") +"Ver cartelera\n"
+                + Colorinchis.red("#4.") + "Ver cartelera\n"
                 + Colorinchis.red("#5.") + "Salir");
     }
 
@@ -480,37 +482,90 @@ public class LDF {
         return matcher.matches();
     }
 
-    /* @author Alvaro.p*/
-    public static void comprarEntradas() {
-        Scanner sc = new Scanner(System.in);
+    public static void comprarEntradas(String nick2) {
+        sc.nextLine();
         Vector<Cartelera> v;
-        bd.listarCartelera();
+        v = bd.listarCartelera();
+
+        for (int i = 0; i < v.size(); i++) {
+
+            System.out.println(v.get(i).toString());
+
+        }
+
         System.out.println("Dime el cine");
         String cines = sc.nextLine();
         v = bd.listarCarteleraFiltrada(cines, "id_cine");
 
+        limpiar();
+
+        for (int i = 0; i < v.size(); i++) {
+
+            System.out.println(v.get(i).toString());
+
+        }
+
         System.out.println("Dime el nombre de la peli");
         String nombre = sc.nextLine();
+
+        limpiar();
+
         for (int i = 0; i < v.size(); i++) {
-            if (v.get(i).getNombre().contains(nombre) == true) {
+            if (v.get(i).getNombre().toUpperCase().contains(nombre.toUpperCase()) == true) {
                 System.out.println(v.get(i).toString());
             }
         }
-        System.out.println("dime la fecha y hora");
+
+        System.out.println("Dime fecha y hora (aaaa-mm-dd-hh:mi)");
         String fh = sc.nextLine();
 
+        limpiar();
+
         for (int i = 0; i < v.size(); i++) {
-            if (v.get(i).toString().contains(fh) == true) {
+            if (v.get(i).toString().contains(fh) == true && v.get(i).getNombre().toUpperCase().contains(nombre.toUpperCase()) == true) {
                 System.out.println(v.get(i).toString());
             }
         }
 
         System.out.println("Dime la sala");
         int sala = sc.nextInt();
+
+        limpiar();
+
         for (int i = 0; i < v.size(); i++) {
-            if (v.get(i).getId_sala() == sala) {
+            if (v.get(i).getId_sala() == sala && v.get(i).toString().contains(fh) == true && v.get(i).getNombre().toUpperCase().contains(nombre.toUpperCase()) == true) {
                 System.out.println(v.get(i).toString());
             }
+        }
+        
+        Cartelera ca = bd.listarPeliculaCartelera(nombre, cines, sala, fh);
+
+        System.out.println("¿Cuántas entradas quiere?");
+
+        int numEntradas = esInt();
+        int nF, nB;
+
+        Vector<Integer> f = bd.listarFilaButaca(sala, cines);
+
+        for (int i = 0; i < numEntradas; i++) {
+
+            do {
+                
+                System.out.println("Introduce la fila (1 - "+ f.get(0) + ")" );             
+                nF = esInt();
+                
+            } while (nF < 1 || nF > f.get(0));
+            
+            
+            do {
+                
+                System.out.println("Introduce la butaca (1 - "+ f.get(1) + ")" );             
+                nB = esInt();
+                
+            } while (nB < 1 || nB > f.get(1));
+            
+            
+            
         }
 
     }
@@ -551,12 +606,12 @@ public class LDF {
         Vector<Cartelera> v4;
 
         do {
-           
+
             System.out.println(Colorinchis.red("#1.") + "Ver cartelera completa\n" + Colorinchis.red("#2.") + "Filtrar cartelera\n" + Colorinchis.red("#3.") + "Volver");
             opc4 = sc.nextInt();
 
             switch (opc4) {
-                
+
                 case 1:
 
                     sc.nextLine();
@@ -577,8 +632,8 @@ public class LDF {
                     sc.nextLine();
                     limpiar();
                     do {
-                        System.out.println(Colorinchis.red("#1.") + "Filtrar por NOMBRE\n" + Colorinchis.red("#2.") + "Filtrar por FECHA\n" + 
-                                Colorinchis.red("#3.") + "Filtrar por TIPO\n"+ Colorinchis.red("#4.") + "Filtrar por CINE\n" + Colorinchis.red("#5.") + "Salir");
+                        System.out.println(Colorinchis.red("#1.") + "Filtrar por NOMBRE\n" + Colorinchis.red("#2.") + "Filtrar por FECHA\n"
+                                + Colorinchis.red("#3.") + "Filtrar por TIPO\n" + Colorinchis.red("#4.") + "Filtrar por CINE\n" + Colorinchis.red("#5.") + "Salir");
                         opc4 = sc.nextInt();
 
                         switch (opc4) {
@@ -659,7 +714,7 @@ public class LDF {
                                 break;
                         }
                     } while (opc4 != 5);
-                     limpiar();
+                    limpiar();
             }
         } while (opc4 != 3);
 
@@ -857,7 +912,7 @@ public class LDF {
 
 
     /* PARTE ADMINISTRADOR */
-    /* Autor : Fer */
+ /* Autor : Fer */
     public static void m_admin() {
         System.out.println(Colorinchis.purple("Bienvenido Bruce:\n")
                 + Colorinchis.red("#1. ") + "Gestionar usuarios\n"
@@ -1024,12 +1079,12 @@ public class LDF {
             case 1:
                 limpiar();
                 String Admin_nomPelicula,
-                        Admin_idCine,
-                        Admin_tipoPeli;
+                 Admin_idCine,
+                 Admin_tipoPeli;
                 int Admin_idSala = -1;
                 LocalDate Admin_fecha_hora;
                 boolean idExiste = false,
-                        salaNum = false;
+                 salaNum = false;
                 System.out.println("Anote nombre de la película: ");
                 Admin_nomPelicula = sc.nextLine();
 
@@ -1086,7 +1141,7 @@ public class LDF {
             case 3:
                 limpiar();
                 String Admin_campo_mod,
-                        Admin_newValue;
+                 Admin_newValue;
                 int Admin_valor_num;
                 boolean Admin_vali;
 

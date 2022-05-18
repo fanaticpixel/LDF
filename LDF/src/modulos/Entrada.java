@@ -22,6 +22,17 @@ public class Entrada {
    private LocalDate fecha_hora;
    private double precio;
 
+    public Entrada(String id_cine, String id_sala, String nombre, int fila, int butaca, LocalDate fecha_hora) {
+        this.id_cine = id_cine;
+        this.id_sala = id_sala;
+        this.nombre = nombre;
+        this.fila = fila;
+        this.butaca = butaca;
+        this.fecha_hora = fecha_hora;
+    }
+
+   
+   
     public String getNick() {
         return nick;
     }
