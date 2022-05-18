@@ -33,20 +33,17 @@ public class LDF {
         int opc1, opc2;
         String nombre1, apellidos1, nick1, correo1, pass1, resp1;
         LocalDate fh1;
-        String nick2, pass2, passRet2;
         Vector<String> v1;
+
+        String nick2, pass2, passRet2;
         Boolean flag1, flag2;
 
         do {
 
             limpiar();
 
-            System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
-            System.out.println(Colorinchis.blue("|                Bienvenido a LDF                |"));
-            System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
-
-            System.out.println(Colorinchis.purple("\nIntroduzca opción:    "));
-            System.out.println("\n#1. Registrarse\n#2. Iniciar Sesión\n#3. Comprar entradas\n#4. Ver cartelera\n#5. Salir");
+            m_cabecera();
+            m_base();
             opc1 = sc.nextInt();
 
             switch (opc1) {
@@ -54,144 +51,8 @@ public class LDF {
                 // REGISTRARSE
                 case 1:
 
-                    sc.nextLine();
-
-                    do {
-                        limpiar();
-
-                        System.out.println(Colorinchis.blue("Vas a crear una cuenta, si desea parar en cualquier momento introduzca '0'"));
-
-                        // PREGUNTAMOS Y VALIDAMOS EL NOMBRE
-                        do {
-
-                            System.out.println("Introduzca su nombre");
-                            nombre1 = sc.nextLine();
-
-                            if (validarDatos(nombre1) == false) {
-
-                                System.out.println("El nombre no puede contener numeros");
-
-                            }
-
-                            if (nombre1.equalsIgnoreCase("0")) {
-                                break;
-                            }
-
-                        } while (validarDatos(nombre1) == false);
-
-                        if (nombre1.equalsIgnoreCase("0")) {
-                            break;
-                        }
-
-                        // PREGUNTAMOS Y VALIDAMOS LOS APELLIDOS
-                        do {
-
-                            System.out.println("Introduce tus apellidos");
-                            apellidos1 = sc.nextLine();
-
-                            if (validarDatos(apellidos1) == false) {
-
-                                System.out.println("Los apellidos no pueden contener numeros");
-
-                            }
-
-                            if (apellidos1.equalsIgnoreCase("0")) {
-                                break;
-                            }
-
-                        } while (validarDatos(apellidos1) == false);
-
-                        if (apellidos1.equalsIgnoreCase("0")) {
-                            break;
-                        }
-
-                        // COMPROBAMOS QUE EL NICK NO ESTE YA EN LA BASE DE DATOS
-                        do {
-                            System.out.println("Introduce tu nick");
-                            nick1 = sc.nextLine();
-
-                            if (nick1.equalsIgnoreCase("0")) {
-                                break;
-                            }
-
-                            v1 = bd.listarCampoTablaString("USUARIOS", "nick");
-
-                            flag1 = false;
-
-                            for (int i = 0; i < v1.size(); i++) {
-                                if (nick1.equalsIgnoreCase(v1.get(i)) == true) {
-                                    flag1 = true;
-                                    System.out.println("El nick introducido ( " + nick1 + " ) ya pertenece a un usuario registrado");
-                                }
-                            }
-
-                        } while (flag1 == true);
-
-                        if (nick1.equalsIgnoreCase("0")) {
-                            break;
-                        }
-
-                        // VALIDAMOS LA FECHA DE NACIMIENTO
-                        System.out.println("Introduce la fecha de nacimiento");
-                        fh1 = leeFecha("Fecha incorrecta | Formato: 'dd/mm/yyyy'", "dd/LL/yyyy");
-
-                        // VALIDAMOS EL CORREO
-                        do {
-
-                            System.out.println("Introduce tu correo");
-                            correo1 = sc.nextLine();
-
-                            if (validaEmail(correo1) == false) {
-                                System.out.println("El correo introducido no es válido");
-                            }
-
-                        } while (validaEmail(correo1) == false);
-
-                        // PREGUNTAMOS POR LA CONTRASEÑA
-                        System.out.println("Introduce tu contraseña");
-                        pass1 = sc.nextLine();
-
-                        if (pass1.equalsIgnoreCase("0")) {
-                            break;
-                        }
-
-                        limpiar();
-
-                        Usuario u = new Usuario(nombre1, apellidos1, nick1, fh1, correo1, pass1);
-
-                        System.out.println(u.toString());
-
-                        System.out.println(Colorinchis.green("\nIntroduce 'No' si quieres volver a rellenar los datos"));
-
-                        resp1 = sc.nextLine();
-
-                        try {
-
-                            int filas1 = bd.añadirUsuario(u);
-
-                            switch (filas1) {
-
-                                case 1:
-
-                                    System.out.println(Colorinchis.rainbow("\nUsuario añadido con éxito"));
-                                    break;
-
-                                case 2:
-
-                                    System.out.println(Colorinchis.purple("\nNo se ha podido añadir el usuario, contacte con soporte"));
-
-                            }
-                        } catch (Exception e) {
-
-                            e.printStackTrace();
-                        }
-
-                        limpiar();
-
-                    } while (resp1.equalsIgnoreCase("no"));
-
-                    limpiar();
-
+                    registrarse();
+                    
                     break;
 
                 case 2:
@@ -519,7 +380,7 @@ public class LDF {
                                                             if (!Admin_emailB) {
                                                                 System.out.println("Email con formato incorrecto");
                                                             }
-                                                        }while(!Admin_emailB);
+                                                        } while (!Admin_emailB);
 
                                                         Admin_filas = bd.Admin_updateUser("correo", email, Admin_nick);
 
@@ -557,10 +418,13 @@ public class LDF {
                                     switch (opcAdmin2) {
                                         case 1:
                                             limpiar();
-                                            String Admin_nomPelicula, Admin_idCine, Admin_tipoPeli;
+                                            String Admin_nomPelicula,
+                                             Admin_idCine,
+                                             Admin_tipoPeli;
                                             int Admin_idSala = -1;
                                             LocalDate Admin_fecha_hora;
-                                            boolean idExiste = false, salaNum = false;
+                                            boolean idExiste = false,
+                                             salaNum = false;
                                             System.out.println("Anote nombre de la película: ");
                                             Admin_nomPelicula = sc.nextLine();
 
@@ -573,17 +437,17 @@ public class LDF {
                                                 if (!idExiste) {
                                                     System.out.println("El cine indicado no existe");
                                                 }
-                                            }while(!idExiste);
+                                            } while (!idExiste);
 
                                             do {
                                                 System.out.println("Anota id de sala:");
                                                 try {
                                                     Admin_idSala = sc.nextInt();
                                                     salaNum = true;
-                                                }catch(InputMismatchException imme) {
+                                                } catch (InputMismatchException imme) {
                                                     System.out.println("Introduce un número");
                                                 }
-                                            }while(!salaNum);
+                                            } while (!salaNum);
 
                                             System.out.println("Anota fecha en formato dd/mm/aaaa: ");
                                             Admin_fecha_hora = leeFecha("Fecha incorrecta | Formato: 'dd/mm/yyyy'", "dd/LL/yyyy");
@@ -598,17 +462,17 @@ public class LDF {
                                                 if (!Admin_tipoPeli.equalsIgnoreCase("CASTELLANO") && !Admin_tipoPeli.equalsIgnoreCase("VOSE")) {
                                                     System.out.println("La película debe ser CASTELLANO o VOSE");
                                                 }
-                                            }while(!Admin_tipoPeli.equalsIgnoreCase("CASTELLANO") && !Admin_tipoPeli.equalsIgnoreCase("VOSE"));
+                                            } while (!Admin_tipoPeli.equalsIgnoreCase("CASTELLANO") && !Admin_tipoPeli.equalsIgnoreCase("VOSE"));
 
                                             //Cartelera c1 = new Cartelera(Admin_nomPelicula, Admin_idCine, Admin_idSala, Admin_fecha_hora, Admin_duracion, Admin_tipoPeli);
-
                                             break;
                                         case 2:
 
                                             break;
                                         case 3:
                                             limpiar();
-                                            String Admin_campo_mod, Admin_newValue;
+                                            String Admin_campo_mod,
+                                             Admin_newValue;
                                             int Admin_valor_num;
                                             boolean Admin_vali;
 
@@ -634,7 +498,7 @@ public class LDF {
                                                     System.out.println("Error, valor se encuentra en la tabla");
                                                     Admin_vali = false;
                                                 }
-                                            }while(!Admin_vali);
+                                            } while (!Admin_vali);
                                             break;
                                         case 4:
                                             break;
@@ -881,7 +745,7 @@ public class LDF {
                                     limpiar();
                                     //VENTAJAS DE SER PREMIUM
                                     System.out.println(Colorinchis.rainbow("Ventajas de ser premium:    "));
-                                    System.out.println("#1. Si no te gusta la película, te devolvemos la entrada");
+                                    System.out.println("#1. Garantía de satis");
                                     System.out.println("#2. Descuentos de un 20% en el precio de tus entradas");
                                     System.out.println("#3. Trato exclusivo y personalizado\n");
                                     System.out.println("#4. Sistema de puntos (No implementado todavía)");
@@ -913,12 +777,24 @@ public class LDF {
                 case 5:
                     System.err.println("El programa se cerrará");
                     System.exit(0);
-                default:
-                    System.out.println("La opción introducida no es correcta");
             }
 
         } while (opc1 != 5);
 
+    }
+
+    public static void m_cabecera() {
+        System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
+        System.out.println(Colorinchis.blue("|                Bienvenido a LDF                |"));
+        System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
+    }
+
+    public static void m_base() {
+        System.out.println(Colorinchis.purple("\nIntroduzca opción:    "));
+        System.out.println("\n#1. Registrarse\n"
+                + "#2. Iniciar Sesión\n"
+                + "#3. Comprar entradas\n"
+                + "#4. Ver cartelera\n#5. Salir");
     }
 
     public static void limpiar() {
@@ -1044,7 +920,7 @@ public class LDF {
         Vector<Cartelera> v4;
 
         do {
-            limpiar();
+
             System.out.println("#1. Ver cartelera completa\n#2. Filtrar cartelera\n#3. Volver");
             opc4 = sc.nextInt();
 
@@ -1158,9 +1034,156 @@ public class LDF {
 
     }
 
+    public static void registrarse() {
+
+        String nombre1, apellidos1, nick1, correo1, pass1, resp1;
+        LocalDate fh1;
+        Vector<String> v1;
+        Boolean flag1;
+
+        sc.nextLine();
+
+        do {
+            limpiar();
+
+            System.out.println(Colorinchis.blue("Vas a crear una cuenta, si desea parar en cualquier momento introduzca '0'"));
+
+            // PREGUNTAMOS Y VALIDAMOS EL NOMBRE
+            do {
+
+                System.out.println("Introduzca su nombre");
+                nombre1 = sc.nextLine();
+
+                if (validarDatos(nombre1) == false) {
+
+                    System.out.println("El nombre no puede contener numeros");
+
+                }
+
+                if (nombre1.equalsIgnoreCase("0")) {
+                    break;
+                }
+
+            } while (validarDatos(nombre1) == false);
+
+            if (nombre1.equalsIgnoreCase("0")) {
+                break;
+            }
+
+            // PREGUNTAMOS Y VALIDAMOS LOS APELLIDOS
+            do {
+
+                System.out.println("Introduce tus apellidos");
+                apellidos1 = sc.nextLine();
+
+                if (validarDatos(apellidos1) == false) {
+
+                    System.out.println("Los apellidos no pueden contener numeros");
+
+                }
+
+                if (apellidos1.equalsIgnoreCase("0")) {
+                    break;
+                }
+
+            } while (validarDatos(apellidos1) == false);
+
+            if (apellidos1.equalsIgnoreCase("0")) {
+                break;
+            }
+
+            // COMPROBAMOS QUE EL NICK NO ESTE YA EN LA BASE DE DATOS
+            do {
+                System.out.println("Introduce tu nick");
+                nick1 = sc.nextLine();
+
+                if (nick1.equalsIgnoreCase("0")) {
+                    break;
+                }
+
+                v1 = bd.listarCampoTablaString("USUARIOS", "nick");
+
+                flag1 = false;
+
+                for (int i = 0; i < v1.size(); i++) {
+                    if (nick1.equalsIgnoreCase(v1.get(i)) == true) {
+                        flag1 = true;
+                        System.out.println("El nick introducido ( " + nick1 + " ) ya pertenece a un usuario registrado");
+                    }
+                }
+
+            } while (flag1 == true);
+
+            if (nick1.equalsIgnoreCase("0")) {
+                break;
+            }
+
+            // VALIDAMOS LA FECHA DE NACIMIENTO
+            System.out.println("Introduce la fecha de nacimiento");
+            fh1 = leeFecha("Fecha incorrecta | Formato: 'dd/mm/yyyy'", "dd/LL/yyyy");
+
+            // VALIDAMOS EL CORREO
+            do {
+
+                System.out.println("Introduce tu correo");
+                correo1 = sc.nextLine();
+
+                if (validaEmail(correo1) == false) {
+                    System.out.println("El correo introducido no es válido");
+                }
+
+            } while (validaEmail(correo1) == false);
+
+            // PREGUNTAMOS POR LA CONTRASEÑA
+            System.out.println("Introduce tu contraseña");
+            pass1 = sc.nextLine();
+
+            if (pass1.equalsIgnoreCase("0")) {
+                break;
+            }
+
+            limpiar();
+
+            Usuario u = new Usuario(nombre1, apellidos1, nick1, fh1, correo1, pass1);
+
+            System.out.println(u.toString());
+
+            System.out.println(Colorinchis.green("\nIntroduce 'No' si quieres volver a rellenar los datos"));
+
+            resp1 = sc.nextLine();
+
+            try {
+
+                int filas1 = bd.añadirUsuario(u);
+
+                switch (filas1) {
+
+                    case 1:
+
+                        System.out.println(Colorinchis.rainbow("\nUsuario añadido con éxito"));
+                        break;
+
+                    case 2:
+
+                        System.out.println(Colorinchis.purple("\nNo se ha podido añadir el usuario, contacte con soporte"));
+
+                }
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+
+            limpiar();
+
+        } while (resp1.equalsIgnoreCase("no"));
+
+        limpiar();
+
+    }
+
 
     /* MENUS ADMINISTRADOR */
-    /* Autor : Fer */
+ /* Autor : Fer */
     public static void m_admin() {
         System.out.println(Colorinchis.purple("Bienvenido Bruce:\n")
                 + Colorinchis.red("#1. ") + "Gestionar usuarios\n"

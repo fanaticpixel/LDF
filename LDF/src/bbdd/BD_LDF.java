@@ -87,7 +87,6 @@ public class BD_LDF extends BD_Conector {
             while (reg.next()) {
 
                 Time f = reg.getTime("fecha_hora");
-                System.out.println(f.toString());
                 Date fecha = reg.getDate("fecha_hora");
                 LocalDate fBuena = fecha.toLocalDate();
 
