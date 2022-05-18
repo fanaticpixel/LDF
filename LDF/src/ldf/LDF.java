@@ -47,7 +47,7 @@ public class LDF {
 
             System.out.println(Colorinchis.purple("\nIntroduzca opción:    "));
             System.out.println("\n#1. Registrarse\n#2. Iniciar Sesión\n#3. Comprar entradas\n#4. Ver cartelera\n#5. Salir");
-            opc1 = sc.nextInt();
+            opc1 = esInt();
 
             switch (opc1) {
 
@@ -1156,6 +1156,44 @@ public class LDF {
 
         limpiar();
 
+    }
+
+    /**
+     * Método para validar que los datos introducidos son números siempre
+     * @return un int 100%
+     */
+    public static int esInt() {
+        boolean pasaPasa = false;
+        int numero = 0;
+        do {
+            try {
+                numero = sc.nextInt();
+                pasaPasa = true;
+            } catch (InputMismatchException imme) {
+                System.out.println(Colorinchis.red("Error! debes introducir un int"));
+                sc.nextLine();
+            }
+        } while(!pasaPasa);
+        return numero;
+    }
+
+    /**
+     * Método para validar que los datos introducidos son números siempre
+     * @return un double 100%
+     */
+    public static double esDouble() {
+        boolean pasaPasa = false;
+        double numero = 0;
+        do {
+            try {
+                numero = sc.nextDouble();
+                pasaPasa = true;
+            } catch (InputMismatchException imme) {
+                System.out.println(Colorinchis.red("Error! debes introducir un double"));
+                sc.nextLine();
+            }
+        } while(!pasaPasa);
+        return numero;
     }
 
 
