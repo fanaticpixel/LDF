@@ -593,14 +593,14 @@ public class LDF {
 
                 do {
 
-                    System.out.println("Introduce la fila (1 - " + f.get(0) + ")");
+                    System.out.println("Introduce la fila (" + Colorinchis.cyan(1) + " - " +  Colorinchis.cyan(f.get(0)) + ")");
                     nF = esInt();
 
                 } while (nF < 1 || nF > f.get(0));
 
                 do {
 
-                    System.out.println("Introduce la butaca (1 - " + f.get(1) + ")");
+                    System.out.println("Introduce la butaca (" + Colorinchis.cyan(1) + " - "  + Colorinchis.cyan(f.get(1)) + ")");
                     nB = esInt();
 
                 } while (nB < 1 || nB > f.get(1));
@@ -612,7 +612,7 @@ public class LDF {
                 flagAux = bd.sitioOcupado(e);
 
                 if (flagAux == true) {
-                    System.out.println("El sitio ya está ocupado, prueba a introducir otro sitio");
+                    System.out.println(Colorinchis.green("El sitio ya está ocupado, prueba a introducir otro sitio"));
                 }
 
             } while (flagAux == true);
