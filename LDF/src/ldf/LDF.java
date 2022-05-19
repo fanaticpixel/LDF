@@ -162,6 +162,9 @@ public class LDF {
 
                                 case 2:
                                     // MODIFICAR ENTRADAS
+                                    limpiar();
+                                    m_admin_entradas();
+                                    Admin_modificarEntradas();
                                     break;
 
                                 case 3:
@@ -941,6 +944,7 @@ public class LDF {
      * Método para validar que los datos introducidos son números siempre
      *
      * @return un int 100%
+     * @author Fer
      */
     public static int esInt() {
         boolean pasaPasa = false;
@@ -961,6 +965,7 @@ public class LDF {
      * Método para validar que los datos introducidos son números siempre
      *
      * @return un double 100%
+     * @author Fer
      */
     public static double esDouble() {
         boolean pasaPasa = false;
@@ -980,7 +985,7 @@ public class LDF {
 
 
     /* PARTE ADMINISTRADOR */
- /* Autor : Fer */
+    /* Autor : Fer */
     public static void m_admin() {
         System.out.println(Colorinchis.purple("Bienvenido Bruce:\n")
                 + Colorinchis.red("#1. ") + "Gestionar usuarios\n"
@@ -1004,6 +1009,12 @@ public class LDF {
                 + Colorinchis.red("#2. ") + "Modificar contraseña\n"
                 + Colorinchis.red("#3. ") + "Modificar email"
                 + Colorinchis.red("#4. ") + "Volver");
+    }
+
+    public static void m_admin_entradas() {
+        System.out.println(Colorinchis.purple("Gestión de entradas:\n")
+                + Colorinchis.red("#1. ") + "Eliminar entrada\n"
+                + Colorinchis.red("#2. ") + "Volver");
     }
 
     public static void m_admin_cart() {
@@ -1136,6 +1147,53 @@ public class LDF {
                     break;
             }
         } while (opcAdmin2 < 1 || opcAdmin2 > 4);
+    }
+
+    /* ADMIN ENTRADAS */
+    public static void Admin_modificarEntradas() {
+        int opcAdmin2 = esInt();
+
+        switch(opcAdmin2) {
+            case 1:
+                limpiar();
+                String id_cine;
+                int id_sala;
+                int num_fila;
+                LocalDate fecha_hora;
+                int num_butaca;
+                sc.nextLine();
+
+                System.out.println("Anota id del cine:");
+                id_cine = sc.nextLine();
+
+                System.out.println("Anota el id de la sala:");
+                id_sala = esInt();
+                sc.nextLine();
+
+                System.out.println("Anota el numero de la fila:");
+                num_fila = esInt();
+                sc.nextLine();
+
+                System.out.println("Anota la fecha en formato dd/mm/yyyy");
+                fecha_hora = leeFecha("Fecha incorrecta | Formato: 'dd/mm/yyyy'", "dd/LL/yyyy");
+
+                System.out.println("Anota el número de butaca:");
+                num_butaca = esInt();sc.nextLine();
+
+                boolean existo = bd.Admin_delete_entrada (id_cine, id_sala, num_fila, fecha_hora, num_butaca);
+
+                if(existo) {
+                    System.out.println(Colorinchis.green("Entrada borrada con éxito"));
+                } else {
+                    System.out.println(Colorinchis.red("Datos incorrectos, entrada no borrada"));
+                }
+                System.out.println("Pulsa enter para continuar");
+                sc.nextLine();
+
+                break;
+            case 2:
+                break;
+        }
     }
 
 

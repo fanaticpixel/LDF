@@ -742,4 +742,23 @@ public class BD_LDF extends BD_Conector {
         return -1;
     }
 
+    public boolean Admin_delete_entrada (String id_cine, int id_sala, int num_fila, LocalDate fecha_hora, int num_butaca) {
+        String cadenaSQL = "DELETE FROM ENTRADAS WHERE id_cine LIKE '" + id_cine + "'" + " AND id_sala LIKE '" + id_sala + "'" + " AND num_fila LIKE '" + num_fila + "'" + " AND fecha_hora LIKE '" + fecha_hora + "' AND num_butaca LIKE '" + num_butaca + "'";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            s.executeUpdate(cadenaSQL);
+            reg.close();
+            this.cerrar();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
 }

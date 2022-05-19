@@ -6,8 +6,8 @@
 package Estilos;
 
 /**
- *
- * @author administrador
+ * Clase/Herramienta que permite modificar los colores del output (terminal)
+ * @author Fer
  */
 public class Colorinchis {
 
