@@ -15,14 +15,14 @@ public class Entrada {
     
    private String nick;
    private String id_cine;
-   private String id_sala;
+   private int id_sala;
    private String nombre;
    private int fila ;
    private int butaca;
    private LocalDate fecha_hora;
    private double precio;
 
-    public Entrada(String id_cine, String id_sala, String nombre, int fila, int butaca, LocalDate fecha_hora) {
+    public Entrada(String id_cine, int id_sala, String nombre, int fila, int butaca, LocalDate fecha_hora) {
         this.id_cine = id_cine;
         this.id_sala = id_sala;
         this.nombre = nombre;
@@ -49,11 +49,11 @@ public class Entrada {
         this.id_cine = id_cine;
     }
 
-    public String getId_sala() {
+    public int getId_sala() {
         return id_sala;
     }
 
-    public void setId_sala(String id_sala) {
+    public void setId_sala(int id_sala) {
         this.id_sala = id_sala;
     }
 

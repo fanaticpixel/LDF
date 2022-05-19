@@ -7,6 +7,7 @@ import modulos.Usuario;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Vector;
+import modulos.Entrada;
 
 /**
  *
@@ -88,6 +89,34 @@ public class BD_LDF extends BD_Conector {
         }
 
         return ca;
+    
+    
+    }
+    
+    public boolean sitioOcupado(Entrada en){
+
+        String cadenaSQL = "SELECT * FROM ENTRADAS WHERE NOMBRE LIKE '%" + en.getNombre() 
+                + "%' AND ID_CINE LIKE '%" + en.getId_cine() + "%' AND ID_SALA = " 
+                + en.getId_sala() + " AND FECHA_HORA LIKE '%"+ en.getFecha_hora() + "%' AND NUM_FILA = " + en.getFila() + " AND NUM_BUTACA = " + en.getButaca();
+        
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+            
+            while (reg.next()) {
+                return true;
+            }
+
+            this.cerrar();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
     
     
     }
@@ -387,6 +416,34 @@ public class BD_LDF extends BD_Conector {
         }
 
     }
+    
+    
+    public boolean esPremium(String nick) {
+
+        String cadenaSQL = "SELECT PREMIUM FROM USUARIOS where NICK = '" + nick + "'";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+
+            while (reg.next()) {
+
+                return reg.getBoolean("premium");
+
+            }
+
+            this.cerrar();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
+        
+    }
 
     public int añadirUsuario(Usuario u) {
 
@@ -406,6 +463,30 @@ public class BD_LDF extends BD_Conector {
         } catch (SQLException e) {
 
             e.printStackTrace();
+        }
+
+        return -1;
+    }
+    
+    public int añadirEntrada(String nick, Entrada e, Double precio) {
+
+        String cadenaSQL = "INSERT INTO ENTRADAS VALUES('" + nick + "','"
+                + e.getId_cine() + "','" + e.getId_sala() + "','" + e.getNombre()
+                + "','" + e.getFila() + "','" + e.getFecha_hora() + "','" + e.getButaca() + "','" 
+                + precio + "')";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            int filas = s.executeUpdate(cadenaSQL);
+            s.close();
+            this.cerrar();
+            return filas;
+
+        } catch (SQLException es) {
+
+            es.printStackTrace();
         }
 
         return -1;

@@ -35,6 +35,7 @@ public class LDF {
         String nombre1, apellidos1, nick1, correo1, pass1, resp1;
         LocalDate fh1;
         Vector<String> v1;
+        
 
         String nick2, pass2, passRet2;
         Boolean flag1, flag2;
@@ -258,33 +259,39 @@ public class LDF {
                                     limpiar();
                                     cartelera();
                                     break;
+                                    
+                                case 5:
+                                    
+                                    Double precio = 9.40;
+                                    
+                                    if(bd.esPremium(nick2) == true){
+                                    
+                                        precio *= 0.8;
+                                        
+                                    }
+                                    
+                                    
+                                    limpiar();
+                                    sc.nextLine();
+                                    System.out.println("Introduce un código de descuento pulsa cualquier tecla");
+                                    String desc = sc.nextLine();
+                                    
+                                    if(Descuentos.existeDescuento(desc) == true){
+                                    
+                                        precio *= 1 - ((double)Descuentos.porcentajeDescuento(desc))/100;
+                                        
+                                    }
+                                    
+                                    comprarEntradas(nick2, precio);
+                                    
+                                    break;
 
                                 case 6:
                                     limpiar();
-                                    //VENTAJAS DE SER PREMIUM
-                                    System.out.println(Colorinchis.rainbow("Ventajas de ser premium:"));
-                                    System.out.println(Colorinchis.purple("#1. ")
-                                            + "GARANTÍA DE SATISFACCIÓN:\n"
-                                            + "Si no te gusta la peli, te devolvemos la entrada");
-                                    System.out.println(Colorinchis.purple("#2. ")
-                                            + "COMODIDAD:\n"
-                                            + "Incluyen butaca VIP");
-                                    System.out.println(Colorinchis.purple("#3. ")
-                                            + "PRECIOS:\n"
-                                            + "Especiales para socios (Podrás elegir butacas VIP a precio rebajado)");
-                                    System.out.println(Colorinchis.purple("#4. ")
-                                            + "DESCUENTOS EXCLUSIVOS:\n"
-                                            + "Recibirás en tu e-mail promos exclusivas Cinesacard");
-                                    System.out.println(Colorinchis.purple("#5. ")
-                                            + "PUNTOS:\n"
-                                            + "Canjéalos por entradas o productos de bar\n");
-
-                                    System.out.println(Colorinchis.black("Pago domicilado (SEPA) de 5€ mensuales", true, true));
-                                    System.out.println(Colorinchis.green("Pulsa cualquier tecla para continuar"));
-                                    sc.nextLine();
-                                    sc.nextLine();
+                                    premium();
                                     break;
 
+                                //HACER CONSULTA DE PREMIUM
                                 //HACER CONSULTA DE PREMIUM
                             }
 
@@ -296,7 +303,7 @@ public class LDF {
 
                 case 3:
                     limpiar();
-                    comprarEntradas("a");
+                    comprarEntradas("AnonymusLDF", 9.40);
                     break;
                 case 4:
 
@@ -311,6 +318,32 @@ public class LDF {
 
         } while (opc1 != 5);
 
+    }
+
+    public static void premium() {
+        //VENTAJAS DE SER PREMIUM
+        System.out.println(Colorinchis.rainbow("Ventajas de ser premium:"));
+        System.out.println(Colorinchis.rainbow("========================\n"));
+        System.out.println(Colorinchis.purple("#1. ")
+                + "GARANTÍA DE SATISFACCIÓN:\n"
+                + "Si no te gusta la peli, te devolvemos la entrada");
+        System.out.println(Colorinchis.purple("#2. ")
+                + "COMODIDAD:\n"
+                + "Incluyen butaca VIP");
+        System.out.println(Colorinchis.purple("#3. ")
+                + "PRECIOS:\n"
+                + "Especiales para socios (Podrás elegir butacas VIP a precio rebajado)");
+        System.out.println(Colorinchis.purple("#4. ")
+                + "DESCUENTOS EXCLUSIVOS:\n"
+                + "Recibirás en tu e-mail promos exclusivas Cinesacard");
+        System.out.println(Colorinchis.purple("#5. ")
+                + "PUNTOS:\n"
+                + "Canjéalos por entradas o productos de bar\n");
+
+        System.out.println(Colorinchis.black("Pago domicilado (SEPA) de 5€ mensuales", true, true));
+        System.out.println(Colorinchis.green("Pulsa cualquier tecla para continuar"));
+        sc.nextLine();
+        sc.nextLine();
     }
 
     public static void usuario_ModificarContraseña(String nick2) {
@@ -482,10 +515,12 @@ public class LDF {
         return matcher.matches();
     }
 
-    public static void comprarEntradas(String nick2) {
+    public static void comprarEntradas(String nick2, double precio) {
         sc.nextLine();
+        boolean flagAux;
         Vector<Cartelera> v;
         v = bd.listarCartelera();
+        Entrada e;
 
         for (int i = 0; i < v.size(); i++) {
 
@@ -537,7 +572,7 @@ public class LDF {
                 System.out.println(v.get(i).toString());
             }
         }
-        
+
         Cartelera ca = bd.listarPeliculaCartelera(nombre, cines, sala, fh);
 
         System.out.println("¿Cuántas entradas quiere?");
@@ -550,22 +585,55 @@ public class LDF {
         for (int i = 0; i < numEntradas; i++) {
 
             do {
-                
-                System.out.println("Introduce la fila (1 - "+ f.get(0) + ")" );             
-                nF = esInt();
-                
-            } while (nF < 1 || nF > f.get(0));
+
+                flagAux = false;
+
+                do {
+
+                    System.out.println("Introduce la fila (1 - " + f.get(0) + ")");
+                    nF = esInt();
+
+                } while (nF < 1 || nF > f.get(0));
+
+                do {
+
+                    System.out.println("Introduce la butaca (1 - " + f.get(1) + ")");
+                    nB = esInt();
+
+                } while (nB < 1 || nB > f.get(1));
+
+                Cartelera auxc = bd.listarPeliculaCartelera(nombre, cines, sala, fh);
+
+                e = new Entrada(auxc.getId_cine(), auxc.getId_sala(), auxc.getNombre(), nF, nB, auxc.getFecha_hora());
+
+                flagAux = bd.sitioOcupado(e);
+
+                if (flagAux == true) {
+                    System.out.println("El sitio ya está ocupado, prueba a introducir otro sitio");
+                }
+
+            } while (flagAux == true);
             
-            
-            do {
-                
-                System.out.println("Introduce la butaca (1 - "+ f.get(1) + ")" );             
-                nB = esInt();
-                
-            } while (nB < 1 || nB > f.get(1));
-            
-            
-            
+            try {
+
+                int filas1 = bd.añadirEntrada(nick2, e, precio);
+
+                switch (filas1) {
+
+                    case 1:
+
+                        System.out.println(Colorinchis.rainbow("\nEntrada sacada con éxito"));
+                        break;
+
+                    case 2:
+
+                        System.out.println(Colorinchis.purple("\nNo se ha podido añadir la entrada, contacte con soporte"));
+
+                }
+            } catch (Exception esp) {
+
+                esp.printStackTrace();
+            }
         }
 
     }
