@@ -724,9 +724,8 @@ public class BD_LDF extends BD_Conector {
         return exito == 1;
     }
 
-    public int Admin_updateCartelera (String campo, String valor) {
-        String cadenaSQL = "UPDATE USUARIOS SET " + campo + " = '" + valor + "' WHERE nick LIKE ";
-
+    public int Admin_updateCine (String campo, String valor, String id_cine) {
+        String cadenaSQL = "UPDATE CINES SET " + campo + " = '" + valor + "' WHERE id_cine LIKE '" + id_cine + "'";
         try {
 
             this.abrir();
@@ -742,23 +741,149 @@ public class BD_LDF extends BD_Conector {
         return -1;
     }
 
-    public boolean Admin_delete_entrada (String id_cine, int id_sala, int num_fila, LocalDate fecha_hora, int num_butaca) {
-        String cadenaSQL = "DELETE FROM ENTRADAS WHERE id_cine LIKE '" + id_cine + "'" + " AND id_sala LIKE '" + id_sala + "'" + " AND num_fila LIKE '" + num_fila + "'" + " AND fecha_hora LIKE '" + fecha_hora + "' AND num_butaca LIKE '" + num_butaca + "'";
+    public int Admin_updateCine (String campo, int valor, String id_cine) {
+        String cadenaSQL = "UPDATE CINES SET " + campo + " = " + valor + " WHERE id_cine LIKE '" + id_cine + "'";
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            int filas = s.executeUpdate(cadenaSQL);
+
+            reg.close();
+            this.cerrar();
+            return filas;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int Admin_delete_entrada (String id_cine, int id_sala, int num_fila, int num_butaca) {
+        String cadenaSQL = "DELETE FROM ENTRADAS WHERE id_cine LIKE '" + id_cine + "'" + " AND id_sala = " + id_sala + " AND num_fila = " + num_fila + " AND num_butaca = " + num_butaca;
+        int filas;
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            filas = s.executeUpdate(cadenaSQL);
+            reg.close();
+            this.cerrar();
+            return filas;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int Admin_contarEntradas (String nick) {
+        String cadenaSQL = "SELECT COUNT(*) FROM ENTRADAS WHERE nick LIKE '" + nick + "'";
 
         try {
 
             this.abrir();
             s = c.createStatement();
-            s.executeUpdate(cadenaSQL);
+            reg = s.executeQuery(cadenaSQL);
+
+            if (reg.next()) {
+                return reg.getInt(1);
+            }
             reg.close();
             this.cerrar();
-            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return -1;
+    }
 
+    public Vector<Cartelera> Admin_mostrar_cartelera (String id_cine) {
+        String cadenaSQL = "SELECT * FROM CARTELERA WHERE id_cine LIKE '" + id_cine + "'";
+        Vector<Cartelera> v = new Vector<Cartelera>();
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+
+            while (reg.next()) {
+                Time f = reg.getTime("fecha_hora");
+
+                Date fecha = reg.getDate("fecha_hora");
+                LocalDate fBuena = fecha.toLocalDate();
+
+
+                v.add(new Cartelera(reg.getString("nombre"), reg.getString("id_cine"), reg.getInt("id_sala"), fBuena, f, reg.getInt("duracion"), reg.getString("tipo")));
+            }
+
+            this.cerrar();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return v;
+    }
+
+    public void Admin_mostrarIdCine () {
+        String cadenaSQL = "SELECT id_cine FROM CINES";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+
+            while (reg.next()) {
+                System.out.println(Colorinchis.purple(reg.getString(1)));
+            }
+            reg.close();
+            this.cerrar();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int Admin_contarPeliculas (String nombre, String id_cine) {
+        String cadenaSQL = "SELECT COUNT(*) FROM CARTELERA WHERE id_cine LIKE '" + id_cine + "' AND NOMBRE LIKE '" + nombre + "'";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            reg = s.executeQuery(cadenaSQL);
+
+            if (reg.next()) {
+                return reg.getInt(1);
+            }
+            reg.close();
+            this.cerrar();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int Admin_borrarCartelera (String nombre, String id_cine, int num_sala) {
+        String cadenaSQL = "DELETE FROM CARTELERA WHERE nombre LIKE '" + nombre + "'" + " AND id_cine LIKE '" + id_cine + "' AND id_sala = " + num_sala;
+        int filas;
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            filas = s.executeUpdate(cadenaSQL);
+            reg.close();
+            this.cerrar();
+            return filas;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 }
