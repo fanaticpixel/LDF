@@ -1450,37 +1450,47 @@ public class LDF {
                 limpiar();
                 Descuentos.mostrarDescuentosActuales();
                 System.out.println(Colorinchis.red("Vamos a añadir un descuento: "));
-                System.out.println("Anota el nombre del descuento: ");
+                System.out.println(Colorinchis.green("Anota el nombre del descuento: "));
+                System.out.println(Colorinchis.red("O anota 0 para salir"));
                 codDescuento = sc.nextLine();
 
-                do {
-                    try {
-                        System.out.println("Cantidad de descuento del 0 al 100");
-                        porcentajeDescuento = sc.nextInt();
-                        sc.nextLine();
-                        correcto = true;
-                    } catch (InputMismatchException imm) {
-                        System.out.println("Error introduce un número");
-                    }
-                } while (!correcto);
+                if (codDescuento.equalsIgnoreCase("0")) {
+                    do {
+                        try {
+                            System.out.println(Colorinchis.green("Cantidad de descuento del 0 al 100"));
+                            porcentajeDescuento = sc.nextInt();
+                            sc.nextLine();
+                            correcto = true;
+                        } catch (InputMismatchException imm) {
+                            System.out.println(Colorinchis.red("Error introduce un número"));
+                        }
+                    } while (!correcto);
 
-                Descuentos.Admin_addDescuento(codDescuento, porcentajeDescuento);
-                System.out.println("Descuento añadido, pulsa enter para continuar");
-                sc.nextLine();
+                    Descuentos.Admin_addDescuento(codDescuento, porcentajeDescuento);
+                    System.out.println(Colorinchis.green("Descuento añadido, pulsa enter para continuar"));
+                    sc.nextLine();
+                    break;
+                }
                 break;
+
 
             case 2:
                 limpiar();
                 Descuentos.mostrarDescuentosActuales();
                 System.out.println(Colorinchis.red("Anota el código del descuento que deseas borrar: "));
+                System.out.println(Colorinchis.red("O anota 0 para salir"));
+
                 codDescuento = sc.nextLine();
 
-                if (Descuentos.Admin_deleteDescuento(codDescuento)) {
-                    System.out.println("Descuento borrado con éxito, pulsa enter para continuar");
-                } else {
-                    System.out.println("Descuento no se ha podido borrar correctamente, pulsa enter para continuar");
+                if (!codDescuento.equalsIgnoreCase("0")) {
+                    if (Descuentos.Admin_deleteDescuento(codDescuento)) {
+                        System.out.println("Descuento borrado con éxito, pulsa enter para continuar");
+                    } else {
+                        System.out.println("Descuento no se ha podido borrar correctamente, pulsa enter para continuar");
+                    }
+                    sc.nextLine();
+                    break;
                 }
-                sc.nextLine();
                 break;
 
             case 3:
@@ -1493,10 +1503,19 @@ public class LDF {
 
                 do {
                     System.out.println(Colorinchis.red("Anota el descuento que desea modificar: "));
+                    System.out.println(Colorinchis.red("O anota 0 para salir"));
                     codDescuento = sc.nextLine();
+
+                    if (codDescuento.equalsIgnoreCase("0")) {
+                        break;
+                    }
 
                     existeDesc = Descuentos.existeDescuento(codDescuento);
                 } while (!existeDesc);
+
+                if (codDescuento.equalsIgnoreCase("0")) {
+                    break;
+                }
 
                 System.out.println(Colorinchis.red("Anota el NUEVO nombre del descuento: "));
                 newCodDesc = sc.nextLine();
