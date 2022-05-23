@@ -885,5 +885,28 @@ public class BD_LDF extends BD_Conector {
         }
         return -1;
     }
+    
+    
+    public int mejorarPremium(String Nick) {
+
+        String cadenaSQL = "UPDATE USUARIOS SET PREMIUM = '1' WHERE NICK = '" + Nick + "'";
+
+        try {
+
+            this.abrir();
+            s = c.createStatement();
+            int filas = s.executeUpdate(cadenaSQL);
+            s.close();
+            this.cerrar();
+            return filas;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return -1;
+
+    }
 
 }

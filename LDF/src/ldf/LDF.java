@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ldf;
 
 import Estilos.Colorinchis;
@@ -20,41 +15,52 @@ import java.util.Vector;
 import java.util.regex.Pattern;
 import modulos.Entrada;
 
+
 /**
- *
- * @author Alvaro.p
+ * 
+ * @author Lucía Piñán Barberan
+ *         Daniel Molano Caraballo
+ *         Fernando Martín Gay
+ *         Álvaro Pérez Hernández
  */
 public class LDF {
-
+    
+    
+    //VARIABLES ESTÁTICAS
     public static Scanner sc = new Scanner(System.in);
     public static BD_LDF bd = new BD_LDF("LDF");
 
+    //MAIN
     public static void main(String[] args) {
 
+        //VARIABLES DEL PROGRAMA
         int opc1, opc2;
         String nombre1, apellidos1, nick1, correo1, pass1, resp1;
         LocalDate fh1;
         Vector<String> v1;
-        
-
         String nick2, pass2, passRet2;
         Boolean flag1, flag2;
 
+        //BUCLE PRINCIPAL DE EJECUCIÓN
         do {
+            
             limpiar();
             m_cabecera();
             m_base();
             opc1 = esInt();
+            
             switch (opc1) {
-                // REGISTRARSE
+                
+                //#1. REGISTRARSE
                 case 1:
+                    
                     registrarse();
                     break;
 
+                //#2. Iniciar Sesión
                 case 2:
 
                     sc.nextLine();
-
                     limpiar();
 
                     System.out.println(Colorinchis.blue("Vas a iniciar sesión, si desea parar en cualquier momento introduzca '0'"));
@@ -117,23 +123,27 @@ public class LDF {
 
                     /*
                      * Usuario Admin
-                     * Autor: Fer
+                     * Autor: Fernando Martín Gay
                      */
                     if (nick2.equalsIgnoreCase("admin")) {
+                        
                         int opcAdmin;
                         int opcAdmin2;
 
                         do {
+                            
                             limpiar();
                             m_admin();
-                            opcAdmin = sc.nextInt();
+                            opcAdmin = esInt();
                             sc.nextLine();
 
                             switch (opcAdmin) {
+                                
                                 case 1:
+                                    
                                     limpiar();
                                     m_admin_ges();
-                                    opcAdmin2 = sc.nextInt();
+                                    opcAdmin2 = esInt();
 
                                     switch (opcAdmin2) {
                                         case 1:
@@ -186,7 +196,7 @@ public class LDF {
                         do {
                             limpiar();
                             m_menuUsuario();
-                            opc2 = sc.nextInt();
+                            opc2 = esInt();
 
                             switch (opc2) {
                                 case 1:
@@ -198,7 +208,7 @@ public class LDF {
                                         bd.listarUser(nick2);
 
                                         m_usuarioVerPerfil();
-                                        opc2 = sc.nextInt();
+                                        opc2 = esInt();
 
                                         sc.nextLine();
                                         limpiar();
@@ -211,7 +221,7 @@ public class LDF {
 
                                                     bd.listarUser(nick2);
                                                     m_usuarioModificarPerfil();
-                                                    opc2 = sc.nextInt();
+                                                    opc2 = esInt();
 
                                                     switch (opc2) {
                                                         case 1:
@@ -242,10 +252,13 @@ public class LDF {
                                 case 2:
 
                                     limpiar();
+                                    sc.nextLine();
 
                                     System.out.println("Listando las entradas del usuario:  " + nick2 + "\n");
 
                                     bd.listarEntradasUsuario(nick2);
+                                    System.out.println(Colorinchis.green("Pulsa enter para continuar"));
+                                    sc.nextLine();
 
                                     break;
 
@@ -261,36 +274,35 @@ public class LDF {
                                     limpiar();
                                     cartelera();
                                     break;
-                                    
+
                                 case 5:
-                                    
+
                                     Double precio = 9.40;
-                                    
-                                    if(bd.esPremium(nick2) == true){
-                                    
+
+                                    if (bd.esPremium(nick2) == true) {
+
                                         precio *= 0.8;
-                                        
+
                                     }
-                                    
-                                    
+
                                     limpiar();
                                     sc.nextLine();
-                                    System.out.println("Introduce un código de descuento pulsa cualquier tecla");
+                                    System.out.println("Introduce un código de descuento o pulsa cualquier tecla");
                                     String desc = sc.nextLine();
-                                    
-                                    if(Descuentos.existeDescuento(desc) == true){
-                                    
-                                        precio *= 1 - ((double)Descuentos.porcentajeDescuento(desc))/100;
-                                        
+
+                                    if (Descuentos.existeDescuento(desc) == true) {
+
+                                        precio *= 1 - ((double) Descuentos.porcentajeDescuento(desc)) / 100;
+
                                     }
-                                    
+
                                     comprarEntradas(nick2, precio);
-                                    
+
                                     break;
 
                                 case 6:
                                     limpiar();
-                                    premium();
+                                    premium(nick2);
                                     break;
 
                                 //HACER CONSULTA DE PREMIUM
@@ -322,7 +334,26 @@ public class LDF {
 
     }
 
-    public static void premium() {
+    /**
+     * Método PREMIUM del menú de usuario
+     * 
+     * @author Daniel Molano Caraballo
+     * @param nick2 Nick del usuario
+     */
+    public static void premium(String nick2) {
+
+        String s = "";
+
+        if (bd.esPremium(nick2) == true) {
+
+            System.out.println("El usuario ya es premium, si desea cancelar su suscripción contacte con soporte");
+            System.out.println(Colorinchis.green("Pulse cualquier tecla para continuar."));
+            sc.nextLine();
+            sc.nextLine();
+            return;
+
+        }
+
         //VENTAJAS DE SER PREMIUM
         System.out.println(Colorinchis.rainbow("Ventajas de ser premium:"));
         System.out.println(Colorinchis.rainbow("========================\n"));
@@ -343,9 +374,38 @@ public class LDF {
                 + "Canjéalos por entradas o productos de bar\n");
 
         System.out.println(Colorinchis.black("Pago domicilado (SEPA) de 5€ mensuales", true, true));
-        System.out.println(Colorinchis.green("Pulsa cualquier tecla para continuar"));
+
+        System.out.println("¿Quiere mejorar a Premium? (Si/No)");
         sc.nextLine();
-        sc.nextLine();
+        s = sc.nextLine();
+
+        if (s.equalsIgnoreCase("SI") == true) {
+
+            try {
+
+                int filas1 = bd.mejorarPremium(nick2);
+
+                switch (filas1) {
+
+                    case 1:
+
+                        System.out.println("\nPremium modificado con éxito");
+                        break;
+
+                    case 2:
+
+                        System.out.println("\nError, contacte con soporte");
+
+                }
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+
+            limpiar();
+
+        }
+
     }
 
     public static void usuario_ModificarContraseña(String nick2) {
@@ -519,7 +579,7 @@ public class LDF {
 
     public static void comprarEntradas(String nick2, double precio) {
         sc.nextLine();
-        boolean flagAux;
+        boolean flagAux, aux = false;
         Vector<Cartelera> v;
         v = bd.listarCartelera();
         Entrada e;
@@ -530,7 +590,7 @@ public class LDF {
 
         }
 
-        System.out.println("Dime el cine");
+        System.out.println("Introduce el códgio del cine");
         String cines = sc.nextLine();
         v = bd.listarCarteleraFiltrada(cines, "id_cine");
 
@@ -542,7 +602,7 @@ public class LDF {
 
         }
 
-        System.out.println("Dime el nombre de la peli");
+        System.out.println("Dime el nombre de la película");
         String nombre = sc.nextLine();
 
         limpiar();
@@ -553,7 +613,7 @@ public class LDF {
             }
         }
 
-        System.out.println("Dime fecha y hora (aaaa-mm-dd-hh:mi)");
+        System.out.println("Dime fecha y hora " + Colorinchis.cyan("aaaa-mm-dd-hh:mi ") + "de la sesión");
         String fh = sc.nextLine();
 
         limpiar();
@@ -565,14 +625,25 @@ public class LDF {
         }
 
         System.out.println("Dime la sala");
-        int sala = sc.nextInt();
+        int sala = esInt();
 
         limpiar();
 
         for (int i = 0; i < v.size(); i++) {
             if (v.get(i).getId_sala() == sala && v.get(i).toString().contains(fh) == true && v.get(i).getNombre().toUpperCase().contains(nombre.toUpperCase()) == true) {
                 System.out.println(v.get(i).toString());
+                aux = true;
             }
+        }
+
+        if (aux == false) {
+
+            System.out.println(Colorinchis.red("No existe ninguna sesión con esos datos, vuelva a intentarlo"));
+            System.out.println(Colorinchis.green("Pulsa enter para volver al menú principal"));
+            sc.nextLine();
+            sc.nextLine();
+            return;
+
         }
 
         Cartelera ca = bd.listarPeliculaCartelera(nombre, cines, sala, fh);
@@ -592,14 +663,14 @@ public class LDF {
 
                 do {
 
-                    System.out.println("Introduce la fila (" + Colorinchis.cyan(1) + " - " +  Colorinchis.cyan(f.get(0)) + ")");
+                    System.out.println("Introduce la fila (" + Colorinchis.cyan(1) + " - " + Colorinchis.cyan(f.get(0)) + ")");
                     nF = esInt();
 
                 } while (nF < 1 || nF > f.get(0));
 
                 do {
 
-                    System.out.println("Introduce la butaca (" + Colorinchis.cyan(1) + " - "  + Colorinchis.cyan(f.get(1)) + ")");
+                    System.out.println("Introduce la butaca (" + Colorinchis.cyan(1) + " - " + Colorinchis.cyan(f.get(1)) + ")");
                     nB = esInt();
 
                 } while (nB < 1 || nB > f.get(1));
@@ -615,7 +686,7 @@ public class LDF {
                 }
 
             } while (flagAux == true);
-            
+
             try {
 
                 int filas1 = bd.añadirEntrada(nick2, e, precio);
@@ -678,7 +749,7 @@ public class LDF {
         do {
 
             System.out.println(Colorinchis.red("#1.") + "Ver cartelera completa\n" + Colorinchis.red("#2.") + "Filtrar cartelera\n" + Colorinchis.red("#3.") + "Volver");
-            opc4 = sc.nextInt();
+            opc4 = esInt();
 
             switch (opc4) {
 
@@ -696,6 +767,9 @@ public class LDF {
 
                     }
 
+                    System.out.println(Colorinchis.green("Pulsa enter para continuar"));
+                    sc.nextLine();
+
                     break;
 
                 case 2:
@@ -704,7 +778,7 @@ public class LDF {
                     do {
                         System.out.println(Colorinchis.red("#1.") + "Filtrar por NOMBRE\n" + Colorinchis.red("#2.") + "Filtrar por FECHA\n"
                                 + Colorinchis.red("#3.") + "Filtrar por TIPO\n" + Colorinchis.red("#4.") + "Filtrar por CINE\n" + Colorinchis.red("#5.") + "Salir");
-                        opc4 = sc.nextInt();
+                        opc4 = esInt();
 
                         switch (opc4) {
 
@@ -724,6 +798,9 @@ public class LDF {
 
                                 }
 
+                                System.out.println(Colorinchis.green("Pulsa enter para continuar"));
+                                sc.nextLine();
+
                                 break;
                             case 2:
 
@@ -741,6 +818,9 @@ public class LDF {
 
                                 }
 
+                                System.out.println(Colorinchis.green("Pulsa enter para continuar"));
+                                sc.nextLine();
+
                                 break;
                             case 3:
 
@@ -757,6 +837,9 @@ public class LDF {
                                     System.out.println(v4.get(i).toString());
 
                                 }
+
+                                System.out.println(Colorinchis.green("Pulsa enter para continuar"));
+                                sc.nextLine();
 
                                 break;
 
@@ -780,6 +863,9 @@ public class LDF {
                                     System.out.println(v4.get(i).toString());
 
                                 }
+
+                                System.out.println(Colorinchis.green("Pulsa enter para continuar"));
+                                sc.nextLine();
 
                                 break;
                         }
@@ -984,7 +1070,7 @@ public class LDF {
 
 
     /* PARTE ADMINISTRADOR */
-    /* Autor : Fer */
+ /* Autor : Fer */
     public static void m_admin() {
         System.out.println(Colorinchis.purple("Bienvenido Bruce:\n")
                 + Colorinchis.red("#1. ") + "Gestionar usuarios\n"
@@ -1157,7 +1243,7 @@ public class LDF {
     public static void Admin_modificarEntradas() {
         int opcAdmin2 = esInt();
 
-        switch(opcAdmin2) {
+        switch (opcAdmin2) {
             case 1:
                 limpiar();
                 String nick;
@@ -1181,7 +1267,7 @@ public class LDF {
                     if (!existeUsu) {
                         System.out.println(Colorinchis.red("Usuario no existe"));
                     }
-                }while(!existeUsu);
+                } while (!existeUsu);
 
                 if (existeUsu) {
                     bd.listarEntradasUsuario(nick);
@@ -1204,9 +1290,9 @@ public class LDF {
                         num_butaca = esInt();
                         sc.nextLine();
 
-                        int filas = bd.Admin_delete_entrada (id_cine, id_sala, num_fila, num_butaca);
+                        int filas = bd.Admin_delete_entrada(id_cine, id_sala, num_fila, num_butaca);
 
-                        if(filas > 0) {
+                        if (filas > 0) {
                             System.out.println(Colorinchis.green("Entrada borrada con éxito"));
                         } else {
                             System.out.println(Colorinchis.red("Datos incorrectos, entrada no borrada"));
@@ -1262,7 +1348,7 @@ public class LDF {
                     do {
                         System.out.println("Anota id de sala:");
                         try {
-                            Admin_idSala = sc.nextInt();
+                            Admin_idSala = esInt();
                             salaNum = true;
                         } catch (InputMismatchException imme) {
                             System.out.println("Introduce un número");
@@ -1274,7 +1360,7 @@ public class LDF {
                     Admin_fecha_hora = leeFecha("Fecha incorrecta | Formato: 'dd/mm/yyyy'", "dd/LL/yyyy");
 
                     System.out.println("Anota la duración de la película: ");
-                    int Admin_duracion = sc.nextInt();
+                    int Admin_duracion = esInt();
                     sc.nextLine();
 
                     do {
@@ -1325,7 +1411,7 @@ public class LDF {
                     } while (correcto == 0);
 
                     System.out.println("Anota id de la sala: ");
-                    int id_sala = sc.nextInt();
+                    int id_sala = esInt();
                     sc.nextLine();
 
                     int filas = bd.Admin_borrarCartelera(laPelicula, Admin_id_cine, id_sala);
@@ -1340,7 +1426,7 @@ public class LDF {
                     break;
                 }
                 break;
-                /*
+            /*
             case 3:
                 sc.nextLine();
                 limpiar();
@@ -1387,7 +1473,7 @@ public class LDF {
                             Admin_vali = true;
                         } else if (Admin_campo_mod.equalsIgnoreCase("sala") || Admin_campo_mod.equalsIgnoreCase("duración")) {
                             System.out.println("Anote el nuevo valor para " + Admin_campo_mod);
-                            Admin_valor_num = sc.nextInt();
+                            Admin_valor_num = esInt();
                             sc.nextLine();
                             Admin_vali = true;
                         } else if (Admin_campo_mod.equalsIgnoreCase("duracion")) {
@@ -1430,7 +1516,7 @@ public class LDF {
                 sc.nextLine();
                 break;
 
-                 */
+             */
             case 3:
                 break;
         }
@@ -1453,12 +1539,13 @@ public class LDF {
                 System.out.println(Colorinchis.green("Anota el nombre del descuento: "));
                 System.out.println(Colorinchis.red("O anota 0 para salir"));
                 codDescuento = sc.nextLine();
+                System.out.println(codDescuento);
 
-                if (codDescuento.equalsIgnoreCase("0")) {
+                if (codDescuento.equalsIgnoreCase("0") == false) {
                     do {
                         try {
                             System.out.println(Colorinchis.green("Cantidad de descuento del 0 al 100"));
-                            porcentajeDescuento = sc.nextInt();
+                            porcentajeDescuento = esInt();
                             sc.nextLine();
                             correcto = true;
                         } catch (InputMismatchException imm) {
@@ -1472,7 +1559,6 @@ public class LDF {
                     break;
                 }
                 break;
-
 
             case 2:
                 limpiar();
@@ -1523,7 +1609,7 @@ public class LDF {
                 do {
                     System.out.println(Colorinchis.red("Anota la NUEVA cantidad de descuento"));
                     try {
-                        newPercent = sc.nextInt();
+                        newPercent = esInt();
                         sc.nextLine();
                         buenNum = true;
                     } catch (InputMismatchException imm) {
