@@ -401,10 +401,10 @@ public class BD_LDF extends BD_Conector {
                 java.sql.Date f = reg.getDate("FECHA_HORA");
                 LocalDate fBuena = f.toLocalDate();
 
-                System.out.println("NICK: " + reg.getString("NICK") + "       ID_CINE: " + reg.getString("ID_CINE")
-                        + "       ID_SALA: " + reg.getInt("ID_SALA") + "       NOMBRE: " + reg.getString("NOMBRE")
-                        + "       NUM_FILA: " + reg.getInt("NUM_FILA") + "       NUM_BUTACA: " + reg.getInt("NUM_BUTACA")
-                        + "       SESION: " + fBuena + "       PRECIO: " + reg.getDouble("PRECIO") + "\n");
+                System.out.println(Colorinchis.purple("NICK: ") + reg.getString("NICK") + Colorinchis.purple("       ID_CINE: ") + reg.getString("ID_CINE")
+                        + Colorinchis.purple("       ID_SALA: ") + reg.getInt("ID_SALA") + Colorinchis.purple("       NOMBRE: ") + reg.getString("NOMBRE")
+                        + Colorinchis.purple("       NUM_FILA: ") + reg.getInt("NUM_FILA") + Colorinchis.purple("       NUM_BUTACA: ") + reg.getInt("NUM_BUTACA")
+                        + Colorinchis.purple("       SESION: ") + fBuena + Colorinchis.purple("       PRECIO: ") + reg.getDouble("PRECIO") + "\n");
 
             }
 
