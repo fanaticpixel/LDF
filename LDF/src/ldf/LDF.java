@@ -17,7 +17,7 @@ import modulos.Entrada;
 
 
 /**
- * 
+ * Clase Principal
  * @author Lucía Piñán Barberan
  *         Daniel Molano Caraballo
  *         Fernando Martín Gay
@@ -1070,7 +1070,10 @@ public class LDF {
 
 
     /* PARTE ADMINISTRADOR */
- /* Autor : Fer */
+    /**
+     * MENUS ADMIN
+     * @author Fer
+     */
     public static void m_admin() {
         System.out.println(Colorinchis.purple("Bienvenido Bruce:\n")
                 + Colorinchis.red("#1. ") + "Gestionar usuarios\n"
@@ -1118,6 +1121,11 @@ public class LDF {
     }
 
     /*ADMIN USUARIO*/
+
+    /**
+     * Método que da de baja un usuario
+     * @author Fer
+     */
     public static void Admin_bajaUsusario() {
         String Admin_nick;
         boolean existe = false;
@@ -1142,6 +1150,10 @@ public class LDF {
         sc.nextLine();
     }
 
+    /**
+     * Método que permite modificar datos de los usuarios
+     * @author Fer
+     */
     public static void Admin_modificarUsuario() {
         sc.nextLine();
         String Admin_nick = null;
@@ -1176,6 +1188,7 @@ public class LDF {
 
                 switch (opcAdmin2) {
                     case 1:
+                        // Cambiar nick
                         limpiar();
                         System.out.println(Colorinchis.green("Anota el nuevo nick: "));
                         newNick = sc.nextLine();
@@ -1192,6 +1205,7 @@ public class LDF {
 
                         break;
                     case 2:
+                        // Cambiar contraseña
                         limpiar();
                         String password;
                         System.out.println(Colorinchis.red("Anota la nueva contraseña nueva: "));
@@ -1210,6 +1224,7 @@ public class LDF {
                         break;
 
                     case 3:
+                        // Cambiar email
                         String email;
                         boolean Admin_emailB;
                         do {
@@ -1240,6 +1255,11 @@ public class LDF {
     }
 
     /* ADMIN ENTRADAS */
+
+    /**
+     * Método para gestionar entradas por parte de usuario administrador
+     * @author Fer
+     */
     public static void Admin_modificarEntradas() {
         int opcAdmin2 = esInt();
 
@@ -1314,6 +1334,11 @@ public class LDF {
 
 
     /*ADMIN CARTELERA*/
+
+    /**
+     * Método para gestionar la cartelera como usuario Administrador
+     * @author Fer
+     */
     public static void Admin_modificarCartelera() {
         int opcAdmin2 = esInt();
 
@@ -1524,6 +1549,12 @@ public class LDF {
 
 
     /*ADMIN PROMOCIONES*/
+
+    /**
+     * Método para gestionar las promociones, las cuales se encuentran en un documento llamado
+     * descuentos.txt que se encuentra en la carpeta raiz del proyecto
+     * @author Fer
+     */
     public static void Admin_modificarPromociones() {
         int opcAdmin2 = esInt();
         String codDescuento;
