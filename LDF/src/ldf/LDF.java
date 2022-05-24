@@ -1244,7 +1244,7 @@ public class LDF {
     /**
      * Método que da de baja un usuario
      * 
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public static void Admin_bajaUsusario() {
         String Admin_nick;
@@ -1273,7 +1273,7 @@ public class LDF {
     /**
      * Método que permite modificar datos de los usuarios
      * 
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public static void Admin_modificarUsuario() {
         sc.nextLine();
@@ -1380,7 +1380,7 @@ public class LDF {
     /**
      * Método para gestionar entradas por parte de usuario administrador
      * 
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public static void Admin_modificarEntradas() {
         int opcAdmin2 = esInt();
@@ -1460,7 +1460,7 @@ public class LDF {
     /**
      * Método para gestionar la cartelera como usuario Administrador
      * 
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public static void Admin_modificarCartelera() {
         int opcAdmin2 = esInt();
@@ -1677,7 +1677,7 @@ public class LDF {
      * Método para gestionar las promociones, las cuales se encuentran en un documento llamado
      * descuentos.txt que se encuentra en la carpeta raiz del proyecto
      * 
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public static void Admin_modificarPromociones() {
         int opcAdmin2 = esInt();

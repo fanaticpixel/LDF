@@ -643,7 +643,7 @@ public class BD_LDF extends BD_Conector {
     /**
      * Método que lista todos los usuarios de la BBDD
      *
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public void Admin_listarUsuarios() {
 
@@ -681,7 +681,7 @@ public class BD_LDF extends BD_Conector {
      *
      * @param nick Nick del usuario
      * @return boolean exito o no
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public boolean Admin_existeUsuario(String nick) {
         String cadenaSQL = "SELECT COUNT(*) FROM USUARIOS WHERE nick LIKE '" + nick + "'";
@@ -715,7 +715,7 @@ public class BD_LDF extends BD_Conector {
      * @param nick Nick del usuario
      * @param password Contraseña del usuario
      * @return boolean existe o no
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public boolean Admin_existeUsuarioPass(String nick, String password) {
         String cadenaSQL = "SELECT COUNT(*) FROM USUARIOS WHERE nick LIKE '" + nick + "' AND contrasena LIKE '" + "'";
@@ -748,7 +748,7 @@ public class BD_LDF extends BD_Conector {
      *
      * @param nick Nick del usuario
      * @return filas afectadas
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public int Admin_borrarUsuario(String nick) {
         String cadenaSQL = "DELETE FROM USUARIOS WHERE nick LIKE '" + nick + "'";
@@ -776,7 +776,7 @@ public class BD_LDF extends BD_Conector {
      * BBDD
      *
      * @param nick Nick del usuario
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     private void Admin_borrarMovAsociados(String nick) {
         String cadenaSQL = "DELETE FROM ENTRADAS WHERE nick LIKE '" + nick + "'";
@@ -801,7 +801,7 @@ public class BD_LDF extends BD_Conector {
      * @param valor Valor del campo
      * @param nick Nick del usuario
      * @return filas afectadas
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public int Admin_updateUser(String campo, String valor, String nick) {
         String cadenaSQL = "UPDATE USUARIOS SET " + campo + " = '" + valor + "' WHERE nick LIKE '%" + nick + "%'";
@@ -826,7 +826,7 @@ public class BD_LDF extends BD_Conector {
      *
      * @param idCine Id del cine
      * @return Booleano existe o no
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public boolean Admin_existeIdCine(String idCine) {
         String cadenaSQL = "SELECT id_cine FROM CINES";
@@ -856,7 +856,7 @@ public class BD_LDF extends BD_Conector {
      *
      * @param c1 Cartelera
      * @return boolean en caso de éxito o fracaso del insert
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public boolean Admin_insertCartelera(Cartelera c1) {
         String cadenaSQL = "INSERT INTO CARTELERA VALUES (?, ?, ?, ?, ?, ?)";
@@ -891,7 +891,7 @@ public class BD_LDF extends BD_Conector {
      * @param valor Valor del campo
      * @param id_cine Id del cine
      * @return filas afectadas
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public int Admin_updateCine(String campo, String valor, String id_cine) {
         String cadenaSQL = "UPDATE CINES SET " + campo + " = '" + valor + "' WHERE id_cine LIKE '" + id_cine + "'";
@@ -918,7 +918,7 @@ public class BD_LDF extends BD_Conector {
      * @param valor Valor del campo
      * @param id_cine Id del cine
      * @return filas afectadas
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public int Admin_updateCine(String campo, int valor, String id_cine) {
         String cadenaSQL = "UPDATE CINES SET " + campo + " = " + valor + " WHERE id_cine LIKE '" + id_cine + "'";
@@ -945,7 +945,7 @@ public class BD_LDF extends BD_Conector {
      * @param num_fila Número de la sala
      * @param num_butaca Número de la butaca
      * @return filas borradas
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public int Admin_delete_entrada(String id_cine, int id_sala, int num_fila, int num_butaca) {
         String cadenaSQL = "DELETE FROM ENTRADAS WHERE id_cine LIKE '" + id_cine + "'" + " AND id_sala = " + id_sala + " AND num_fila = " + num_fila + " AND num_butaca = " + num_butaca;
@@ -970,7 +970,7 @@ public class BD_LDF extends BD_Conector {
      *
      * @param nick Nick del usuario
      * @return int (conteo)
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public int Admin_contarEntradas(String nick) {
         String cadenaSQL = "SELECT COUNT(*) FROM ENTRADAS WHERE nick LIKE '" + nick + "'";
@@ -999,7 +999,7 @@ public class BD_LDF extends BD_Conector {
      *
      * @param id_cine Id del cine
      * @return Vector cartelera
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public Vector<Cartelera> Admin_mostrar_cartelera(String id_cine) {
         String cadenaSQL = "SELECT * FROM CARTELERA WHERE id_cine LIKE '" + id_cine + "'";
@@ -1033,7 +1033,7 @@ public class BD_LDF extends BD_Conector {
     /**
      * Método que muestra el id_cine de la tabla cines
      *
-     * @author Fer
+     * @author Fernando Martín Gay
      *
      */
     public void Admin_mostrarIdCine() {
@@ -1063,7 +1063,7 @@ public class BD_LDF extends BD_Conector {
      * @param nombre Nombre de la película
      * @param id_cine Id del cine
      * @return conteo
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public int Admin_contarPeliculas(String nombre, String id_cine) {
         String cadenaSQL = "SELECT COUNT(*) FROM CARTELERA WHERE id_cine LIKE '" + id_cine + "' AND NOMBRE LIKE '" + nombre + "'";
@@ -1093,7 +1093,7 @@ public class BD_LDF extends BD_Conector {
      * @param id_cine Id del cine
      * @param num_sala Numero de la sala
      * @return filas borradas
-     * @author Fer
+     * @author Fernando Martín Gay
      */
     public int Admin_borrarCartelera(String nombre, String id_cine, int num_sala) {
         String cadenaSQL = "DELETE FROM CARTELERA WHERE nombre LIKE '" + nombre + "'" + " AND id_cine LIKE '" + id_cine + "' AND id_sala = " + num_sala;

@@ -20,6 +20,8 @@ public class Descuentos {
      *
      * @return Éxito o no en función de si la información se ha cargado
      * correctamente
+     *
+     * @author Fernando Martín Gay
      */
     private static boolean cargarDescuentosHashMap() {
 
@@ -56,6 +58,8 @@ public class Descuentos {
      * Actualiza los descuentos del archivo descuentos.txt
      *
      * @return Éxito o no de la operación
+     *
+     * @author Fernando Martín Gay
      */
     private static boolean cargarDescuentosTXT() {
 
@@ -84,6 +88,8 @@ public class Descuentos {
     /**
      * Muestra los descuentos del archivo descuentos.txt
      *
+     * @author Fernando Martín Gay
+     *
      */
     public static void mostrarDescuentosActuales() {
         descuentos.clear();
@@ -102,6 +108,8 @@ public class Descuentos {
      * @param codDescuento Código de descuento en formato String
      * @return Cantidad de descuento a aplicar o -1 en caso de no existir
      * descuento
+     *
+     * @author Fernando Martín Gay
      */
     public static int porcentajeDescuento(String codDescuento) {
         codDescuento = codDescuento.toUpperCase();
@@ -122,6 +130,8 @@ public class Descuentos {
      *
      * @param codDescuento
      * @return true o false
+     *
+     * @author Fernando Martín Gay
      */
     public static boolean existeDescuento(String codDescuento) {
         codDescuento = codDescuento.toUpperCase();
@@ -141,6 +151,8 @@ public class Descuentos {
      *
      * @param codDescuento codigo de descuento
      * @param porcentajeDescuento % de escuento
+     *
+     * @author Fernando Martín Gay
      */
     public static void Admin_addDescuento(String codDescuento, Integer porcentajeDescuento) {
         codDescuento = codDescuento.toUpperCase();
@@ -155,6 +167,8 @@ public class Descuentos {
      * del archivo descuentos.txt
      *
      * @param codDescuento
+     *
+     * @author Fernando Martín Gay
      */
     public static boolean Admin_deleteDescuento(String codDescuento) {
         codDescuento = codDescuento.toUpperCase();
