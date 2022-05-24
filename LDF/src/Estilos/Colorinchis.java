@@ -1,21 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Estilos;
 
 /**
- * Clase/Herramienta que permite modificar los colores del output (terminal)
- * @author Fer
+ * Clase Colorinchis
+ *
+ * @author Fernando Martín Gay
+ *
+ * @version 1.8 24/05/2022
  */
 public class Colorinchis {
 
-    // ROJO
+    
+    /**
+     * Colorea la cadena de color rojo
+     *
+     * @param frase Cadena a colorear
+     * 
+     * @return La cadena coloreada
+     */
     public static String red (String frase) {
         return "\u001B[31m"+frase+"\u001B[0m";
     }
 
+    /**
+     * Colorea la cadena de color rojo, negrita e itálica
+     *
+     * @param frase Cadena a colorear
+     * @param bold indicador de negrita
+     * @param italic indicador de cursiva
+     * 
+     * @return La cadena coloreada
+     */
     public static String red (String frase, boolean bold, boolean italic) {
         if (bold && italic) {
             return "\u001B[1m\033[3m\u001B[31m"+frase+"\u001B[0m";
@@ -28,14 +42,35 @@ public class Colorinchis {
         }
     }
 
+    /**
+     * Colorea el caracter de color rojo
+     *
+     * @param frase Cadena a colorear
+     * 
+     * @return El caracter coloreada
+     */
     public static String red (char caracter) {
         return "\u001B[31m"+caracter+"\u001B[0m";
     }
 
+    /**
+     * Colorea el numero de color rojo
+     *
+     * @param frase numero a colorear
+     * 
+     * @return El numero coloreado
+     */
     public static String red (int numero) {
         return "\u001B[31m"+numero+"\u001B[0m";
     }
 
+    /**
+     * Colorea el double de color rojo
+     *
+     * @param frase numero a colorear
+     * 
+     * @return El double coloreado
+     */
     public static String red (double numero) {
         return "\u001B[31m"+numero+"\u001B[0m";
     }

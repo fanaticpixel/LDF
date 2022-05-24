@@ -22,6 +22,8 @@ import modulos.Entrada;
  *         Daniel Molano Caraballo
  *         Fernando Martín Gay
  *         Álvaro Pérez Hernández
+ * 
+ * @version 1.8 24/05/2022
  */
 public class LDF {
     
@@ -304,9 +306,6 @@ public class LDF {
                                     limpiar();
                                     premium(nick2);
                                     break;
-
-                                //HACER CONSULTA DE PREMIUM
-                                //HACER CONSULTA DE PREMIUM
                             }
 
                         } while (opc2 != 7);
@@ -408,6 +407,12 @@ public class LDF {
 
     }
 
+    /**
+     * Método para modificar la contraseña de un usuario
+     * 
+     * @author Daniel Molano Caraballo
+     * @param nick2 Nick del usuario
+     */
     public static void usuario_ModificarContraseña(String nick2) {
         System.out.println("Introduce una nueva contraseña");
         String newPass = sc.nextLine();
@@ -436,6 +441,13 @@ public class LDF {
         limpiar();
     }
 
+    /**
+     * Método para modificar el nick de un usuario
+     * 
+     * @author Daniel Molano Caraballo
+     * @param nick2 Nick del usuario
+     * @return el nuevo nick del usuario
+     */
     public static String usuario_ModificarPerfil(String nick2) {
         Vector<String> v1;
         Boolean flag1;
@@ -488,6 +500,11 @@ public class LDF {
         return nick2;
     }
 
+    /**
+     * Método que imprime el menu de modificar perfil
+     * 
+     * @author Daniel Molano Caraballo
+     */
     public static void m_usuarioModificarPerfil() {
         System.out.println(Colorinchis.blue("¿Que desea modificar?\n")
                 + Colorinchis.red("#1.") + " Modificar Nick\n"
@@ -495,11 +512,21 @@ public class LDF {
                 + Colorinchis.red("#3.") + "Volver");
     }
 
+    /**
+     * Método que imprime el menu de ver perfil
+     * 
+     * @author Daniel Molano Caraballo
+     */
     public static void m_usuarioVerPerfil() {
         System.out.println(Colorinchis.red("#1.") + "Modificar información\n"
                 + Colorinchis.red("#2.") + "Salir");
     }
 
+    /**
+     * Método que imprime el menu del usuario
+     * 
+     * @author Daniel Molano Caraballo
+     */
     public static void m_menuUsuario() {
         System.out.println(Colorinchis.red("#1.") + "Ver perfil\n"
                 + Colorinchis.red("#2.") + "Mirar entradas\n"
@@ -510,12 +537,21 @@ public class LDF {
                 + Colorinchis.red("#7.") + "Cerrar sesión");
     }
 
+    /**
+     * Método que imprime la cabecera del programa
+     * 
+     * @author Daniel Molano Caraballo
+     */    
     public static void m_cabecera() {
         System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
         System.out.println(Colorinchis.blue("|                Bienvenido a LDF                |"));
         System.out.println(Colorinchis.rainbow("--------------------------------------------------"));
     }
-
+    /**
+     * Método que imprime el menu base del programa
+     * 
+     * @author Daniel Molano Caraballo
+     */
     public static void m_base() {
         System.out.println(Colorinchis.purple("\nIntroduzca opción:    "));
         System.out.println(Colorinchis.red("#1.") + "Registrarse\n"
@@ -525,6 +561,11 @@ public class LDF {
                 + Colorinchis.red("#5.") + "Salir");
     }
 
+    /**
+     * Método que limpia la pantalla
+     * 
+     * @author Daniel Molano Caraballo
+     */
     public static void limpiar() {
 
         for (int i = 0; i < 60; i++) {
@@ -576,7 +617,15 @@ public class LDF {
         java.util.regex.Matcher matcher = pattern.matcher(mail);
         return matcher.matches();
     }
-
+    
+    /**
+     * Método que compra entradas en función del usuario y el precio
+     * 
+     * @param nick2 Nick del usuario que compra las entradas
+     * @param precio precio final de la entrada
+     * 
+     * @author Daniel Molano Caraballo
+     */
     public static void comprarEntradas(String nick2, double precio) {
         sc.nextLine();
         boolean flagAux, aux = false;
@@ -711,6 +760,14 @@ public class LDF {
 
     }
 
+    /**
+     * Método que valida una fecha
+     * 
+     * @param msgError Mensaje de error
+     * @param patron Formato de la fecha
+     * 
+     * @author Ángel Navacerrada Rodriguez
+     */
     public static LocalDate leeFecha(String msgError, String patron) {
 
         boolean correcto = false;
@@ -738,7 +795,9 @@ public class LDF {
     }
 
     /**
-     * @author Lucía Piñán Barberán
+     * Método que imprime la cartelera entera o filtrada
+     * 
+     * @author LUcía Piñán Barberán
      */
     public static void cartelera() {
 
@@ -878,6 +937,11 @@ public class LDF {
 
     }
 
+    /**
+     * Método que crea un nuevo usuario
+     * 
+     * @author Daniel Molano Caraballo
+     */
     public static void registrarse() {
 
         String nombre1, apellidos1, nick1, correo1, pass1, resp1;
@@ -1028,8 +1092,8 @@ public class LDF {
     /**
      * Método para validar que los datos introducidos son números siempre
      *
-     * @return un int 100%
-     * @author Fer
+     * @return Un int 100%
+     * @author Fernando Martín Gay
      */
     public static int esInt() {
         boolean pasaPasa = false;
@@ -1049,8 +1113,8 @@ public class LDF {
     /**
      * Método para validar que los datos introducidos son números siempre
      *
-     * @return un double 100%
-     * @author Fer
+     * @return Un double 100%
+     * @author Fernando Martín Gay
      */
     public static double esDouble() {
         boolean pasaPasa = false;
@@ -1070,9 +1134,11 @@ public class LDF {
 
 
     /* PARTE ADMINISTRADOR */
+    
     /**
      * MENUS ADMIN
-     * @author Fer
+     * 
+     * @author Fernando Martín Gay
      */
     public static void m_admin() {
         System.out.println(Colorinchis.purple("Bienvenido Bruce:\n")
@@ -1083,6 +1149,11 @@ public class LDF {
                 + Colorinchis.red("#5. ") + "Volver");
     }
 
+    /**
+     * MENUS GESTIONAR ADMIN
+     * 
+     * @author Fernando Martín Gay
+     */
     public static void m_admin_ges() {
         System.out.println(Colorinchis.purple("Gestión de usuarios:\n")
                 + Colorinchis.red("#1. ") + "Alta usuario\n"
@@ -1091,6 +1162,12 @@ public class LDF {
                 + Colorinchis.red("#4. ") + "Volver");
     }
 
+    
+    /**
+     * MENUS ADMIN USUARIOS
+     * 
+     * @author Fernando Martín Gay
+     */
     public static void m_admin_ges_mod() {
         System.out.println(Colorinchis.purple("Gestión de usuarios:\n")
                 + Colorinchis.red("#1. ") + "Modificar nick\n"
@@ -1099,12 +1176,23 @@ public class LDF {
                 + Colorinchis.red("#4. ") + "Volver");
     }
 
+    
+    /**
+     * MENUS ADMIN ENTRADAS
+     * 
+     * @author Fernando Martín Gay
+     */
     public static void m_admin_entradas() {
         System.out.println(Colorinchis.purple("Gestión de entradas:\n")
                 + Colorinchis.red("#1. ") + "Eliminar entrada\n"
                 + Colorinchis.red("#2. ") + "Volver");
     }
 
+    /**
+     * MENUS ADMIN CARTELERA
+     * 
+     * @author Fernando Martín Gay
+     */
     public static void m_admin_cart() {
         System.out.println(Colorinchis.purple("Gestión de cartelera:\n")
                 + Colorinchis.red("#1. ") + "Añadir datos\n"
@@ -1112,6 +1200,11 @@ public class LDF {
                 + Colorinchis.red("#3. ") + "Volver");
     }
 
+    /**
+     * MENUS ADMIN PROMOCIONES
+     * 
+     * @author Fernando Martín Gay
+     */
     public static void m_admin_prom() {
         System.out.println(Colorinchis.purple("Gestión de promociones:\n")
                 + Colorinchis.red("#1. ") + "Añadir promoción\n"
@@ -1124,6 +1217,7 @@ public class LDF {
 
     /**
      * Método que da de baja un usuario
+     * 
      * @author Fer
      */
     public static void Admin_bajaUsusario() {
@@ -1152,6 +1246,7 @@ public class LDF {
 
     /**
      * Método que permite modificar datos de los usuarios
+     * 
      * @author Fer
      */
     public static void Admin_modificarUsuario() {
@@ -1258,6 +1353,7 @@ public class LDF {
 
     /**
      * Método para gestionar entradas por parte de usuario administrador
+     * 
      * @author Fer
      */
     public static void Admin_modificarEntradas() {
@@ -1337,6 +1433,7 @@ public class LDF {
 
     /**
      * Método para gestionar la cartelera como usuario Administrador
+     * 
      * @author Fer
      */
     public static void Admin_modificarCartelera() {
@@ -1553,6 +1650,7 @@ public class LDF {
     /**
      * Método para gestionar las promociones, las cuales se encuentran en un documento llamado
      * descuentos.txt que se encuentra en la carpeta raiz del proyecto
+     * 
      * @author Fer
      */
     public static void Admin_modificarPromociones() {
