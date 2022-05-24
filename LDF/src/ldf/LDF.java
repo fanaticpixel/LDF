@@ -507,7 +507,7 @@ public class LDF {
      */
     public static void m_usuarioModificarPerfil() {
         System.out.println(Colorinchis.blue("¿Que desea modificar?\n")
-                + Colorinchis.red("#1.") + " Modificar Nick\n"
+                + Colorinchis.red("#1.") + "Modificar Nick\n"
                 + Colorinchis.red("#2.") + "Modificar Contraseñas\n"
                 + Colorinchis.red("#3.") + "Volver");
     }
