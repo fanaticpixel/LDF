@@ -373,13 +373,11 @@ public class BD_LDF extends BD_Conector {
     }
 
     /**
-     * Método que accede a la BBDD y devuelve la contraseña del usuario
+     * Método que accede a la BBDD y devuelve los datos del usuario
      *
      * @author Daniel Molano Caraballo
      * 
      * @param nick Nick del usuario
-     *
-     * @return Contraseña del usuario
      */
     public void listarUser(String nick) {
 
@@ -409,7 +407,13 @@ public class BD_LDF extends BD_Conector {
         }
 
     }
-
+    
+    /**
+     * Método que accede a la BBDD y devuelve los datos de los cines
+     *
+     * @author Lucía Piñán Barberán
+     */
+    
     public void listarCines() {
 
         String cadenaSQL = "SELECT id_cine, nombre, direccion FROM CINES";
@@ -435,7 +439,13 @@ public class BD_LDF extends BD_Conector {
         }
 
     }
-
+    
+    /**
+     * Método que accede a la BBDD y devuelve los datos de la entrada
+     *
+     * @author Daniel Molano Caraballo
+     * @param nick Nick del usuario
+     */
     public void listarEntradasUsuario(String nick) {
 
         String cadenaSQL = "SELECT * FROM ENTRADAS where NICK = '" + nick + "'";
@@ -466,7 +476,15 @@ public class BD_LDF extends BD_Conector {
         }
 
     }
-
+    
+    /**
+     * Método que accede a la BBDD y devuelve el estado del usuario
+     *
+     * @author Daniel Molano Caraballo
+     * 
+     * @param nick Nick del usuario
+     * @return estado del premium
+     */
     public boolean esPremium(String nick) {
 
         String cadenaSQL = "SELECT PREMIUM FROM USUARIOS where NICK = '" + nick + "'";
@@ -493,7 +511,15 @@ public class BD_LDF extends BD_Conector {
         return false;
 
     }
-
+    
+    /**
+     * Método que accede a la BBDD y crea un usuario
+     *
+     * @author Daniel Molano Caraballo
+     * 
+     * @param u Usuario 
+     * @return 0 si ha ido bien o -1 si no ha salido bien
+     */
     public int añadirUsuario(Usuario u) {
 
         String cadenaSQL = "INSERT INTO USUARIOS VALUES('" + u.getNick() + "','"
@@ -516,7 +542,17 @@ public class BD_LDF extends BD_Conector {
 
         return -1;
     }
-
+    
+    /**
+     * Método que accede a la BBDD y añade una entrada
+     *
+     * @author Daniel Molano Caraballo
+     * 
+     * @param nick Nick del usuario
+     * @param e Entrada
+     * @param precio Precio de la entrada
+     * @return 0 si ha ido bien o -1 si no ha salido bien
+     */
     public int añadirEntrada(String nick, Entrada e, Double precio) {
 
         String cadenaSQL = "INSERT INTO ENTRADAS VALUES('" + nick + "','"
@@ -540,7 +576,16 @@ public class BD_LDF extends BD_Conector {
 
         return -1;
     }
-
+    
+    /**
+     * Método que accede a la BBDD y modifica un nick
+     *
+     * @author Daniel Molano Caraballo
+     * 
+     * @param newNick Nick del nuevo usuario
+     * @param oldNick Nick del anitguo usuario
+     * @return 0 si ha ido bien o -1 si no ha salido bien
+     */
     public int cambiarNick(String newNick, String oldNick) {
 
         String cadenaSQL = "UPDATE USUARIOS SET NICK = '" + newNick + "' WHERE NICK = '" + oldNick + "'";
@@ -562,7 +607,16 @@ public class BD_LDF extends BD_Conector {
         return -1;
 
     }
-
+    
+    /**
+     * Método que accede a la BBDD y modifica la contrasña de un usuario
+     *
+     * @author Daniel Molano Caraballo
+     * 
+     * @param newPass nueva Contraseña
+     * @param nick Nick a buscar
+     * @return 0 si ha ido bien o -1 si no ha salido bien
+     */
     public int cambiarContrasena(String newPass, String Nick) {
 
         String cadenaSQL = "UPDATE USUARIOS SET CONTRASENA = '" + newPass + "' WHERE NICK = '" + Nick + "'";
@@ -625,7 +679,7 @@ public class BD_LDF extends BD_Conector {
     /**
      * Método que comprueba que existe usuario o no
      *
-     * @param nick
+     * @param nick Nick del usuario
      * @return boolean exito o no
      * @author Fer
      */
@@ -658,8 +712,8 @@ public class BD_LDF extends BD_Conector {
     /**
      * Comprueba la existencia de un usuario en la bbdd
      *
-     * @param nick
-     * @param password
+     * @param nick Nick del usuario
+     * @param password Contraseña del usuario
      * @return boolean existe o no
      * @author Fer
      */
@@ -692,7 +746,7 @@ public class BD_LDF extends BD_Conector {
     /**
      * Método que borra el usuario
      *
-     * @param nick
+     * @param nick Nick del usuario
      * @return filas afectadas
      * @author Fer
      */
@@ -721,7 +775,7 @@ public class BD_LDF extends BD_Conector {
      * Borrar entradas asociadas a un nick, para poder eliminar el usuario de la
      * BBDD
      *
-     * @param nick
+     * @param nick Nick del usuario
      * @author Fer
      */
     private void Admin_borrarMovAsociados(String nick) {
@@ -743,9 +797,9 @@ public class BD_LDF extends BD_Conector {
     /**
      * Método que actualiza usuario
      *
-     * @param campo
-     * @param valor
-     * @param nick
+     * @param campo Campo a actualizar
+     * @param valor Valor del campo
+     * @param nick Nick del usuario
      * @return filas afectadas
      * @author Fer
      */
@@ -770,8 +824,8 @@ public class BD_LDF extends BD_Conector {
     /**
      * Método que comprueba existencia de un id_cine
      *
-     * @param idCine
-     * @return Bolleano existe o no
+     * @param idCine Id del cine
+     * @return Booleano existe o no
      * @author Fer
      */
     public boolean Admin_existeIdCine(String idCine) {
@@ -798,9 +852,9 @@ public class BD_LDF extends BD_Conector {
     }
 
     /**
-     * Insertar cartelera
+     * Método que insertar una cartelera
      *
-     * @param c1
+     * @param c1 Cartelera
      * @return boolean en caso de éxito o fracaso del insert
      * @author Fer
      */
@@ -833,9 +887,9 @@ public class BD_LDF extends BD_Conector {
      * Método que actualiza un "campo" y un "valor" String que se pasa por
      * parámetro (overloaded)
      *
-     * @param campo
-     * @param valor
-     * @param id_cine
+     * @param campo Campo a actualizar
+     * @param valor Valor del campo
+     * @param id_cine Id del cine
      * @return filas afectadas
      * @author Fer
      */
@@ -860,9 +914,9 @@ public class BD_LDF extends BD_Conector {
      * Método que actualiza un "campo" y un "valor" INT que se pasa por
      * parámetro(overloaded)
      *
-     * @param campo
-     * @param valor
-     * @param id_cine
+     * @param campo Campo a actualizar
+     * @param valor Valor del campo
+     * @param id_cine Id del cine
      * @return filas afectadas
      * @author Fer
      */
@@ -886,10 +940,10 @@ public class BD_LDF extends BD_Conector {
     /**
      * Método que borra un a entrada de la tabla entradas
      *
-     * @param id_cine
-     * @param id_sala
-     * @param num_fila
-     * @param num_butaca
+     * @param id_cine Id del cine
+     * @param id_sala Id de la sala
+     * @param num_fila Número de la sala
+     * @param num_butaca Número de la butaca
      * @return filas borradas
      * @author Fer
      */
@@ -914,7 +968,7 @@ public class BD_LDF extends BD_Conector {
     /**
      * Método que cuenta cuantas entradas corresponden a un determinado nick
      *
-     * @param nick
+     * @param nick Nick del usuario
      * @return int (conteo)
      * @author Fer
      */
@@ -943,7 +997,7 @@ public class BD_LDF extends BD_Conector {
      * Método que devuelve un Vector con la cartelera correspondiente al id_cine
      * pasado por parámetro
      *
-     * @param id_cine
+     * @param id_cine Id del cine
      * @return Vector cartelera
      * @author Fer
      */
@@ -1006,8 +1060,8 @@ public class BD_LDF extends BD_Conector {
      * Método para contar cuantas peliculas corresponde con el nombre e id_cine
      * que se pasa por parámetro
      *
-     * @param nombre
-     * @param id_cine
+     * @param nombre Nombre de la película
+     * @param id_cine Id del cine
      * @return conteo
      * @author Fer
      */
@@ -1035,9 +1089,9 @@ public class BD_LDF extends BD_Conector {
     /**
      * Método para borrar elementos de la cartelera en la BBDD
      *
-     * @param nombre
-     * @param id_cine
-     * @param num_sala
+     * @param nombre Nombre de la pelicula
+     * @param id_cine Id del cine
+     * @param num_sala Numero de la sala
      * @return filas borradas
      * @author Fer
      */
@@ -1058,7 +1112,15 @@ public class BD_LDF extends BD_Conector {
         }
         return -1;
     }
-
+    
+    /**
+     * Método que accede a la BBDD y actualiza el campo Premium
+     * 
+     * @autor Daniel Molano Caraballo
+     * @param Nick Nick del usuario
+     * @return 0 si ha salido bien y -1 si ha salido mal
+     * 
+     */
     public int mejorarPremium(String Nick) {
 
         String cadenaSQL = "UPDATE USUARIOS SET PREMIUM = '1' WHERE NICK = '" + Nick + "'";
