@@ -9,8 +9,14 @@ import Estilos.Colorinchis;
 import java.time.LocalDate;
 
 /**
+ * Clase usuario
  *
- * @author Alvaro.p
+ * @author Lucía Piñán Barberan 
+ *         Daniel Molano Caraballo 
+ *         Fernando Martín Gay 
+ *         Álvaro Pérez Hernández
+ *
+ * @version 1.8 24/05/2022
  */
 public class Usuario {
     

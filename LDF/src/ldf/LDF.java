@@ -574,7 +574,12 @@ public class LDF {
 
     }
 
-    /* @author Alvaro.p*/
+    /**
+     * metodo que valida el numero de tarjeta y retorna true o false
+     * @param dato
+     * @return boolean
+     * @author Alvaro Perez Hernandez
+     */
     public static boolean validarNumTarjeta(String dato) {
 
         Pattern pattern = Pattern.compile("\\d{16}");
@@ -582,7 +587,12 @@ public class LDF {
         return matcher.matches();
     }
 
-    /* @author Alvaro.p*/
+    /**
+     * metodo que valida la fecha de una tarjeta y retorna true o false
+     * @param dato
+     * @return boolean
+     * @author Alvaro Perez Hernandez
+     */
     public static boolean validarFechaTarjeta(String dato) {
 
         Pattern pattern = Pattern.compile("\\d{1,2}/\\d{1,2}");
@@ -590,7 +600,12 @@ public class LDF {
         return matcher.matches();
     }
 
-    /* @author Alvaro.p*/
+    /**
+     * metodo que valida el cv de una tarjeta y retorna true o false
+     * @param dato
+     * @return boolean
+     * @author Alvaro Perez Hernandez
+     */
     public static boolean validarCvTarjeta(String dato) {
 
         Pattern pattern = Pattern.compile("\\d{3}");
@@ -598,7 +613,12 @@ public class LDF {
         return matcher.matches();
     }
 
-    /* @author Alvaro.p*/
+     /**
+     * metodo que valida los datos introducidas sean solo letras matusculas o minusculas retorna true o false
+     * @param dato
+     * @return boolean
+     * @author Alvaro Perez Hernandez
+     */
     public static boolean validarDatos(String dato) {
 
         /* String regexp = "\\d+[a-zA-Z]";
@@ -611,7 +631,13 @@ public class LDF {
         return matcher.matches();
     }
 
-    /* @author Alvaro.p*/
+    /**
+     * metodo que valida que el correo introducido sea valido es decir empieze por 
+     *        letras seguido de un @ seguido de letras y terminado por un punto y de 2 a 6 letras
+     * @param dato
+     * @return boolean
+     * @author Alvaro Perez Hernandez
+     */
     public static boolean validaEmail(String mail) {
         Pattern pattern = Pattern.compile("^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$");
         java.util.regex.Matcher matcher = pattern.matcher(mail);
